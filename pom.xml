@@ -6,7 +6,12 @@
 	<groupId>eu.me73.luncheon</groupId>
 	<artifactId>luncheon</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<modules>
+		<module>webapp</module>
+		<module>repository</module>
+		<module>user</module>
+	</modules>
+	<packaging>pom</packaging>
 
 	<name>luncheon</name>
 	<description>Lunches ordering for employees</description>
