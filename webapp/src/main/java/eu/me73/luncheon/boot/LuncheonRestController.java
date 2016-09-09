@@ -9,7 +9,7 @@ public class LuncheonRestController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     String getIndex(){
-        return "index.html";
+        return "static/index.html";
     }
 
 }
