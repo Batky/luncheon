@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sport Centre login page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/luncheon.css">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat|Open+Sans' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+</head>
+<body>
+<header>
+    <h1>Luncheon - login</h1>
+</header>
+<section>
+    <form id="login_form" method="post">
+        <label for="name">Prihlasovacie meno:</label>
+        <input type="text" name="username" id="name"/>
+        <label for="password">Prihlasovacie heslo:</label>
+        <input type="password" name="password" id="password"/>
+        <br>
+        <button type="submit" id="login_button">Click Me!</button>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+</section>
+<footer>(c)2016 me73</footer>
+</body>
+</html>

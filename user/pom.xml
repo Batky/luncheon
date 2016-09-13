@@ -14,6 +14,7 @@
     <modules>
         <module>user-api</module>
         <module>user-impl</module>
+        <module>user-rest</module>
     </modules>
 
 

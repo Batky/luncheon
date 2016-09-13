@@ -9,7 +9,12 @@ public class LuncheonRestController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     String getIndex(){
-        return "static/index.html";
+        return "index.html";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    String getLogin() {
+        return "pages/login.html";
     }
 
 }

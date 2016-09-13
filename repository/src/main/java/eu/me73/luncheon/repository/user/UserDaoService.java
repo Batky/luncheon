@@ -1,4 +1,4 @@
-package eu.me73.luncheon.repostiory;
+package eu.me73.luncheon.repository.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

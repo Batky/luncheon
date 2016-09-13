@@ -1,7 +1,7 @@
 package eu.me73.luncheon.user.impl;
 
 import ch.qos.logback.classic.Logger;
-import eu.me73.luncheon.repostiory.UserDaoService;
+import eu.me73.luncheon.repository.user.UserDaoService;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
 import java.util.Collection;
