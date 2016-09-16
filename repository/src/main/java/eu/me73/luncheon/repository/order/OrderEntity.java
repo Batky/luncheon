@@ -26,8 +26,7 @@ public class OrderEntity implements Serializable {
     @Column(name = "user")
     UserEntity user;
 
-    public OrderEntity(LunchEntity lunch) {
-        this.lunch = lunch;
+    public OrderEntity() {
     }
 
     public Long getId() {

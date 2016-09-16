@@ -10,6 +10,8 @@
 		<module>webapp</module>
 		<module>repository</module>
 		<module>user</module>
+        <module>lunch</module>
+		<module>order</module>
 	</modules>
 	<packaging>pom</packaging>
 

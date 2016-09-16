@@ -3,15 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>luncheon</artifactId>
+        <artifactId>order</artifactId>
         <groupId>eu.me73.luncheon</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>webapp</artifactId>
-
+    <artifactId>order-api</artifactId>
     <dependencies>
+        <dependency>
+            <groupId>eu.me73.luncheon</groupId>
+            <artifactId>repository</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>eu.me73.luncheon</groupId>
             <artifactId>user-api</artifactId>
@@ -19,27 +23,7 @@
         </dependency>
         <dependency>
             <groupId>eu.me73.luncheon</groupId>
-            <artifactId>user-rest</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>eu.me73.luncheon</groupId>
-            <artifactId>user-impl</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>eu.me73.luncheon</groupId>
-            <artifactId>order-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>eu.me73.luncheon</groupId>
-            <artifactId>order-impl</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>eu.me73.luncheon</groupId>
-            <artifactId>lunch-impl</artifactId>
+            <artifactId>lunch-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
