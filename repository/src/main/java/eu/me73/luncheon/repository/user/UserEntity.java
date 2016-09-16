@@ -75,7 +75,7 @@ public class UserEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "LunchEntity{" +
+        return "UserEntity{" +
                 "id=" + id +
                 ", barCode='" + barCode + '\'' +
                 ", firstName='" + firstName + '\'' +
