@@ -1,7 +1,5 @@
 package eu.me73.luncheon.repository.order;
 
-import eu.me73.luncheon.repository.lunch.LunchEntity;
-import eu.me73.luncheon.repository.user.UserEntity;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,10 +19,10 @@ public class OrderEntity implements Serializable {
     Long id;
 
     @Column(name = "lunch")
-    LunchEntity lunch;
+    Long lunchId;
 
     @Column(name = "user")
-    UserEntity user;
+    Long userId;
 
     public OrderEntity() {
     }
@@ -37,28 +35,28 @@ public class OrderEntity implements Serializable {
         this.id = id;
     }
 
-    public LunchEntity getLunch() {
-        return lunch;
+    public Long getLunchId() {
+        return lunchId;
     }
 
-    public void setLunch(LunchEntity lunch) {
-        this.lunch = lunch;
+    public void setLunchId(Long lunchId) {
+        this.lunchId = lunchId;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
         return "OrderEntity{" +
                 "id=" + id +
-                ", lunch=" + lunch +
-                ", user=" + user +
+                ", lunchId=" + lunchId +
+                ", userId=" + userId +
                 '}';
     }
 }

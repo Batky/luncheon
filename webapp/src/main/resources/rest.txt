@@ -1,3 +1,6 @@
 /lunches GET - all lunches
 /lunches/lunch POST - one lunch JSON
 /lunches/lunches POST - list of lunches JSON
+/orders/ GET - all orders
+/orders/order POST - one order JSON
+/orders/orders POST - list of orders JSON

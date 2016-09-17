@@ -19,7 +19,7 @@ public class UserRestController {
     UserService userServices;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET, produces = "application/json")
-    public Collection<User> getAllUsers(){
+    public Collection<User> getAllUsers() {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for all users.");
         }

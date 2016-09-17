@@ -5,6 +5,7 @@ import java.util.Collection;
 public interface OrderService {
 
     void save(final Order order);
+
     Collection<Order> getAllOrders();
 
 }

@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Import(LuncheonBeanConfiguration.class)
 public class LuncheonApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LuncheonApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(LuncheonApplication.class, args);
+    }
 }

@@ -81,7 +81,7 @@ public class User {
         this.relation = relation;
     }
 
-    public String getLongName(){
+    public String getLongName() {
         return firstName + SPACE + lastName;
     }
 

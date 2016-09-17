@@ -1,12 +1,14 @@
 [
   {
-    "id":1,
-    "soup":true,
-    "date":1474070400000,
-    "description":"Haskova polievka"},
+    "id": 1,
+    "soup": true,
+    "date": 1474070400000,
+    "description": "Haskova polievka"
+  },
   {
-    "id":2,
-    "soup":false,
-    "date":1474070400000,
-    "description":"Rezen so zemiakmi"}
+    "id": 2,
+    "soup": false,
+    "date": 1474070400000,
+    "description": "Rezen so zemiakmi"
+  }
 ]

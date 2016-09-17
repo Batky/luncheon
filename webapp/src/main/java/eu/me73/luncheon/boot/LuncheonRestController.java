@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LuncheonRestController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    String getIndex(){
+    String getIndex() {
         return "index.html";
     }
 
