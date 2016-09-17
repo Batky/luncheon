@@ -1,0 +1,3 @@
+/lunches GET - all lunches
+/lunches/lunch POST - one lunch JSON
+/lunches/lunches POST - list of lunches JSON

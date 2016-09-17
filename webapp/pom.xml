@@ -47,6 +47,11 @@
             <artifactId>order-rest</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>eu.me73.luncheon</groupId>
+            <artifactId>lunch-rest</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 
