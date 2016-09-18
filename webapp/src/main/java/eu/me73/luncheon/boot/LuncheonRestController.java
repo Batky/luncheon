@@ -17,4 +17,8 @@ public class LuncheonRestController {
         return "pages/login.html";
     }
 
+    @RequestMapping(value = "/lunches", method = RequestMethod.GET)
+    String getLunches() {
+        return "pages/lunches.html";
+    }
 }

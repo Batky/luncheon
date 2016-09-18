@@ -1,6 +1,7 @@
 package eu.me73.luncheon.repository.lunch;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class LunchEntity implements Serializable {
     Boolean soup;
 
     @Column(name = "date")
-    Date date;
+    LocalDate date;
 
     @Column(name = "description")
     String description;
@@ -47,11 +48,11 @@ public class LunchEntity implements Serializable {
         this.soup = soup;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

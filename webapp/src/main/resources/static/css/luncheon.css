@@ -77,3 +77,8 @@ button#login_button {
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
+
+nav ul li {
+    display: inline;
+    margin: 5px;
+}

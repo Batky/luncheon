@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actual lunches</title>
+    <link rel="stylesheet" type="text/css" href="../css/luncheon.css">
+    <link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+</head>
+<body>
+<header>
+    <h1>Zoznam aktuálne zapísaných obedov</h1>
+</header>
+<nav>
+    <ul>
+        <li>Pridaj</li>
+        <li>Zmen</li>
+    </ul>
+</nav>
+<section>
+    <div class="lunches" id="lunches">
+        <table id="day1" class="day1">
+            <tr id="day1_header">
+                <th id="day1h">Dátum</th>
+            </tr>
+            <tr>
+                <td id="day1p">Polievky</td>
+            </tr>
+            <tr id="day1_soup"></tr>
+            <tr>
+                <td id="day1hj">Hlavné jedlá</td>
+            </tr>
+        </table>
+    </div>
+</section>
+<footer>(c)2016 me73</footer>
+<script src="../scripts/getLunches.js"></script>
+</body>
+</html>

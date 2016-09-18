@@ -2,13 +2,49 @@
   {
     "id": 1,
     "soup": true,
-    "date": 1474070400000,
+    "date": "2016-11-01",
     "description": "Haskova polievka"
   },
   {
     "id": 2,
     "soup": false,
-    "date": 1474070400000,
+    "date": "2016-11-01",
     "description": "Rezen so zemiakmi"
+  },
+  {
+    "id": 3,
+    "soup": true,
+    "date": "2016-10-01",
+    "description": "Zemiakova polievka"
+  },
+  {
+    "id": 4,
+    "soup": false,
+    "date": "2016-10-01",
+    "description": "Špagety"
+  },
+  {
+    "id": 5,
+    "soup": true,
+    "date": "2016-10-01",
+    "description": "Hŕstková polievka"
+  },
+  {
+    "id": 6,
+    "soup": false,
+    "date": "2016-10-01",
+    "description": "Čevapčiči"
+  },
+  {
+    "id": 7,
+    "soup": false,
+    "date": "2016-10-01",
+    "description": "Zeleninový šalát s krutonmi"
+  },
+  {
+    "id": 8,
+    "soup": false,
+    "date": "2016-10-01",
+    "description": "Bojnícke tajomstvo, zemiaková placka plnená dvoma druhmi mäsa, paradajkový šalát"
   }
 ]

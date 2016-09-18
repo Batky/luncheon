@@ -1,13 +1,14 @@
 package eu.me73.luncheon.lunch.api;
 
 import eu.me73.luncheon.repository.lunch.LunchEntity;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Lunch {
 
     private Long id = 0L;
     private Boolean soup;
-    private Date date;
+    private LocalDate date;
     private String description;
 
 
@@ -38,11 +39,11 @@ public class Lunch {
         this.soup = soup;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

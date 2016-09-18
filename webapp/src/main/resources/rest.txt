@@ -1,6 +1,8 @@
-/lunches GET - all lunches
+/lunches - page lunches.html
+/lunches/all GET - all lunches
 /lunches/lunch POST - one lunch JSON
 /lunches/lunches POST - list of lunches JSON
+/lunches/date/{date} - list of lunches from {date} pattern="yyyy-MM-dd"
 /orders/ GET - all orders
 /orders/order POST - one order JSON
 /orders/orders POST - list of orders JSON

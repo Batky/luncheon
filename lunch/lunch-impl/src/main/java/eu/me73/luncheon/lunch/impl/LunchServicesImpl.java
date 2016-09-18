@@ -4,7 +4,10 @@ import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
 import eu.me73.luncheon.repository.lunch.LunchDaoService;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
@@ -31,6 +34,15 @@ public class LunchServicesImpl implements LunchService {
     public Collection<Lunch> getAllLunches() {
         return service
                 .findAll()
+                .stream()
+                .map(Lunch::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<Lunch> getAllFromDate(final LocalDate date) {
+        return service
+                .findByDateGreaterThanEqualOrderByDate(date)
                 .stream()
                 .map(Lunch::new)
                 .collect(Collectors.toList());
