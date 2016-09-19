@@ -16,7 +16,8 @@ public class LuncheonSecurity extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/", "/home").permitAll()
-                .antMatchers("/users/**").access("hasRole('ADMIN')")
+                .antMatchers("/users/**").access("hasRole('USER')")
+                .antMatchers("/lunches/**").access("hasRole('USER')")
                 .and().formLogin().loginPage("/login")
                 .usernameParameter("ssoId").passwordParameter("password")
                 .and().exceptionHandling().accessDeniedPage("/Access_Denied")

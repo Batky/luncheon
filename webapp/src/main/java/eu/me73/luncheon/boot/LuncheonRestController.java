@@ -17,6 +17,16 @@ public class LuncheonRestController {
         return "pages/login.html";
     }
 
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    String getLogout() {
+        return "pages/logout.html";
+    }
+
+    @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+    String getAccessDenied() {
+        return "pages/access.html";
+    }
+
     @RequestMapping(value = "/lunches", method = RequestMethod.GET)
     String getLunches() {
         return "pages/lunches.html";
