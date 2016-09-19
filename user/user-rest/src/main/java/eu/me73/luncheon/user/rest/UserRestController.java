@@ -32,7 +32,11 @@ public class UserRestController {
 
     @RequestMapping(value = "users/card/{card}", method = RequestMethod.GET, produces = "application/json")
     public User getUser(@PathVariable String card){
+        if (LOG.isDebugEnabled()){
+            LOG.debug("Rest request for user with card number: {}", card);
+        }
         if (!initialized) {
+            LOG.info("Users source not initialized, initializing now.");
             userServices.userSource(new DummyUserStorage());
             initialized = true;
         }
