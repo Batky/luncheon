@@ -13,23 +13,14 @@ public class LuncheonSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/", "/home")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .antMatchers("/users")
-                .hasRole("ADMIN")
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .and()
-                .csrf().disable();
+
+        http.authorizeRequests()
+                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/users/**").access("hasRole('ADMIN')")
+                .and().formLogin().loginPage("/login")
+                .usernameParameter("ssoId").passwordParameter("password")
+                .and().exceptionHandling().accessDeniedPage("/Access_Denied")
+                .and().csrf().disable();
     }
 
     @Override
@@ -41,11 +32,11 @@ public class LuncheonSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("user")
-                .password("user")
+                .password("")
                 .roles("USER");
         auth.inMemoryAuthentication()
                 .withUser("admin")
-                .password("admin")
+                .password("")
                 .roles("ADMIN");
     }
 

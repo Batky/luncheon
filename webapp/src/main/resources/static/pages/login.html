@@ -14,12 +14,11 @@
 </header>
 <section>
     <form id="login_form" method="post">
-        <label for="name">Prihlasovacie meno:</label>
-        <input type="text" name="username" id="name"/>
-        <label for="password">Prihlasovacie heslo:</label>
-        <input type="password" name="password" id="password"/>
+        <label for="ssoId">Načítaj čiarový kód:</label>
+        <input type="text" name="ssoId" id="ssoId"/>
+        <input type="password" name="password" id="password" hidden/>
         <br>
-        <button type="submit" id="login_button">Click Me!</button>
+        <button type="submit" id="login_button">OK</button>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
 </section>
