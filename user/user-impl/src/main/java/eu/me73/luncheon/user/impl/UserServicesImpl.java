@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.repository.user.UserDaoService;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
+import eu.me73.luncheon.user.api.UserStorage;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class UserServicesImpl implements UserService {
 
     private final Logger LOG = (Logger) LoggerFactory.getLogger(UserServicesImpl.class);
+
+    private UserStorage userStorage;
 
     @Autowired
     UserDaoService service;
@@ -34,6 +37,26 @@ public class UserServicesImpl implements UserService {
                 .stream()
                 .map(User::new)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void userSource(final UserStorage userStorage) {
+        this.userStorage = userStorage;
+    }
+
+    @Override
+    public User getUserByCard(String card) {
+        return service
+                .findByBarCode(card)
+                .stream()
+                .map(User::new)
+                .collect(Collectors.toList())
+                .get(0);
+    }
+
+    @Override
+    public User getUserByCardFromStorage(final String card) {
+        return Objects.nonNull(this.userStorage) ? this.userStorage.getUserByCard(card) : null;
     }
 
 }

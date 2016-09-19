@@ -6,3 +6,4 @@
 /orders/ GET - all orders
 /orders/order POST - one order JSON
 /orders/orders POST - list of orders JSON
+users/card/{card} - user JSON by card from storage
