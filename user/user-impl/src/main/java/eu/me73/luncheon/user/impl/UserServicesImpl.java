@@ -20,10 +20,11 @@ public class UserServicesImpl implements UserService {
 
     private final Logger LOG = (Logger) LoggerFactory.getLogger(UserServicesImpl.class);
 
+    @Autowired
     private UserStorage userStorage;
 
     @Autowired
-    UserDaoService service;
+    private UserDaoService service;
 
     @Override
     public void save(final User user) {
@@ -32,6 +33,15 @@ public class UserServicesImpl implements UserService {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("User {} saved.", user);
             }
+        }
+    }
+
+    @Override
+    public void save(Collection<User> users) {
+        Objects.requireNonNull(users, "Saving users collection cannot be null");
+        users.stream().map(User::toEntity).forEach(userEntity -> service.save(userEntity));
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Saved {} users", users.size());
         }
     }
 
@@ -45,11 +55,6 @@ public class UserServicesImpl implements UserService {
     }
 
     @Override
-    public void userSource(final UserStorage userStorage) {
-        this.userStorage = userStorage;
-    }
-
-    @Override
     public User getUserByCard(String card) {
         return service
                 .findByBarCode(card)
@@ -60,8 +65,13 @@ public class UserServicesImpl implements UserService {
     }
 
     @Override
+    public Collection<User> getAllUsersFromStorage() {
+        return this.userStorage.getAllUsersFromStorage();
+    }
+
+    @Override
     public User getUserByCardFromStorage(final String card) {
-        return Objects.nonNull(this.userStorage) ? this.userStorage.getUserByCard(card) : null;
+        return this.userStorage.getUserByCard(card);
     }
 
     @Override

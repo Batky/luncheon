@@ -3,7 +3,11 @@
 /lunches/lunch POST - one lunch JSON
 /lunches/lunches POST - list of lunches JSON
 /lunches/date/{date} - list of lunches from {date} pattern="yyyy-MM-dd"
+
 /orders/ GET - all orders
 /orders/order POST - one order JSON
 /orders/orders POST - list of orders JSON
-users/card/{card} - user JSON by card from storage
+
+users/card/{card} GET - user JSON by card
+users/storage/import GET - reimport users from storage
+users/file/import GET - reimport users from file

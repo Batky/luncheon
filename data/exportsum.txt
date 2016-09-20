@@ -1,0 +1,24 @@
+Január
+1,18;1,42;3,15
+Barniaková Mária;1,18;0;0
+Kúdelová Andrea;1,18;0;0
+Fronková Mária;1,18;0;0
+Stachová Václava;1,18;0;0
+Beňová Ľubica;1,18;0;0
+Gregorová Viera;1,18;0;0
+Červenková Jana;1,18;0;0
+Šlachtová Adriana;1,18;0;0
+Marenčák Jozef;1,18;0;0
+Vargová Helena;1,18;0;0
+Sebechlebská Andrea;1,18;0;0
+Červenák Ľudovít;1,18;0;0
+Šlachta Roman;1,18;0;0
+Hrnčiar Miroslav;1,18;0;0
+Ondrušíková Petra;1,18;0;0
+Cinkaničová Petra;1,18;0;0
+Gašparík Maroš;1,18;0;0
+Rajnoha Marian;1,18;0;0
+Meliš Juraj;1,18;0;0
+Hromádka Milan;1,18;0;0
+Košta Róbert;1,18;0;0
+Širáňová Elena;1,18;0;0

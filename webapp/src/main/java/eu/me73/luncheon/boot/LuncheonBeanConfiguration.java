@@ -5,6 +5,8 @@ import eu.me73.luncheon.lunch.impl.LunchServicesImpl;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.impl.OrderServicesImpl;
 import eu.me73.luncheon.user.api.UserService;
+import eu.me73.luncheon.user.api.UserStorage;
+import eu.me73.luncheon.user.impl.DummyUserStorage;
 import eu.me73.luncheon.user.impl.UserServicesImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,5 +27,10 @@ public class LuncheonBeanConfiguration {
     @Bean
     public LunchService lunchService() {
         return new LunchServicesImpl();
+    }
+
+    @Bean
+    public UserStorage userStorage() {
+        return new DummyUserStorage();
     }
 }

@@ -7,10 +7,14 @@ import java.util.Collection;
 public interface UserService {
 
     void save(final User user);
+    void save(final Collection<User> users);
+
     Collection<User> getAllUsers();
-    void userSource(final UserStorage userStorage);
     User getUserByCard(final String card);
+
+    Collection<User> getAllUsersFromStorage();
     User getUserByCardFromStorage(final String card);
+
     Collection<User> importUsersFromFile(final BufferedReader importFile) throws IOException;
 
 }

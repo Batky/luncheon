@@ -35,7 +35,7 @@ public class User {
         this.barCode = entity.getBarCode();
         this.firstName = entity.getFirstName();
         this.lastName = entity.getLastName();
-        if (Objects.nonNull(entity.getRelation())) {
+        if (Objects.isNull(entity.getRelation())) {
             this.relation = UserRelation.EMPLOYEE;
         } else {
             this.relation = entity.getRelation();
