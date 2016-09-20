@@ -20,6 +20,17 @@ public class Lunch {
 
     }
 
+    public Lunch(
+            final Long id,
+            final Boolean soup,
+            final LocalDate date,
+            final String description) {
+        this.id = id;
+        this.soup = soup;
+        this.date = date;
+        this.description = description;
+    }
+
     public Lunch() {
     }
 

@@ -2,11 +2,16 @@ package eu.me73.luncheon.user.impl;
 
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.repository.user.UserDaoService;
+import eu.me73.luncheon.repository.user.UserRelation;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
 import eu.me73.luncheon.user.api.UserStorage;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +62,41 @@ public class UserServicesImpl implements UserService {
     @Override
     public User getUserByCardFromStorage(final String card) {
         return Objects.nonNull(this.userStorage) ? this.userStorage.getUserByCard(card) : null;
+    }
+
+    @Override
+    public Collection<User> importUsersFromFile(final BufferedReader importFile) throws IOException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Importing users from file {} ", importFile);
+        }
+        String line;
+        Collection<User> users = new ArrayList<>();
+        long xid = 1;
+        while (Objects.nonNull(line = importFile.readLine())){
+            if (LOG.isTraceEnabled()) {
+                LOG.trace("Read line {}", line);
+            }
+            String[] s = line.split(";");
+            if (s.length == 4) {
+                String nameSplit[] = s[1].split(" ");
+                UserRelation type = UserRelation.EMPLOYEE;
+                if (s[3].equals("true")) {
+                    type = UserRelation.PARTIAL;
+                }
+                if (nameSplit[1].equals("Návšteva")) {
+                    type = UserRelation.VISITOR;
+                }
+                User user = new User(xid++, s[0], s[2], nameSplit[0], nameSplit[1], type);
+                if (LOG.isTraceEnabled()) {
+                    LOG.trace("Adding user {}", user);
+                }
+                users.add(user);
+            }
+        }
+        if (LOG.isDebugEnabled()){
+            LOG.debug("Returning {} users from import file", users.size());
+        }
+        return users;
     }
 
 }

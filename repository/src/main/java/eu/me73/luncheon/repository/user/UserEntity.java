@@ -15,10 +15,13 @@ public class UserEntity implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column(name = "id")
+    @Column(name = "id", unique = true, nullable = false)
     Long id;
 
-    @Column(name = "barcode")
+    @Column(name = "pid", unique = true, nullable = false)
+    String pid;
+
+    @Column(name = "barcode", unique = true)
     String barCode;
 
     @Column(name = "first")
@@ -73,10 +76,19 @@ public class UserEntity implements Serializable {
         this.relation = relation;
     }
 
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
     @Override
     public String toString() {
         return "UserEntity{" +
                 "id=" + id +
+                ", pid='" + pid + '\'' +
                 ", barCode='" + barCode + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

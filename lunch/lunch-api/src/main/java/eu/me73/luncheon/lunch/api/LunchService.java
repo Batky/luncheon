@@ -1,5 +1,7 @@
 package eu.me73.luncheon.lunch.api;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -8,5 +10,6 @@ public interface LunchService {
     void save(final Lunch order);
     Collection<Lunch> getAllLunches();
     Collection<Lunch> getAllFromDate(final LocalDate date);
+    Collection<Lunch> importLunchesFromFile(final BufferedReader importFile) throws IOException;
 
 }
