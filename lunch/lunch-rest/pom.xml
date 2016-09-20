@@ -21,6 +21,11 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>eu.me73.luncheon</groupId>
+            <artifactId>commons</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

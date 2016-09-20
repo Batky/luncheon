@@ -1,9 +1,10 @@
 package eu.me73.luncheon.lunch.rest;
 
+import static eu.me73.luncheon.commons.DateUtils.getFirstDate;
+import static eu.me73.luncheon.commons.DateUtils.getLastDate;
+
 import ch.qos.logback.classic.Logger;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
@@ -14,7 +15,6 @@ import java.util.List;
 import java.util.Objects;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,7 +69,7 @@ public class LunchRestController {
                 LOG.trace("Parsing error: ", e);
             }
         }
-        return Objects.nonNull(dt) ? lunchService.getAllFromDate(dt) : null;
+        return Objects.nonNull(dt) ? lunchService.getAllBetweenDates(getFirstDate(dt), getLastDate(dt)) : null;
     }
 
 }

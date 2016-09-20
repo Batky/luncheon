@@ -9,7 +9,7 @@ public interface LunchService {
 
     void save(final Lunch order);
     Collection<Lunch> getAllLunches();
-    Collection<Lunch> getAllFromDate(final LocalDate date);
+    Collection<Lunch> getAllBetweenDates(final LocalDate fromDate, final LocalDate toDate);
     Collection<Lunch> importLunchesFromFile(final BufferedReader importFile) throws IOException;
 
 }

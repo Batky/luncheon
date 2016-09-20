@@ -7,11 +7,9 @@ import eu.me73.luncheon.repository.lunch.LunchDaoService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -45,9 +43,9 @@ public class LunchServicesImpl implements LunchService {
     }
 
     @Override
-    public Collection<Lunch> getAllFromDate(final LocalDate date) {
+    public Collection<Lunch> getAllBetweenDates(final LocalDate fromDate, final LocalDate toDate) {
         return service
-                .findByDateGreaterThanEqualOrderByDate(date)
+                .findByDateGreaterThanEqualAndDateLessThanEqualOrderByDate(fromDate, toDate)
                 .stream()
                 .map(Lunch::new)
                 .collect(Collectors.toList());

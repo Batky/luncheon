@@ -12,6 +12,7 @@
         <module>user</module>
         <module>lunch</module>
         <module>order</module>
+        <module>commons</module>
     </modules>
     <packaging>pom</packaging>
 
