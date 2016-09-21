@@ -2,7 +2,6 @@ package eu.me73.luncheon.lunch.api;
 
 import eu.me73.luncheon.repository.lunch.LunchEntity;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Lunch {
 

@@ -4,17 +4,42 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * User service
+ */
 public interface UserService {
 
     void save(final User user);
+
+    /**
+     * Store collection of users into database
+     * @param users collection non null, non empty
+     */
     void save(final Collection<User> users);
 
+    /**
+     * All database stored of users
+     * @return collection od users
+     */
     Collection<User> getAllUsers();
     User getUserByCard(final String card);
 
+    /**
+     * Load all users from external storage such as LDAP
+     * Import only in memory, not stored in database
+     * @return Collection of users
+     */
     Collection<User> getAllUsersFromStorage();
     User getUserByCardFromStorage(final String card);
 
+    /**
+     * Import users from file (old luncheon system used only once)
+     * Import is done only in memory, not stored in database
+     * @param importFile text file
+     * @return Collection of users
+     * @throws IOException for the importFile
+     */
     Collection<User> importUsersFromFile(final BufferedReader importFile) throws IOException;
 
+    User getUserById(final Long userId);
 }

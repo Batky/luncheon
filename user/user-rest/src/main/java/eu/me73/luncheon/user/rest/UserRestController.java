@@ -5,8 +5,6 @@ import static eu.me73.luncheon.commons.DummyConfig.getUserFile;
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
-import eu.me73.luncheon.user.api.UserStorage;
-import eu.me73.luncheon.user.impl.DummyUserStorage;
 import java.io.IOException;
 import java.util.Collection;
 import org.slf4j.LoggerFactory;

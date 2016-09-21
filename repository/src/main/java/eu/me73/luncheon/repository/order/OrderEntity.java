@@ -1,6 +1,8 @@
 package eu.me73.luncheon.repository.order;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,11 +20,20 @@ public class OrderEntity implements Serializable {
     @Column(name = "id")
     Long id;
 
-    @Column(name = "lunch")
-    Long lunchId;
+    @Column(name = "date")
+    LocalDate date;
+
+    @Column(name = "soup")
+    Long soup;
+
+    @Column(name = "meal")
+    Long meal;
 
     @Column(name = "user")
-    Long userId;
+    Long user;
+
+    @Column(name = "changed")
+    LocalDateTime changed;
 
     public OrderEntity() {
     }
@@ -35,28 +46,55 @@ public class OrderEntity implements Serializable {
         this.id = id;
     }
 
-    public Long getLunchId() {
-        return lunchId;
+    public Long getSoup() {
+        return soup;
     }
 
-    public void setLunchId(Long lunchId) {
-        this.lunchId = lunchId;
+    public void setSoup(Long soup) {
+        this.soup = soup;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getMeal() {
+        return meal;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setMeal(Long meal) {
+        this.meal = meal;
+    }
+
+    public Long getUser() {
+        return user;
+    }
+
+    public void setUser(Long user) {
+        this.user = user;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalDateTime getChanged() {
+        return changed;
+    }
+
+    public void setChanged(LocalDateTime changed) {
+        this.changed = changed;
     }
 
     @Override
     public String toString() {
         return "OrderEntity{" +
                 "id=" + id +
-                ", lunchId=" + lunchId +
-                ", userId=" + userId +
+                ", date=" + date +
+                ", soup=" + soup +
+                ", meal=" + meal +
+                ", user=" + user +
+                ", changed=" + changed +
                 '}';
     }
 }

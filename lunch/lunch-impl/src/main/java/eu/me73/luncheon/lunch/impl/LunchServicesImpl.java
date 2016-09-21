@@ -86,4 +86,9 @@ public class LunchServicesImpl implements LunchService {
         }
         return lunches;
     }
+
+    @Override
+    public Lunch getLunchById(Long lunchId) {
+        return new Lunch(service.findOne(lunchId));
+    }
 }

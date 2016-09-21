@@ -3,7 +3,6 @@ package eu.me73.luncheon.user.impl;
 import eu.me73.luncheon.repository.user.UserRelation;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserStorage;
-import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
 

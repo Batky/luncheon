@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,10 @@ public class UserServicesImpl implements UserService {
     @Override
     public void save(Collection<User> users) {
         Objects.requireNonNull(users, "Saving users collection cannot be null");
-        users.stream().map(User::toEntity).forEach(userEntity -> service.save(userEntity));
+        users
+                .stream()
+                .map(User::toEntity)
+                .forEach(userEntity -> service.save(userEntity));
         if (LOG.isDebugEnabled()) {
             LOG.debug("Saved {} users", users.size());
         }
@@ -107,6 +109,11 @@ public class UserServicesImpl implements UserService {
             LOG.debug("Returning {} users from import file", users.size());
         }
         return users;
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+        return new User(service.findOne(userId));
     }
 
 }
