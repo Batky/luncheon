@@ -3,9 +3,12 @@ package eu.me73.luncheon.order.impl;
 import static eu.me73.luncheon.commons.DummyConfig.FIRST_YEAR_OF_ORDER_IMPORTING;
 
 import ch.qos.logback.classic.Logger;
+import eu.me73.luncheon.lunch.api.LunchService;
 import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.repository.order.OrderDaoService;
+import eu.me73.luncheon.repository.order.OrderEntity;
+import eu.me73.luncheon.user.api.UserService;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -18,7 +21,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OrderServicesImpl implements OrderService {
 
     private final Logger LOG = (Logger) LoggerFactory.getLogger(OrderServicesImpl.class);
@@ -27,6 +32,12 @@ public class OrderServicesImpl implements OrderService {
 
     @Autowired
     OrderDaoService service;
+
+    @Autowired
+    LunchService lunchService;
+
+    @Autowired
+    UserService userService;
 
     @Override
     public void save(final Order order) {
@@ -52,7 +63,7 @@ public class OrderServicesImpl implements OrderService {
         return service
                 .findAll()
                 .stream()
-                .map(Order::new)
+                .map(this::fromEntity)
                 .collect(Collectors.toList());
     }
 
@@ -73,13 +84,20 @@ public class OrderServicesImpl implements OrderService {
             if (s.length >= 4) {
                 LocalDate date = LocalDate.parse(remakeOldDateString(s[0]), FORMATTER);
                 final long meal = Long.parseLong(s[3]);
-                if ((meal != 99) && (date.getYear() > FIRST_YEAR_OF_ORDER_IMPORTING)) {
-                    orders.add(new Order(xid++, date, Long.parseLong(s[1]), Long.parseLong(s[2]), meal));
+                if ((meal != 99) && (date.getYear() >= FIRST_YEAR_OF_ORDER_IMPORTING)) {
+                    Order order = this.updateOrder(xid++, date, s[1], Long.parseLong(s[2]), meal);
+                    orders.add(order);
+                    if (LOG.isTraceEnabled()) {
+                        LOG.trace("Adding order {}, orders count {}", order, orders.size());
+                    }
                 } else {
-                    if ((meal == 99) && (date.getYear() > FIRST_YEAR_OF_ORDER_IMPORTING)) {
-                        Order order = new Order(xid++, date, Long.parseLong(s[1]), Long.parseLong(s[2]), meal);
+                    if ((meal == 99) && (date.getYear() >= FIRST_YEAR_OF_ORDER_IMPORTING)) {
+                        Order order = this.updateOrder(xid++, date, s[1], Long.parseLong(s[2]), meal);
                         if (orders.contains(order)) {
                             orders.remove(order);
+                        }
+                        if (LOG.isTraceEnabled()) {
+                            LOG.trace("Removing order {}, orders count {}", order, orders.size());
                         }
                     }
                 }
@@ -91,10 +109,33 @@ public class OrderServicesImpl implements OrderService {
         return orders;
     }
 
+    @Override
+    public Order updateOrder(final Long id,
+                             final LocalDate date,
+                             final String pid,
+                             final Long soup,
+                             final Long meal) {
+        Order order = new Order();
+        order.setId(id);
+        order.updateDate(date);
+        order.updateUser(userService.getUserByPid(pid));
+        order.updateSoup(lunchService.getLunchById(soup));
+        order.updateMeal(lunchService.getLunchById(meal));
+        return order;
+    }
+
+    public Order fromEntity(final OrderEntity entity) {
+        Order order = new Order();
+        order.setId(entity.getId());
+        order.updateDate(entity.getDate());
+        order.updateUser(userService.getUserById(entity.getUser()));
+        order.updateSoup(lunchService.getLunchById(entity.getSoup()));
+        order.updateMeal(lunchService.getLunchById(entity.getMeal()));
+        return order;
+    }
+
+
     private CharSequence remakeOldDateString(final String oldDateString) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Remaking string {}", oldDateString);
-        }
         String replaced = oldDateString.substring(0, oldDateString.length() - 7).replaceAll("\\s", "");
         String [] replacedAndSplitted = replaced.split("\\.");
         if (replacedAndSplitted.length < 3) {

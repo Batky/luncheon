@@ -77,6 +77,7 @@ public class LunchRestController {
 
     @Async
     @RequestMapping(value = "lunches/file/import", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.CREATED)
     public String importLocalUsersFromFile() {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for reimporting local lunches from file.");

@@ -115,7 +115,7 @@ public class User {
 
         User user = (User) o;
 
-        if (!pid.equals(user.pid)) return false;
+        if (pid != null ? !pid.equals(user.pid) : user.pid != null) return false;
         if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
         return lastName != null ? lastName.equals(user.lastName) : user.lastName == null;
 
@@ -123,7 +123,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        int result = pid.hashCode();
+        int result = pid != null ? pid.hashCode() : 0;
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         return result;

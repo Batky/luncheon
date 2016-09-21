@@ -14,23 +14,23 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LuncheonBeanConfiguration {
 
-    @Bean
-    public UserService userService() {
-        return new UserServicesImpl();
-    }
+//    @Bean
+//    public UserService userService() {
+//        return new UserServicesImpl();
+//    }
 
-    @Bean
-    public OrderService orderService() {
-        return new OrderServicesImpl();
-    }
+//    @Bean
+//    public OrderService orderService() {
+//        return new OrderServicesImpl();
+//    }
 
-    @Bean
-    public LunchService lunchService() {
-        return new LunchServicesImpl();
-    }
+//    @Bean
+//    public LunchService lunchService() {
+//        return new LunchServicesImpl();
+//    }
 
-    @Bean
-    public UserStorage userStorage() {
-        return new DummyUserStorage();
-    }
+//    @Bean
+//    public UserStorage userStorage() {
+//        return new DummyUserStorage();
+//    }
 }

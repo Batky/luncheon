@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
 import eu.me73.luncheon.repository.lunch.LunchDaoService;
+import eu.me73.luncheon.repository.lunch.LunchEntity;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -15,7 +16,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LunchServicesImpl implements LunchService {
 
     private final Logger LOG = (Logger) LoggerFactory.getLogger(LunchServicesImpl.class);
@@ -94,7 +97,14 @@ public class LunchServicesImpl implements LunchService {
 
     @Override
     public Lunch getLunchById(Long id) {
-        return new Lunch(service.findOne(id));
+        LunchEntity lunchEntity = service.findOne(id);
+        Lunch lunch = null;
+        if (Objects.isNull(lunchEntity)) {
+            LOG.warn("Cannot find a lunch with id: {}", id);
+        } else {
+            lunch = new Lunch(lunchEntity);
+        }
+        return lunch;
     }
 
     @Override

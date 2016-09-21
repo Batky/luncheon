@@ -7,46 +7,19 @@ import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class Order {
 
-    private Long id = 0L;
+    private Long id;
     private LocalDate date;
     private User user;
     private Lunch soup;
     private Lunch meal;
     private LocalDateTime changed;
 
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    LunchService lunchService;
-
-    public Order(final OrderEntity entity) {
-        this.id = entity.getId();
-        this.date = entity.getDate();
-        this.user = userService.getUserById(entity.getUser());
-        this.soup = lunchService.getLunchById(entity.getSoup());
-        this.meal = lunchService.getLunchById(entity.getMeal());
-        this.changed = entity.getChanged();
-    }
-
     public Order() {
-    }
-
-    public Order(final Long id,
-                 final LocalDate date,
-                 final Long user,
-                 final Long soup,
-                 final Long meal) {
-        this.id = id;
-        this.date = date;
-        this.user = userService.getUserById(user);
-        this.soup = lunchService.getLunchById(soup);
-        this.meal = lunchService.getLunchById(meal);
-        this.changed = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -62,10 +35,7 @@ public class Order {
     }
 
     public void updateDate(final LocalDate date) {
-        if (!this.date.equals(date)) {
-            this.date = date;
-            this.changed = LocalDateTime.now();
-        }
+        this.date = this.updateObject(this.date, date);
     }
 
     public User getUser() {
@@ -73,10 +43,7 @@ public class Order {
     }
 
     public void updateUser(final User user) {
-        if (!this.user.equals(user)) {
-            this.user = user;
-            this.changed = LocalDateTime.now();
-        }
+        this.user = this.updateObject(this.user, user);
     }
 
     public Lunch getSoup() {
@@ -84,10 +51,7 @@ public class Order {
     }
 
     public void updateSoup(final Lunch soup) {
-        if (!this.soup.equals(soup)) {
-            this.soup = soup;
-            this.changed = LocalDateTime.now();
-        }
+        this.soup = this.updateObject(this.soup, soup);
     }
 
     public Lunch getMeal() {
@@ -95,10 +59,7 @@ public class Order {
     }
 
     public void updateMeal(final Lunch meal) {
-        if (!this.meal.equals(meal)) {
-            this.meal = meal;
-            this.changed = LocalDateTime.now();
-        }
+        this.meal = this.updateObject(this.meal, meal);
     }
 
     public LocalDateTime getChanged() {
@@ -118,6 +79,16 @@ public class Order {
         orderEntity.setUser(this.user.getId());
         orderEntity.setChanged(this.changed);
         return orderEntity;
+    }
+
+    private <T> T updateObject(T thisObject, final T newObject) {
+        if (Objects.nonNull(newObject)) {
+            if (Objects.isNull(thisObject) || !thisObject.equals(newObject)) {
+                thisObject = newObject;
+                this.changed = LocalDateTime.now();
+            }
+        }
+        return thisObject;
     }
 
     @Override

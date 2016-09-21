@@ -2,6 +2,7 @@ package eu.me73.luncheon.user.impl;
 
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.repository.user.UserDaoService;
+import eu.me73.luncheon.repository.user.UserEntity;
 import eu.me73.luncheon.repository.user.UserRelation;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
@@ -14,7 +15,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserServicesImpl implements UserService {
 
     private final Logger LOG = (Logger) LoggerFactory.getLogger(UserServicesImpl.class);
@@ -116,4 +119,15 @@ public class UserServicesImpl implements UserService {
         return new User(service.findOne(userId));
     }
 
+    @Override
+    public User getUserByPid(String pid) {
+        UserEntity userEntity = service.findByPid(pid);
+        User user = null;
+        if (Objects.isNull(userEntity)) {
+            LOG.warn("Cannot find a user with pid {}", pid);
+        } else {
+            user = new User(userEntity);
+        }
+        return user;
+    }
 }

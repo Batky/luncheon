@@ -5,7 +5,9 @@ import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserStorage;
 import java.util.ArrayList;
 import java.util.Collection;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DummyUserStorage implements UserStorage {
 
     @Override

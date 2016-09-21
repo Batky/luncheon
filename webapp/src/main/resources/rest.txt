@@ -8,6 +8,7 @@ lunches/file/import GET - reimport lunches from file
 orders/all GET - all orders
 orders/order POST - one order JSON
 orders/orders POST - list of orders JSON
+orders/file/import GET - reimport orders from file
 
 users/all GET - return all users in DB
 users/card/{card} GET - user JSON by card

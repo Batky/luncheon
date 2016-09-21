@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface LunchService {
 
     void save(final Lunch lunch);

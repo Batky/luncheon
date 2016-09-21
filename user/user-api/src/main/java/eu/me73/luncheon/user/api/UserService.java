@@ -3,10 +3,12 @@ package eu.me73.luncheon.user.api;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Collection;
+import org.springframework.stereotype.Service;
 
 /**
  * User service
  */
+@Service
 public interface UserService {
 
     void save(final User user);
@@ -42,4 +44,6 @@ public interface UserService {
     Collection<User> importUsersFromFile(final BufferedReader importFile) throws IOException;
 
     User getUserById(final Long userId);
+
+    User getUserByPid(final String pid);
 }
