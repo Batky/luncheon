@@ -22,7 +22,7 @@ public class OrderRestController {
     @Autowired
     OrderService userServices;
 
-    @RequestMapping(value = "/orders", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/orders/all", method = RequestMethod.GET, produces = "application/json")
     public Collection<Order> getAllOrders() {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for all orders.");

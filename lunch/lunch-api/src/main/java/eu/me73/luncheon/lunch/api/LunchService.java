@@ -7,10 +7,11 @@ import java.util.Collection;
 
 public interface LunchService {
 
-    void save(final Lunch order);
+    void save(final Lunch lunch);
+    void save(final Collection<Lunch> lunches);
     Collection<Lunch> getAllLunches();
     Collection<Lunch> getAllBetweenDates(final LocalDate fromDate, final LocalDate toDate);
     Collection<Lunch> importLunchesFromFile(final BufferedReader importFile) throws IOException;
 
-    Lunch getLunchById(final Long lunchId);
+    Lunch getLunchById(final Long id);
 }

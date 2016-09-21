@@ -8,7 +8,7 @@ import java.io.UnsupportedEncodingException;
 
 public class DummyConfig {
 
-    public static BufferedReader getUserFile(final String fileName) throws UnsupportedEncodingException, FileNotFoundException {
+    public static BufferedReader createBufferedReaderFromFileName(final String fileName) throws UnsupportedEncodingException, FileNotFoundException {
         return new BufferedReader(new InputStreamReader(new FileInputStream(fileName),"windows-1250"));
     }
 

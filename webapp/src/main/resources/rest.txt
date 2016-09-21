@@ -1,13 +1,15 @@
-/lunches - page lunches.html
-/lunches/all GET - all lunches
-/lunches/lunch POST - one lunch JSON
-/lunches/lunches POST - list of lunches JSON
-/lunches/date/{date} - list of lunches from {date} pattern="yyyy-MM-dd"
+lunches - page lunches.html
+lunches/all GET - all lunches
+lunches/lunch POST - one lunch JSON
+lunches/lunches POST - list of lunches JSON
+lunches/date/{date} GET - list of lunches from {date} pattern="yyyy-MM-dd"
+lunches/file/import GET - reimport lunches from file
 
-/orders/ GET - all orders
-/orders/order POST - one order JSON
-/orders/orders POST - list of orders JSON
+orders/all GET - all orders
+orders/order POST - one order JSON
+orders/orders POST - list of orders JSON
 
+users/all GET - return all users in DB
 users/card/{card} GET - user JSON by card
 users/storage/import GET - reimport users from storage
 users/file/import GET - reimport users from file

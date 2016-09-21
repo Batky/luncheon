@@ -1,6 +1,6 @@
 package eu.me73.luncheon.user.rest;
 
-import static eu.me73.luncheon.commons.DummyConfig.getUserFile;
+import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileName;
 
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.user.api.User;
@@ -23,7 +23,7 @@ public class UserRestController {
     @Autowired
     UserService userServices;
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/users/all", method = RequestMethod.GET, produces = "application/json")
     public Collection<User> getAllUsers() {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for all users.");
@@ -60,7 +60,7 @@ public class UserRestController {
         final Collection<User> users;
         int count = 0;
         try {
-            users = userServices.importUsersFromFile(getUserFile("data/zam.txt"));
+            users = userServices.importUsersFromFile(createBufferedReaderFromFileName("data/zam.txt"));
             count = users.size();
             userServices.save(users);
         } catch (IOException e) {

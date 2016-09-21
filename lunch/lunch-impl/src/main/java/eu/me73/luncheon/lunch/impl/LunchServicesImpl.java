@@ -73,11 +73,16 @@ public class LunchServicesImpl implements LunchService {
                         continue;
                     }
                     counter++;
-                    Lunch lunch = new Lunch(xid++, (counter < 3), date, sLunch);
-                    if (LOG.isTraceEnabled()) {
-                        LOG.trace("Adding lunch {}", lunch);
+                    if (sLunch.trim().length() > 255) {
+                        LOG.warn("Lunch description is longer as 255 characters");
+                        LOG.info("Description: {}", sLunch.trim());
+                    } else {
+                        Lunch lunch = new Lunch(xid++, (counter <= 3), date, sLunch.trim());
+                        if (LOG.isTraceEnabled()) {
+                            LOG.trace("Adding lunch {}", lunch);
+                        }
+                        lunches.add(lunch);
                     }
-                    lunches.add(lunch);
                 }
             }
         }
@@ -88,7 +93,13 @@ public class LunchServicesImpl implements LunchService {
     }
 
     @Override
-    public Lunch getLunchById(Long lunchId) {
-        return new Lunch(service.findOne(lunchId));
+    public Lunch getLunchById(Long id) {
+        return new Lunch(service.findOne(id));
+    }
+
+    @Override
+    public void save(Collection<Lunch> lunches) {
+        Objects.requireNonNull(lunches, "Collection cannot be null if collection store is required.");
+        lunches.stream().map(Lunch::toEntity).forEach(lunchEntity -> service.save(lunchEntity));
     }
 }
