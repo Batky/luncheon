@@ -16,7 +16,6 @@ public class Lunch {
         this.soup = entity.getSoup();
         this.date = entity.getDate();
         this.description = entity.getDescription();
-
     }
 
     public Lunch(

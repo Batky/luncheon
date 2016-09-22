@@ -116,7 +116,14 @@ public class UserServicesImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) {
-        return new User(service.findOne(userId));
+        UserEntity userEntity = service.findOne(userId);
+        User user = null;
+        if (Objects.isNull(userEntity)) {
+            LOG.warn("Cannot find a user with id {}", userId);
+        } else {
+            user = new User(userEntity);
+        }
+        return user;
     }
 
     @Override

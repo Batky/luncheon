@@ -1,6 +1,5 @@
 package eu.me73.luncheon.order.api;
 
-import eu.me73.luncheon.repository.order.OrderEntity;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -16,14 +15,16 @@ public interface OrderService {
     Collection<Order> getAllOrders();
     Collection<Order> importOrdersFromFile(final BufferedReader importFile) throws IOException;
 
-    Collection<Order> getOrdersForUser(Long id, LocalDate fromDate, LocalDate toDate);
+    Collection<UserOrder> getOrdersForUser(Long id, LocalDate fromDate, LocalDate toDate);
+
+    void storeOrdersForUser(Collection<UserOrder> userOrders);
+
+    void delete(final Collection<Order> orders);
 
     Order updateOrder(final Long id,
                       final LocalDate date,
                       final String pid,
                       final int soup,
                       final int meal);
-
-    Order fromEntity(final OrderEntity entity);
 
 }

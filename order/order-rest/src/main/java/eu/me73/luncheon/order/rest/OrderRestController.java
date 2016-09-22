@@ -8,6 +8,7 @@ import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileN
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderService;
+import eu.me73.luncheon.order.api.UserOrder;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -56,12 +57,21 @@ public class OrderRestController {
     }
 
     @RequestMapping(value = "orders/date/{date}/id/{id}", method = RequestMethod.GET)
-    public Collection<Order> getOrdersForUserFromDate(@PathVariable String date, @PathVariable Long id) {
+    public Collection<UserOrder> getOrdersForUserFromDate(@PathVariable String date, @PathVariable Long id) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Request for orders for user {} and date: {}", id, date);
         }
         LocalDate dt = getLocalDate(date);
         return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, getFirstDate(dt), getLastDate(dt)) : null;
+    }
+
+    @RequestMapping(value = "orders/store/user", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void saveUsersLunches(@RequestBody List<UserOrder> userOrders) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request to store user orders {}", userOrders.toArray());
+        }
+        orderService.storeOrdersForUser(userOrders);
     }
 
     @Async

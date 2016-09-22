@@ -3,11 +3,14 @@ package eu.me73.luncheon.order.impl;
 import static eu.me73.luncheon.commons.DummyConfig.FIRST_YEAR_OF_ORDER_IMPORTING;
 
 import ch.qos.logback.classic.Logger;
+import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
 import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderService;
+import eu.me73.luncheon.order.api.UserOrder;
 import eu.me73.luncheon.repository.order.OrderDaoService;
 import eu.me73.luncheon.repository.order.OrderEntity;
+import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -110,12 +113,123 @@ public class OrderServicesImpl implements OrderService {
     }
 
     @Override
-    public Collection<Order> getOrdersForUser(final Long id, final LocalDate fromDate, final LocalDate toDate) {
-        return service
+    public Collection<UserOrder> getOrdersForUser(final Long id, final LocalDate fromDate, final LocalDate toDate) {
+
+        Collection<Lunch> lunches = lunchService.getAllBetweenDates(fromDate, toDate);
+
+        Collection<Order> orders = service
                 .findByUserAndDateGreaterThanEqualAndDateLessThanEqualOrderByDate(id, fromDate, toDate)
                 .stream()
                 .map(this::fromEntity)
                 .collect(Collectors.toList());
+
+        User user = userService.getUserById(id);
+
+        Collection<UserOrder> userOrders = lunches
+                .stream()
+                .map(lunch -> new UserOrder(user, lunchInOrders(orders, lunch), lunch))
+                .collect(Collectors.toList());
+
+        return userOrders;
+    }
+
+    @Override
+    public void storeOrdersForUser(final Collection<UserOrder> userOrders) {
+        Objects.requireNonNull(userOrders, "If storing users orders collection cannot be null");
+        if (userOrders.isEmpty()) {
+            LOG.warn("User orders collection is empty nothing to store");
+            return;
+        }
+
+        ArrayList<UserOrder> userOrderArrayList = (ArrayList<UserOrder>) userOrders;
+        Long id = userOrderArrayList.get(0).getUser().getId();
+        LocalDate firstDate = userOrderArrayList.get(0).getLunch().getDate();
+        LocalDate lastDate = userOrderArrayList.get(userOrderArrayList.size()-1).getLunch().getDate();
+
+        Collection<Order> orders = service
+                .findByUserAndDateGreaterThanEqualAndDateLessThanEqualOrderByDate(id, firstDate, lastDate)
+                .stream()
+                .map(this::fromEntity)
+                .collect(Collectors.toList());
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Found {} stored orders fro user {} and days from {} to {}",
+                    orders.size(),
+                    userOrderArrayList.get(0).getUser(),
+                    firstDate,
+                    lastDate);
+        }
+
+        delete(orders);
+
+        Collection<UserOrder> updatedUserOrders = userOrders
+                .stream()
+                .filter(UserOrder::isOrdered)
+                .collect(Collectors.toList());
+
+        Collection<Order> updatedOrders = createOrdersFromUserOrders(updatedUserOrders);
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Found {} updated orders for user {} and days from {} to {}",
+                    updatedOrders.size(),
+                    userOrderArrayList.get(0).getUser(),
+                    firstDate,
+                    lastDate);
+        }
+
+        save(updatedOrders);
+    }
+
+    private Collection<Order> createOrdersFromUserOrders(Collection<UserOrder> updatedUserOrders) {
+
+        ArrayList<UserOrder> userOrderArrayList = (ArrayList<UserOrder>) updatedUserOrders;
+        User user = userOrderArrayList.get(0).getUser();
+
+        Collection<LocalDate> dates = updatedUserOrders
+                .stream()
+                .map(UserOrder::getDate)
+                .distinct()
+                .collect(Collectors.toList());
+
+        Collection<Order> orders = new ArrayList<>();
+
+        for (LocalDate date : dates) {
+            Order order = new Order();
+            order.updateDate(date);
+            order.updateUser(user);
+            order.updateSoup(findSoup(date, updatedUserOrders));
+            order.updateSoup(findMeal(date, updatedUserOrders));
+            orders.add(order);
+        }
+
+        return orders;
+    }
+
+    private Lunch findMeal(final LocalDate date, final Collection<UserOrder> updatedUserOrders) {
+        return updatedUserOrders
+                .stream()
+                .filter(userOrder -> date.equals(userOrder.getDate()) && (!userOrder.getLunch().getSoup()))
+                .findFirst()
+                .get()
+                .getLunch();
+    }
+
+    private Lunch findSoup(final LocalDate date, final Collection<UserOrder> updatedUserOrders) {
+        return updatedUserOrders
+                .stream()
+                .filter(userOrder -> date.equals(userOrder.getDate()) && (userOrder.getLunch().getSoup()))
+                .findFirst()
+                .get()
+                .getLunch();
+    }
+
+    @Override
+    public void delete(final Collection<Order> orders) {
+        Objects.requireNonNull(orders, "Collection cannot be null if deleting required");
+        orders
+                .stream()
+                .map(Order::toEntity)
+                .forEach(orderEntity -> service.delete(orderEntity));
     }
 
     @Override
@@ -133,7 +247,16 @@ public class OrderServicesImpl implements OrderService {
         return order;
     }
 
-    public Order fromEntity(final OrderEntity entity) {
+    private boolean lunchInOrders(final Collection<Order> orders, final Lunch lunch) {
+        for (Order order : orders) {
+            if (lunch.equals(order.getSoup()) || lunch.equals(order.getMeal())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Order fromEntity(final OrderEntity entity) {
         Order order = new Order();
         order.setId(entity.getId());
         order.updateDate(entity.getDate());
