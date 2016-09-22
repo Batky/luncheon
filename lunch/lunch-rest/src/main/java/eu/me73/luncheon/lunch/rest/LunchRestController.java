@@ -2,6 +2,7 @@ package eu.me73.luncheon.lunch.rest;
 
 import static eu.me73.luncheon.commons.DateUtils.getFirstDate;
 import static eu.me73.luncheon.commons.DateUtils.getLastDate;
+import static eu.me73.luncheon.commons.DateUtils.getLocalDate;
 import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileName;
 
 import ch.qos.logback.classic.Logger;
@@ -11,7 +12,6 @@ import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -63,15 +63,7 @@ public class LunchRestController {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Request for lunches for date: {}", date);
         }
-        LocalDate dt = null;
-        try {
-            dt = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
-        } catch (final Exception e) {
-            LOG.warn("Error parsing date string {}", date);
-            if (LOG.isTraceEnabled()) {
-                LOG.trace("Parsing error: ", e);
-            }
-        }
+        LocalDate dt = getLocalDate(date);
         return Objects.nonNull(dt) ? lunchService.getAllBetweenDates(getFirstDate(dt), getLastDate(dt)) : null;
     }
 

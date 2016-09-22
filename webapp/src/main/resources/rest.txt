@@ -2,13 +2,14 @@ lunches - page lunches.html
 lunches/all GET - all lunches
 lunches/lunch POST - one lunch JSON
 lunches/lunches POST - list of lunches JSON
-lunches/date/{date} GET - list of lunches from {date} pattern="yyyy-MM-dd"
+lunches/date/{date} GET - list of lunches from {date} pattern="yyyymmdd"
 lunches/file/import GET - reimport lunches from file
 
 orders/all GET - all orders
 orders/order POST - one order JSON
 orders/orders POST - list of orders JSON
 orders/file/import GET - reimport orders from file
+orders/date/{date}/id/{id} GET - return all orders for user for date range pattern "yyyymmdd"
 
 users/all GET - return all users in DB
 users/card/{card} GET - user JSON by card

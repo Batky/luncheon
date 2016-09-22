@@ -1,11 +1,15 @@
 package eu.me73.luncheon.order.rest;
 
+import static eu.me73.luncheon.commons.DateUtils.getFirstDate;
+import static eu.me73.luncheon.commons.DateUtils.getLastDate;
+import static eu.me73.luncheon.commons.DateUtils.getLocalDate;
 import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileName;
 
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderService;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,6 +53,15 @@ public class OrderRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveLunch(@RequestBody Order order) {
         orderService.save(order);
+    }
+
+    @RequestMapping(value = "orders/date/{date}/id/{id}", method = RequestMethod.GET)
+    public Collection<Order> getOrdersForUserFromDate(@PathVariable String date, @PathVariable Long id) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Request for orders for user {} and date: {}", id, date);
+        }
+        LocalDate dt = getLocalDate(date);
+        return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, getFirstDate(dt), getLastDate(dt)) : null;
     }
 
     @Async

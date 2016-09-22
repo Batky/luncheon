@@ -16,4 +16,13 @@ public interface LunchService {
     Collection<Lunch> importLunchesFromFile(final BufferedReader importFile) throws IOException;
 
     Lunch getLunchById(final Long id);
+
+    /**
+     * Returns lunch by index in day counting separately for soups and meals from 1
+     * @param date date of lunch
+     * @param index index of meal that day
+     * @param soup if true mean search in soups else search in main meal
+     * @return found lunch
+     */
+    Lunch getLunchByDayIndex(final LocalDate date, final int index, final boolean soup);
 }

@@ -112,4 +112,19 @@ public class LunchServicesImpl implements LunchService {
         Objects.requireNonNull(lunches, "Collection cannot be null if collection store is required.");
         lunches.stream().map(Lunch::toEntity).forEach(lunchEntity -> service.save(lunchEntity));
     }
+
+    @Override
+    public Lunch getLunchByDayIndex(LocalDate date, int index, boolean soup) {
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Searching  {} for date {} and index {}", soup ? "soup" : "meal", date, index);
+        }
+        if (index == 99) {
+            return null;
+        }
+        return service
+                .findByDateAndSoupOrderById(date, soup)
+                .stream()
+                .map(Lunch::new)
+                .collect(Collectors.toList()).get(index-1);
+    }
 }

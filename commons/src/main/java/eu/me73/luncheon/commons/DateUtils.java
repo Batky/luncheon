@@ -1,10 +1,15 @@
 package eu.me73.luncheon.commons;
 
+import ch.qos.logback.classic.Logger;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
+import org.slf4j.LoggerFactory;
 
 public class DateUtils {
+
+    private static final Logger LOG = (Logger) LoggerFactory.getLogger(DateUtils.class);
 
     /**
      * Luncheon in standard working in two work weeks. Two weeks period is counted from actual date
@@ -46,4 +51,18 @@ public class DateUtils {
     public static String getSlovakDayOfWeek(final LocalDate date) {
         return date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("sk-SK"));
     }
+
+    public static LocalDate getLocalDate(final String date) {
+        LocalDate dt = null;
+        try {
+            dt = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
+        } catch (final Exception e) {
+            LOG.warn("Error parsing date string {}", date);
+            if (LOG.isTraceEnabled()) {
+                LOG.trace("Parsing error: ", e);
+            }
+        }
+        return dt;
+    }
+
 }

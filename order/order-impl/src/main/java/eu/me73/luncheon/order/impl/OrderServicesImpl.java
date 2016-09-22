@@ -83,16 +83,16 @@ public class OrderServicesImpl implements OrderService {
             String[] s = line.split(";");
             if (s.length >= 4) {
                 LocalDate date = LocalDate.parse(remakeOldDateString(s[0]), FORMATTER);
-                final long meal = Long.parseLong(s[3]);
+                final int meal = Integer.parseInt(s[3]);
                 if ((meal != 99) && (date.getYear() >= FIRST_YEAR_OF_ORDER_IMPORTING)) {
-                    Order order = this.updateOrder(xid++, date, s[1], Long.parseLong(s[2]), meal);
+                    Order order = this.updateOrder(xid++, date, s[1], Integer.parseInt(s[2]), meal);
                     orders.add(order);
                     if (LOG.isTraceEnabled()) {
                         LOG.trace("Adding order {}, orders count {}", order, orders.size());
                     }
                 } else {
                     if ((meal == 99) && (date.getYear() >= FIRST_YEAR_OF_ORDER_IMPORTING)) {
-                        Order order = this.updateOrder(xid++, date, s[1], Long.parseLong(s[2]), meal);
+                        Order order = this.updateOrder(xid++, date, s[1], Integer.parseInt(s[2]), meal);
                         if (orders.contains(order)) {
                             orders.remove(order);
                         }
@@ -110,17 +110,26 @@ public class OrderServicesImpl implements OrderService {
     }
 
     @Override
+    public Collection<Order> getOrdersForUser(final Long id, final LocalDate fromDate, final LocalDate toDate) {
+        return service
+                .findByUserAndDateGreaterThanEqualAndDateLessThanEqualOrderByDate(id, fromDate, toDate)
+                .stream()
+                .map(this::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Order updateOrder(final Long id,
                              final LocalDate date,
                              final String pid,
-                             final Long soup,
-                             final Long meal) {
+                             final int soup,
+                             final int meal) {
         Order order = new Order();
         order.setId(id);
         order.updateDate(date);
         order.updateUser(userService.getUserByPid(pid));
-        order.updateSoup(lunchService.getLunchById(soup));
-        order.updateMeal(lunchService.getLunchById(meal));
+        order.updateSoup(lunchService.getLunchByDayIndex(date, soup, true));
+        order.updateMeal(lunchService.getLunchByDayIndex(date, meal, false));
         return order;
     }
 

@@ -16,13 +16,14 @@ public interface OrderService {
     Collection<Order> getAllOrders();
     Collection<Order> importOrdersFromFile(final BufferedReader importFile) throws IOException;
 
+    Collection<Order> getOrdersForUser(Long id, LocalDate fromDate, LocalDate toDate);
+
     Order updateOrder(final Long id,
                       final LocalDate date,
                       final String pid,
-                      final Long soup,
-                      final Long meal);
+                      final int soup,
+                      final int meal);
 
     Order fromEntity(final OrderEntity entity);
-
 
 }
