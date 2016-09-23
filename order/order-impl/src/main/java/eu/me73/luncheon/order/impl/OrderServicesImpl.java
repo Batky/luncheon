@@ -126,7 +126,7 @@ public class OrderServicesImpl implements OrderService {
 
         Collection<UserOrder> userOrders = lunches
                 .stream()
-                .map(lunch -> new UserOrder(id, lunchInOrders(orders, lunch), lunch, itsChangeable(lunch.getDate())))
+                .map(lunch -> new UserOrder(id, lunchInOrders(orders, lunch), lunch.getId(), itsChangeable(lunch.getDate())))
                 .collect(Collectors.toList());
 
         return userOrders;
@@ -150,8 +150,8 @@ public class OrderServicesImpl implements OrderService {
         }
 
         Long id = userOrderArrayList.get(0).getUser();
-        LocalDate firstDate = userOrderArrayList.get(0).getLunch().getDate();
-        LocalDate lastDate = userOrderArrayList.get(userOrderArrayList.size()-1).getLunch().getDate();
+        LocalDate firstDate = lunchService.getLunchById(userOrderArrayList.get(0).getLunch()).getDate();
+        LocalDate lastDate = lunchService.getLunchById(userOrderArrayList.get(userOrderArrayList.size()-1).getLunch()).getDate();
 
         Collection<Order> orders = service
                 .findByUserAndDateGreaterThanEqualAndDateLessThanEqualOrderByDate(id, firstDate, lastDate)
@@ -200,7 +200,7 @@ public class OrderServicesImpl implements OrderService {
 
         Collection<LocalDate> dates = updatedUserOrders
                 .stream()
-                .map(UserOrder::getDate)
+                .map(this::gainDateFromUserOrder)
                 .distinct()
                 .collect(Collectors.toList());
 
@@ -218,20 +218,28 @@ public class OrderServicesImpl implements OrderService {
         return orders;
     }
 
+    private LocalDate gainDateFromUserOrder(final UserOrder userOrder) {
+        return lunchService.getLunchById(userOrder.getLunch()).getDate();
+    }
+
+    private boolean isSoup(final UserOrder userOrder) {
+        return lunchService.getLunchById(userOrder.getLunch()).getSoup();
+    }
+
     private Lunch findMeal(final LocalDate date, final Collection<UserOrder> updatedUserOrders) {
         Optional<UserOrder> userOrderOptional = updatedUserOrders
                 .stream()
-                .filter(userOrder -> date.equals(userOrder.getDate()) && (!userOrder.getLunch().getSoup()))
+                .filter(userOrder -> date.equals(gainDateFromUserOrder(userOrder)) && (!isSoup(userOrder)))
                 .findFirst();
-        return userOrderOptional.isPresent() ? userOrderOptional.get().getLunch() : null;
+        return userOrderOptional.isPresent() ? lunchService.getLunchById(userOrderOptional.get().getLunch()) : null;
     }
 
     private Lunch findSoup(final LocalDate date, final Collection<UserOrder> updatedUserOrders) {
         Optional<UserOrder> userOrderOptional = updatedUserOrders
                 .stream()
-                .filter(userOrder -> date.equals(userOrder.getDate()) && (userOrder.getLunch().getSoup()))
+                .filter(userOrder -> date.equals(gainDateFromUserOrder(userOrder)) && (isSoup(userOrder)))
                 .findFirst();
-        return userOrderOptional.isPresent() ? userOrderOptional.get().getLunch() : null;
+        return userOrderOptional.isPresent() ? lunchService.getLunchById(userOrderOptional.get().getLunch()) : null;
     }
 
     @Override

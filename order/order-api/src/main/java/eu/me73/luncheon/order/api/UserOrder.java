@@ -1,13 +1,9 @@
 package eu.me73.luncheon.order.api;
 
-import eu.me73.luncheon.lunch.api.Lunch;
-import eu.me73.luncheon.user.api.User;
-import java.time.LocalDate;
-
 public class UserOrder {
 
     private Long user;
-    private Lunch lunch;
+    private Long lunch;
     private boolean ordered;
     private boolean changeable;
 
@@ -17,7 +13,7 @@ public class UserOrder {
     public UserOrder(
             final Long user,
             final boolean ordered,
-            final Lunch lunch,
+            final Long lunch,
             final boolean changeable) {
         this.user = user;
         this.ordered = ordered;
@@ -41,16 +37,12 @@ public class UserOrder {
         this.ordered = ordered;
     }
 
-    public Lunch getLunch() {
+    public Long getLunch() {
         return lunch;
     }
 
-    public void setLunch(Lunch lunch) {
+    public void setLunch(Long lunch) {
         this.lunch = lunch;
-    }
-
-    public LocalDate getDate() {
-        return lunch.getDate();
     }
 
     public boolean isChangeable() {

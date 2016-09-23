@@ -1,5 +1,7 @@
 package eu.me73.luncheon.lunch.impl;
 
+import static eu.me73.luncheon.commons.DummyConfig.FIRST_YEAR_OF_ORDER_IMPORTING;
+
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
@@ -70,21 +72,23 @@ public class LunchServicesImpl implements LunchService {
             if (dividedLunchDay.length == 8) {
                 int counter = 0;
                 LocalDate date = LocalDate.parse(dividedLunchDay[0], DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH));
-                for (String sLunch : dividedLunchDay) {
-                    if (counter == 0) {
-                        counter++;
-                        continue;
-                    }
-                    counter++;
-                    if (sLunch.trim().length() > 255) {
-                        LOG.warn("Lunch description is longer as 255 characters");
-                        LOG.info("Description: {}", sLunch.trim());
-                    } else {
-                        Lunch lunch = new Lunch(xid++, (counter <= 3), date, sLunch.trim());
-                        if (LOG.isTraceEnabled()) {
-                            LOG.trace("Adding lunch {}", lunch);
+                if (date.getYear() >= FIRST_YEAR_OF_ORDER_IMPORTING) {
+                    for (String sLunch : dividedLunchDay) {
+                        if (counter == 0) {
+                            counter++;
+                            continue;
                         }
-                        lunches.add(lunch);
+                        counter++;
+                        if (sLunch.trim().length() > 255) {
+                            LOG.warn("Lunch description is longer as 255 characters");
+                            LOG.info("Description: {}", sLunch.trim());
+                        } else {
+                            Lunch lunch = new Lunch(xid++, (counter <= 3), date, sLunch.trim());
+                            if (LOG.isTraceEnabled()) {
+                                LOG.trace("Adding lunch {}", lunch);
+                            }
+                            lunches.add(lunch);
+                        }
                     }
                 }
             }
