@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -198,7 +199,7 @@ public class OrderServicesImpl implements OrderService {
             order.updateDate(date);
             order.updateUser(user);
             order.updateSoup(findSoup(date, updatedUserOrders));
-            order.updateSoup(findMeal(date, updatedUserOrders));
+            order.updateMeal(findMeal(date, updatedUserOrders));
             orders.add(order);
         }
 
@@ -206,21 +207,19 @@ public class OrderServicesImpl implements OrderService {
     }
 
     private Lunch findMeal(final LocalDate date, final Collection<UserOrder> updatedUserOrders) {
-        return updatedUserOrders
+        Optional<UserOrder> userOrderOptional = updatedUserOrders
                 .stream()
                 .filter(userOrder -> date.equals(userOrder.getDate()) && (!userOrder.getLunch().getSoup()))
-                .findFirst()
-                .get()
-                .getLunch();
+                .findFirst();
+        return userOrderOptional.isPresent() ? userOrderOptional.get().getLunch() : null;
     }
 
     private Lunch findSoup(final LocalDate date, final Collection<UserOrder> updatedUserOrders) {
-        return updatedUserOrders
+        Optional<UserOrder> userOrderOptional = updatedUserOrders
                 .stream()
                 .filter(userOrder -> date.equals(userOrder.getDate()) && (userOrder.getLunch().getSoup()))
-                .findFirst()
-                .get()
-                .getLunch();
+                .findFirst();
+        return userOrderOptional.isPresent() ? userOrderOptional.get().getLunch() : null;
     }
 
     @Override
