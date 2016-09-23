@@ -17,4 +17,6 @@ public interface LunchDaoService extends JpaRepository<LunchEntity, Long> {
     Collection<LunchEntity> findByDateGreaterThanEqualAndDateLessThanEqualOrderByDate(LocalDate fromDate, LocalDate toDate);
 
     Collection<LunchEntity> findByDateAndSoupOrderById(LocalDate date, boolean soup);
+
+    Collection<LunchEntity> findByDate(LocalDate date);
 }

@@ -27,4 +27,5 @@ public interface OrderService {
                       final int soup,
                       final int meal);
 
+    Order getOrderForId(final Long id);
 }

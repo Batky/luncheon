@@ -25,4 +25,6 @@ public interface LunchService {
      * @return found lunch
      */
     Lunch getLunchByDayIndex(final LocalDate date, final int index, final boolean soup);
+
+    Collection<Lunch> getLunchByDate(final LocalDate date);
 }

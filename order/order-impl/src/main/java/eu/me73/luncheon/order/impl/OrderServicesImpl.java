@@ -258,6 +258,11 @@ public class OrderServicesImpl implements OrderService {
         return order;
     }
 
+    @Override
+    public Order getOrderForId(final Long id) {
+        return fromEntity(service.findOne(id));
+    }
+
     private boolean lunchInOrders(final Collection<Order> orders, final Lunch lunch) {
         for (Order order : orders) {
             if (lunch.equals(order.getSoup()) || lunch.equals(order.getMeal())) {
@@ -268,6 +273,9 @@ public class OrderServicesImpl implements OrderService {
     }
 
     private Order fromEntity(final OrderEntity entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
         Order order = new Order();
         order.setId(entity.getId());
         order.updateDate(entity.getDate());

@@ -96,7 +96,7 @@ public class LunchServicesImpl implements LunchService {
     }
 
     @Override
-    public Lunch getLunchById(Long id) {
+    public Lunch getLunchById(final Long id) {
         LunchEntity lunchEntity = service.findOne(id);
         Lunch lunch = null;
         if (Objects.isNull(lunchEntity)) {
@@ -114,7 +114,7 @@ public class LunchServicesImpl implements LunchService {
     }
 
     @Override
-    public Lunch getLunchByDayIndex(LocalDate date, int index, boolean soup) {
+    public Lunch getLunchByDayIndex(final LocalDate date, final int index, final boolean soup) {
         if (LOG.isTraceEnabled()) {
             LOG.trace("Searching  {} for date {} and index {}", soup ? "soup" : "meal", date, index);
         }
@@ -126,5 +126,14 @@ public class LunchServicesImpl implements LunchService {
                 .stream()
                 .map(Lunch::new)
                 .collect(Collectors.toList()).get(index-1);
+    }
+
+    @Override
+    public Collection<Lunch> getLunchByDate(final LocalDate date) {
+        return service
+                .findByDate(date)
+                .stream()
+                .map(Lunch::new)
+                .collect(Collectors.toList());
     }
 }

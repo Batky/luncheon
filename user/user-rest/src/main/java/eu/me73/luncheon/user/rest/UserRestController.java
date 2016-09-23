@@ -32,11 +32,27 @@ public class UserRestController {
     }
 
     @RequestMapping(value = "users/card/{card}", method = RequestMethod.GET, produces = "application/json")
-    public User getUser(@PathVariable String card){
+    public User getUserByCard(@PathVariable String card){
         if (LOG.isDebugEnabled()){
             LOG.debug("Rest request for user with card number: {}", card);
         }
         return userServices.getUserByCard(card);
+    }
+
+    @RequestMapping(value = "users/id/{id}", method = RequestMethod.GET, produces = "application/json")
+    public User getUserById(@PathVariable Long id){
+        if (LOG.isDebugEnabled()){
+            LOG.debug("Rest request for user with id number: {}", id);
+        }
+        return userServices.getUserById(id);
+    }
+
+    @RequestMapping(value = "users/pid/{pid}", method = RequestMethod.GET, produces = "application/json")
+    public User getUserByPid(@PathVariable String pid){
+        if (LOG.isDebugEnabled()){
+            LOG.debug("Rest request for user with pid number: {}", pid);
+        }
+        return userServices.getUserByPid(pid);
     }
 
     @Async

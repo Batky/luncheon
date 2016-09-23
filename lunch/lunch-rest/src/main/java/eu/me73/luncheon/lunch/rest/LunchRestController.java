@@ -42,6 +42,22 @@ public class LunchRestController {
         return lunchService.getAllLunches();
     }
 
+    @RequestMapping(value = "lunches/id/{id}", method = RequestMethod.GET, produces = "application/json")
+    public Lunch getLunchById(@PathVariable Long id) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for lunch with id: {}", id);
+        }
+        return lunchService.getLunchById(id);
+    }
+
+    @RequestMapping(value = "lunches/date/{date}", method = RequestMethod.GET, produces = "application/json")
+    public Collection<Lunch> getAllLunchesByDate(@PathVariable LocalDate date) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for all lunches for date {}", date);
+        }
+        return lunchService.getLunchByDate(date);
+    }
+
     @RequestMapping(value = "lunches/lunches", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @JsonSerialize(using = LocalDateSerializer.class)

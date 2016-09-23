@@ -56,13 +56,30 @@ public class OrderRestController {
         orderService.save(order);
     }
 
-    @RequestMapping(value = "orders/date/{date}/id/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "orders/date/{date}/user/{id}", method = RequestMethod.GET)
     public Collection<UserOrder> getOrdersForUserFromDate(@PathVariable String date, @PathVariable Long id) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Request for orders for user {} and date: {}", id, date);
         }
         LocalDate dt = getLocalDate(date);
         return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, getFirstDate(dt), getLastDate(dt)) : null;
+    }
+
+    @RequestMapping(value = "orders/id/{id}", method = RequestMethod.GET)
+    public Order getOrdersById(@PathVariable Long id) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Request for orders with id {} ", id);
+        }
+        return orderService.getOrderForId(id);
+    }
+
+    @RequestMapping(value = "orders/exact/date/{date}/user/{id}", method = RequestMethod.GET)
+    public Collection<UserOrder> getOrdersForUserForExactDate(@PathVariable String date, @PathVariable Long id) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Request for orders for user {} and exact date: {}", id, date);
+        }
+        LocalDate dt = getLocalDate(date);
+        return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, dt, dt) : null;
     }
 
     @RequestMapping(value = "orders/store/user", method = RequestMethod.POST, consumes = "application/json")
