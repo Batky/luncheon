@@ -13,4 +13,5 @@ public class DummyConfig {
     }
 
     public final static int FIRST_YEAR_OF_ORDER_IMPORTING = 2016;
+    public final static int LAST_POSSIBLE_HOUR_TO_CHANGE_LUNCH = 14;
 }

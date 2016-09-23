@@ -1,5 +1,6 @@
 package eu.me73.luncheon.order.impl;
 
+import static eu.me73.luncheon.commons.DateUtils.itsChangeable;
 import static eu.me73.luncheon.commons.DummyConfig.FIRST_YEAR_OF_ORDER_IMPORTING;
 
 import ch.qos.logback.classic.Logger;
@@ -10,7 +11,6 @@ import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.api.UserOrder;
 import eu.me73.luncheon.repository.order.OrderDaoService;
 import eu.me73.luncheon.repository.order.OrderEntity;
-import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -126,7 +126,7 @@ public class OrderServicesImpl implements OrderService {
 
         Collection<UserOrder> userOrders = lunches
                 .stream()
-                .map(lunch -> new UserOrder(id, lunchInOrders(orders, lunch), lunch))
+                .map(lunch -> new UserOrder(id, lunchInOrders(orders, lunch), lunch, itsChangeable(lunch.getDate())))
                 .collect(Collectors.toList());
 
         return userOrders;
@@ -140,7 +140,15 @@ public class OrderServicesImpl implements OrderService {
             return;
         }
 
-        ArrayList<UserOrder> userOrderArrayList = (ArrayList<UserOrder>) userOrders;
+        ArrayList<UserOrder> userOrderArrayList = userOrders
+                .stream()
+                .filter(UserOrder::isChangeable)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        if (userOrderArrayList.isEmpty()) {
+            return;
+        }
+
         Long id = userOrderArrayList.get(0).getUser();
         LocalDate firstDate = userOrderArrayList.get(0).getLunch().getDate();
         LocalDate lastDate = userOrderArrayList.get(userOrderArrayList.size()-1).getLunch().getDate();

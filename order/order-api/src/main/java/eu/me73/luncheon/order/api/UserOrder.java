@@ -7,16 +7,22 @@ import java.time.LocalDate;
 public class UserOrder {
 
     private Long user;
-    private boolean ordered;
     private Lunch lunch;
+    private boolean ordered;
+    private boolean changeable;
 
     public UserOrder() {
     }
 
-    public UserOrder(Long user, boolean ordered, Lunch lunch) {
+    public UserOrder(
+            final Long user,
+            final boolean ordered,
+            final Lunch lunch,
+            final boolean changeable) {
         this.user = user;
         this.ordered = ordered;
         this.lunch = lunch;
+        this.changeable = changeable;
     }
 
     public Long getUser() {
@@ -45,6 +51,14 @@ public class UserOrder {
 
     public LocalDate getDate() {
         return lunch.getDate();
+    }
+
+    public boolean isChangeable() {
+        return changeable;
+    }
+
+    public void setChangeable(boolean changeable) {
+        this.changeable = changeable;
     }
 
     @Override

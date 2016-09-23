@@ -3,9 +3,11 @@ package eu.me73.luncheon.commons;
 import static eu.me73.luncheon.commons.DateUtils.getFirstDate;
 import static eu.me73.luncheon.commons.DateUtils.getLastDate;
 import static eu.me73.luncheon.commons.DateUtils.getSlovakDayOfWeek;
+import static eu.me73.luncheon.commons.DateUtils.itsChangeable;
 
 import ch.qos.logback.classic.Logger;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
@@ -43,6 +45,21 @@ public class DateUtilsTest {
             Assert.assertEquals(getFirstDate(monday).getDayOfWeek().getValue(), 1);
             Assert.assertEquals(getLastDate(monday).getDayOfWeek().getValue(), 5);
         }
+    }
+
+    @Test
+    public void testItsChangeable() throws Exception {
+
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        LocalDate today = LocalDate.now();
+
+        Assert.assertTrue(itsChangeable(tomorrow));
+        Assert.assertFalse(itsChangeable(yesterday));
+
+        LOG.info("Actual time is {}", LocalTime.now());
+        LOG.info("Result from 'itsChangeable' for today is {}", itsChangeable(today));
+
     }
 
 }

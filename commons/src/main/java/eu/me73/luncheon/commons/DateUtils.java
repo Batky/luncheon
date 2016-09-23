@@ -1,11 +1,16 @@
 package eu.me73.luncheon.commons;
 
+import static eu.me73.luncheon.commons.DummyConfig.LAST_POSSIBLE_HOUR_TO_CHANGE_LUNCH;
+
 import ch.qos.logback.classic.Logger;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
 import org.slf4j.LoggerFactory;
+import org.springframework.cglib.core.Local;
 
 public class DateUtils {
 
@@ -63,6 +68,23 @@ public class DateUtils {
             }
         }
         return dt;
+    }
+
+    public static boolean itsChangeable(final LocalDate date) {
+
+        LocalDate actualDate = LocalDate.now();
+        LocalTime actualTime = LocalTime.now();
+
+        if (date.isBefore(actualDate)) {
+            return false;
+        }
+
+        if (date.equals(actualDate)) {
+            return !actualTime.isAfter(LocalTime.of(LAST_POSSIBLE_HOUR_TO_CHANGE_LUNCH, 0));
+        }
+
+        return true;
+
     }
 
 }
