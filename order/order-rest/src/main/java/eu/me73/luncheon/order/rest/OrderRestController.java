@@ -69,7 +69,7 @@ public class OrderRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveUsersLunches(@RequestBody List<UserOrder> userOrders) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Rest request to store user orders {}", userOrders.toArray());
+            LOG.debug("Rest request to store {} user orders", userOrders.size());
         }
         orderService.storeOrdersForUser(userOrders);
     }

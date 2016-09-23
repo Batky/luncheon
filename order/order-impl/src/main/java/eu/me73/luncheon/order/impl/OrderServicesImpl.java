@@ -124,11 +124,9 @@ public class OrderServicesImpl implements OrderService {
                 .map(this::fromEntity)
                 .collect(Collectors.toList());
 
-        User user = userService.getUserById(id);
-
         Collection<UserOrder> userOrders = lunches
                 .stream()
-                .map(lunch -> new UserOrder(user, lunchInOrders(orders, lunch), lunch))
+                .map(lunch -> new UserOrder(id, lunchInOrders(orders, lunch), lunch))
                 .collect(Collectors.toList());
 
         return userOrders;
@@ -143,7 +141,7 @@ public class OrderServicesImpl implements OrderService {
         }
 
         ArrayList<UserOrder> userOrderArrayList = (ArrayList<UserOrder>) userOrders;
-        Long id = userOrderArrayList.get(0).getUser().getId();
+        Long id = userOrderArrayList.get(0).getUser();
         LocalDate firstDate = userOrderArrayList.get(0).getLunch().getDate();
         LocalDate lastDate = userOrderArrayList.get(userOrderArrayList.size()-1).getLunch().getDate();
 
@@ -168,6 +166,11 @@ public class OrderServicesImpl implements OrderService {
                 .filter(UserOrder::isOrdered)
                 .collect(Collectors.toList());
 
+        if (updatedUserOrders.isEmpty()) {
+            LOG.info("Nothing to store to orders for user {}", id);
+            return;
+        }
+
         Collection<Order> updatedOrders = createOrdersFromUserOrders(updatedUserOrders);
 
         if (LOG.isDebugEnabled()) {
@@ -184,7 +187,8 @@ public class OrderServicesImpl implements OrderService {
     private Collection<Order> createOrdersFromUserOrders(Collection<UserOrder> updatedUserOrders) {
 
         ArrayList<UserOrder> userOrderArrayList = (ArrayList<UserOrder>) updatedUserOrders;
-        User user = userOrderArrayList.get(0).getUser();
+
+        Long user = userOrderArrayList.get(0).getUser();
 
         Collection<LocalDate> dates = updatedUserOrders
                 .stream()
@@ -197,7 +201,7 @@ public class OrderServicesImpl implements OrderService {
         for (LocalDate date : dates) {
             Order order = new Order();
             order.updateDate(date);
-            order.updateUser(user);
+            order.updateUser(userService.getUserById(user));
             order.updateSoup(findSoup(date, updatedUserOrders));
             order.updateMeal(findMeal(date, updatedUserOrders));
             orders.add(order);

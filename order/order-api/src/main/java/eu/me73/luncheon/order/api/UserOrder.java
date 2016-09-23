@@ -6,24 +6,24 @@ import java.time.LocalDate;
 
 public class UserOrder {
 
-    private User user;
+    private Long user;
     private boolean ordered;
     private Lunch lunch;
 
     public UserOrder() {
     }
 
-    public UserOrder(User user, boolean ordered, Lunch lunch) {
+    public UserOrder(Long user, boolean ordered, Lunch lunch) {
         this.user = user;
         this.ordered = ordered;
         this.lunch = lunch;
     }
 
-    public User getUser() {
+    public Long getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Long user) {
         this.user = user;
     }
 
