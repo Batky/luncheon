@@ -10,14 +10,16 @@ import eu.me73.luncheon.user.impl.DummyUserStorage;
 import eu.me73.luncheon.user.impl.UserServicesImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class LuncheonBeanConfiguration {
 
-//    @Bean
-//    public UserService userService() {
-//        return new UserServicesImpl();
-//    }
+    @Bean
+    @Primary
+    public UserService userService() {
+        return new UserServicesImpl();
+    }
 
 //    @Bean
 //    public OrderService orderService() {

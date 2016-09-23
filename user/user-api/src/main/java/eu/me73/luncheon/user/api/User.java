@@ -2,9 +2,13 @@ package eu.me73.luncheon.user.api;
 
 import eu.me73.luncheon.repository.user.UserEntity;
 import eu.me73.luncheon.repository.user.UserRelation;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class User {
+public class User implements UserDetails {
 
     private static final String SPACE = " ";
 
@@ -14,6 +18,15 @@ public class User {
     private String firstName;
     private String lastName;
     private UserRelation relation;
+
+    /* Spring Security related fields*/
+    private List<Role> authorities;
+    private boolean accountNonExpired = true;
+    private boolean accountNonLocked = true;
+    private boolean credentialsNonExpired = true;
+    private boolean enabled = true;
+    private String loginName = "";
+    private String password = "";
 
     public User(final Long id,
                 final String pid,
@@ -141,5 +154,67 @@ public class User {
                 '}';
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.loginName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    public void setAuthorities(List<Role> authorities) {
+        this.authorities = authorities;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
 

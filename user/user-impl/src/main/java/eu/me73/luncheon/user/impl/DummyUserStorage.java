@@ -1,6 +1,7 @@
 package eu.me73.luncheon.user.impl;
 
 import eu.me73.luncheon.repository.user.UserRelation;
+import eu.me73.luncheon.user.api.Role;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserStorage;
 import java.util.ArrayList;
@@ -12,14 +13,26 @@ public class DummyUserStorage implements UserStorage {
 
     @Override
     public User getUserByCard(final String card) {
-        User user = new User();
-        user.setFirstName("Jozef");
-        user.setRelation(UserRelation.EMPLOYEE);
-        user.setLastName("Bacigal");
-        user.setId(666L);
-        user.setBarCode("123");
-        user.setPid("018");
-        return user;
+        if (card.equals("123")) {
+            User user = new User();
+            user.setFirstName("Jozef");
+            user.setRelation(UserRelation.EMPLOYEE);
+            user.setLastName("Bacigal");
+            user.setId(666L);
+            user.setBarCode("123");
+            user.setPid("018");
+            user.setLoginName("jozef.bacigal");
+            ArrayList<Role> roles = new ArrayList<>();
+            roles.add(new Role("ROLE_USER"));
+            user.setAuthorities(roles);
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public User getUserByCredentials(final String name, final String password) {
+        return null;
     }
 
     @Override

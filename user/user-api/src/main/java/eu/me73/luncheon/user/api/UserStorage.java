@@ -7,5 +7,6 @@ import org.springframework.stereotype.Service;
 public interface UserStorage {
 
     User getUserByCard(final String card);
+    User getUserByCredentials(final String name, final String password);
     Collection<User> getAllUsersFromStorage();
 }

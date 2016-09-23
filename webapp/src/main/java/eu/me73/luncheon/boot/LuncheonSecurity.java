@@ -1,5 +1,6 @@
 package eu.me73.luncheon.boot;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,13 +12,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class LuncheonSecurity extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    LuncheonAuthenticationProvider authenticationProvider;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
                 .antMatchers("/", "/home").permitAll()
-                .antMatchers("/users/**").access("hasRole('USER')")
+                .antMatchers("/users/**").access("hasRole('POWER')")
                 .antMatchers("/lunches/**").access("hasRole('USER')")
+                .antMatchers("/orders/**").access("hasRole('POWER')")
                 .and().formLogin().loginPage("/login")
                 .usernameParameter("ssoId").passwordParameter("password")
                 .and().exceptionHandling().accessDeniedPage("/Access_Denied")
@@ -31,14 +36,15 @@ public class LuncheonSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user")
-                .password("")
-                .roles("USER");
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password("")
-                .roles("ADMIN");
+//        auth.inMemoryAuthentication()
+//                .withUser("user")
+//                .password("")
+//                .roles("USER");
+//        auth.inMemoryAuthentication()
+//                .withUser("admin")
+//                .password("")
+//                .roles("POWER", "USER");
+        auth.authenticationProvider(authenticationProvider);
     }
 
 }

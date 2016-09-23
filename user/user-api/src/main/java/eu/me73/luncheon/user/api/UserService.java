@@ -33,6 +33,7 @@ public interface UserService {
      */
     Collection<User> getAllUsersFromStorage();
     User getUserByCardFromStorage(final String card);
+    User getUserByCredentialsFromStorage(final String name, final String password);
 
     /**
      * Import users from file (old luncheon system used only once)

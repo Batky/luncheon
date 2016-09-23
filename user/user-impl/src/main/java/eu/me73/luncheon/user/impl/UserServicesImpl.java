@@ -80,6 +80,11 @@ public class UserServicesImpl implements UserService {
     }
 
     @Override
+    public User getUserByCredentialsFromStorage(String name, String password) {
+        return this.userStorage.getUserByCredentials(name, password);
+    }
+
+    @Override
     public Collection<User> importUsersFromFile(final BufferedReader importFile) throws IOException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Importing users from file {} ", importFile);
