@@ -1,6 +1,6 @@
 package eu.me73.luncheon.user.impl;
 
-import eu.me73.luncheon.repository.user.UserRelation;
+import eu.me73.luncheon.repository.users.UserRelation;
 import eu.me73.luncheon.user.api.Role;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserStorage;

@@ -1,9 +1,9 @@
 package eu.me73.luncheon.user.impl;
 
 import ch.qos.logback.classic.Logger;
-import eu.me73.luncheon.repository.user.UserDaoService;
-import eu.me73.luncheon.repository.user.UserEntity;
-import eu.me73.luncheon.repository.user.UserRelation;
+import eu.me73.luncheon.repository.users.UserDaoService;
+import eu.me73.luncheon.repository.users.UserEntity;
+import eu.me73.luncheon.repository.users.UserRelation;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
 import eu.me73.luncheon.user.api.UserStorage;

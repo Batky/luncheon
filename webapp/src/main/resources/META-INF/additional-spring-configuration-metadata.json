@@ -1,9 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "luncheon.ordering.time",
-      "type": "java.lang.Long",
-      "description": "Description for luncheon.ordering.time."
-    }
-  ]
-}

@@ -1,18 +1,20 @@
 package eu.me73.luncheon.commons;
 
-import static eu.me73.luncheon.commons.DummyConfig.LAST_POSSIBLE_HOUR_TO_CHANGE_LUNCH;
-
 import ch.qos.logback.classic.Logger;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Locale;
 import org.slf4j.LoggerFactory;
-import org.springframework.cglib.core.Local;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DateUtils {
+
+    @Autowired
+    LuncheonConfig config;
 
     private static final Logger LOG = (Logger) LoggerFactory.getLogger(DateUtils.class);
 
@@ -20,7 +22,7 @@ public class DateUtils {
      * Luncheon in standard working in two work weeks. Two weeks period is counted from actual date
      * @return last date of friday of two work weeks, taking actual date
      */
-    public static LocalDate getLastDate(){
+    public LocalDate getLastDate(){
         return getLastDate(LocalDate.now());
     }
 
@@ -28,7 +30,7 @@ public class DateUtils {
      * Luncheon in standard working in two work weeks. Two weeks period is counted from actual date
      * @return first date of monday of two work weeks, taking actual date
      */
-    public static LocalDate getFirstDate(){
+    public LocalDate getFirstDate(){
         return getFirstDate(LocalDate.now());
     }
 
@@ -36,7 +38,7 @@ public class DateUtils {
      * Luncheon in standard working in two work weeks. Two weeks period is counted from actual date
      * @return last date of friday of two work weeks
      */
-    public static LocalDate getLastDate(final LocalDate date){
+    public LocalDate getLastDate(final LocalDate date){
         return date.plusDays(12 - date.getDayOfWeek().getValue());
     }
 
@@ -44,7 +46,7 @@ public class DateUtils {
      * Luncheon in standard working in two work weeks. Two weeks period is counted from actual date
      * @return first date of monday of two work weeks
      */
-    public static LocalDate getFirstDate(final LocalDate date){
+    public LocalDate getFirstDate(final LocalDate date){
         return date.minusDays(date.getDayOfWeek().getValue() - 1 );
     }
 
@@ -53,11 +55,11 @@ public class DateUtils {
      * @param date
      * @return slovak day of week
      */
-    public static String getSlovakDayOfWeek(final LocalDate date) {
+    public String getSlovakDayOfWeek(final LocalDate date) {
         return date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("sk-SK"));
     }
 
-    public static LocalDate getLocalDate(final String date) {
+    public LocalDate getLocalDate(final String date) {
         LocalDate dt = null;
         try {
             dt = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
@@ -70,7 +72,7 @@ public class DateUtils {
         return dt;
     }
 
-    public static boolean itsChangeable(final LocalDate date) {
+    public boolean itsChangeable(final LocalDate date) {
 
         LocalDate actualDate = LocalDate.now();
         LocalTime actualTime = LocalTime.now();
@@ -80,7 +82,7 @@ public class DateUtils {
         }
 
         if (date.equals(actualDate)) {
-            return !actualTime.isAfter(LocalTime.of(LAST_POSSIBLE_HOUR_TO_CHANGE_LUNCH, 0));
+            return !actualTime.isAfter(LocalTime.of(config.getOrdering(), 0));
         }
 
         return true;

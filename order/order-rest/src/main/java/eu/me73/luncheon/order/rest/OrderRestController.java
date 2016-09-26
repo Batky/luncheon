@@ -1,11 +1,9 @@
 package eu.me73.luncheon.order.rest;
 
-import static eu.me73.luncheon.commons.DateUtils.getFirstDate;
-import static eu.me73.luncheon.commons.DateUtils.getLastDate;
-import static eu.me73.luncheon.commons.DateUtils.getLocalDate;
 import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileName;
 
 import ch.qos.logback.classic.Logger;
+import eu.me73.luncheon.commons.DateUtils;
 import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.api.UserOrder;
@@ -34,6 +32,9 @@ public class OrderRestController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    DateUtils dateUtils;
+
     @RequestMapping(value = "orders/all", method = RequestMethod.GET, produces = "application/json")
     public Collection<Order> getAllOrders() {
         if (LOG.isDebugEnabled()) {
@@ -61,8 +62,8 @@ public class OrderRestController {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Request for orders for user {} and date: {}", id, date);
         }
-        LocalDate dt = getLocalDate(date);
-        return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, getFirstDate(dt), getLastDate(dt)) : null;
+        LocalDate dt = dateUtils.getLocalDate(date);
+        return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, dateUtils.getFirstDate(dt), dateUtils.getLastDate(dt)) : null;
     }
 
     @RequestMapping(value = "orders/id/{id}", method = RequestMethod.GET)
@@ -78,7 +79,7 @@ public class OrderRestController {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Request for orders for user {} and exact date: {}", id, date);
         }
-        LocalDate dt = getLocalDate(date);
+        LocalDate dt = dateUtils.getLocalDate(date);
         return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, dt, dt) : null;
     }
 

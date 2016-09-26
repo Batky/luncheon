@@ -1,4 +1,4 @@
-package eu.me73.luncheon.repository.user;
+package eu.me73.luncheon.repository.users;
 
 import java.io.Serializable;
 import javax.persistence.Column;

@@ -1,7 +1,7 @@
 package eu.me73.luncheon.user.api;
 
-import eu.me73.luncheon.repository.user.UserEntity;
-import eu.me73.luncheon.repository.user.UserRelation;
+import eu.me73.luncheon.repository.users.UserEntity;
+import eu.me73.luncheon.repository.users.UserRelation;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;

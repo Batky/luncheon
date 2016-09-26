@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "luncheon.ordering",
+      "type": "java.lang.Integer",
+      "description": "Last possible time to order lunch."
+    }
+  ]
+}

@@ -1,13 +1,11 @@
 package eu.me73.luncheon.lunch.rest;
 
-import static eu.me73.luncheon.commons.DateUtils.getFirstDate;
-import static eu.me73.luncheon.commons.DateUtils.getLastDate;
-import static eu.me73.luncheon.commons.DateUtils.getLocalDate;
 import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileName;
 
 import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import eu.me73.luncheon.commons.DateUtils;
 import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
 import java.io.IOException;
@@ -33,6 +31,9 @@ public class LunchRestController {
 
     @Autowired
     LunchService lunchService;
+
+    @Autowired
+    DateUtils dateUtils;
 
     @RequestMapping(value = "lunches/all", method = RequestMethod.GET, produces = "application/json")
     public Collection<Lunch> getAllLunches() {
@@ -79,8 +80,8 @@ public class LunchRestController {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Request for lunches for date: {}", date);
         }
-        LocalDate dt = getLocalDate(date);
-        return Objects.nonNull(dt) ? lunchService.getAllBetweenDates(getFirstDate(dt), getLastDate(dt)) : null;
+        LocalDate dt = dateUtils.getLocalDate(date);
+        return Objects.nonNull(dt) ? lunchService.getAllBetweenDates(dateUtils.getFirstDate(dt), dateUtils.getLastDate(dt)) : null;
     }
 
     @Async

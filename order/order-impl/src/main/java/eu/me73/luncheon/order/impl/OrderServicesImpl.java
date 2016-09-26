@@ -1,9 +1,9 @@
 package eu.me73.luncheon.order.impl;
 
-import static eu.me73.luncheon.commons.DateUtils.itsChangeable;
 import static eu.me73.luncheon.commons.DummyConfig.FIRST_YEAR_OF_ORDER_IMPORTING;
 
 import ch.qos.logback.classic.Logger;
+import eu.me73.luncheon.commons.DateUtils;
 import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
 import eu.me73.luncheon.order.api.Order;
@@ -42,6 +42,9 @@ public class OrderServicesImpl implements OrderService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    DateUtils dateUtils;
 
     @Override
     public void save(final Order order) {
@@ -126,7 +129,7 @@ public class OrderServicesImpl implements OrderService {
 
         Collection<UserOrder> userOrders = lunches
                 .stream()
-                .map(lunch -> new UserOrder(id, lunchInOrders(orders, lunch), lunch.getId(), itsChangeable(lunch.getDate())))
+                .map(lunch -> new UserOrder(id, lunchInOrders(orders, lunch), lunch.getId(), dateUtils.itsChangeable(lunch.getDate())))
                 .collect(Collectors.toList());
 
         return userOrders;
