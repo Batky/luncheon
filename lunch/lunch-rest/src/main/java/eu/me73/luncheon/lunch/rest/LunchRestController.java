@@ -52,11 +52,11 @@ public class LunchRestController {
     }
 
     @RequestMapping(value = "lunches/date/{date}", method = RequestMethod.GET, produces = "application/json")
-    public Collection<Lunch> getAllLunchesByDate(@PathVariable LocalDate date) {
+    public Collection<Lunch> getAllLunchesByDate(@PathVariable String date) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for all lunches for date {}", date);
         }
-        return lunchService.getLunchByDate(date);
+        return lunchService.getLunchByDate(dateUtils.getLocalDate(date));
     }
 
     @RequestMapping(value = "lunches/lunches", method = RequestMethod.POST, consumes = "application/json")

@@ -19,7 +19,7 @@ public class LuncheonSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/", "/home").access("hasRole('USER')")
                 .antMatchers("/users/**").access("hasRole('USER')")
                 .antMatchers("/lunches/**").access("hasRole('USER')")
                 .antMatchers("/orders/**").access("hasRole('USER')")

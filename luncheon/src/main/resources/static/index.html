@@ -4,15 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/luncheon.css">
-    <link href='http://fonts.googleapis.com/css?family=Montserrat|Open+Sans' rel='stylesheet' type='text/css'>
-    <title>Obedovy system</title>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat|Open+Sans' rel='stylesheet' type='text/css'>-->
+    <title>Obedový systém</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<header>
-    <h1>Obedovy system</h1>
-</header>
-<nav>
-    <a href="/lunches">Aktualny zoznam obedov</a>
-</nav>
+<!-- Begin page content -->
+<div class="container">
+    <div class="page-header">
+        <h1>Obedový systém</h1>
+    </div>
+    <!--<p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS.</p>-->
+</div>
+
+
+<div class="container">
+
+    <form class="form-signin">
+        <h2 class="form-signin-heading">Prihlásenie</h2>
+        <label for="ssoId" class="sr-only">Prihlasovací kód</label>
+        <input type="text" name= "ssoId" id="ssoId" class="form-control" placeholder="kód alebo meno" required autofocus>
+        <label for="inputPassword" class="sr-only">Heslo</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="heslo">
+        <!--<div class="checkbox">-->
+            <!--<label>-->
+                <!--<input type="checkbox" value="remember-me"> Remember me-->
+            <!--</label>-->
+        <!--</div>-->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Prihlás ma</button>
+        <!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+    </form>
+
+</div> <!-- /container -->
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">Obedový systém, verzia 1.0, pre K-system spol. s r.o.</p>
+    </div>
+</footer>
 </body>
 </html>

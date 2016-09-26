@@ -5,23 +5,27 @@
     <title>Luncheon login page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/luncheon.css">
-    <link href='http://fonts.googleapis.com/css?family=Montserrat|Open+Sans' rel='stylesheet' type='text/css'>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat|Open+Sans' rel='stylesheet' type='text/css'>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<header>
-    <h1>Luncheon - login</h1>
-</header>
-<section>
-    <form id="login_form" method="post">
-        <label for="ssoId">Načítaj čiarový kód:</label>
-        <input type="text" name="ssoId" id="ssoId"/>
-        <input type="password" name="password" id="password" hidden/>
-        <br>
-        <button type="submit" id="login_button">OK</button>
+<div class="container">
+    <form id="login_form" method="post" class="form-signin">
+        <h2 class="form-signin-heading">Prihlásenie</h2>
+        <label for="ssoId" class="sr-only">Načítaj čiarový kód:</label>
+        <input type="text" name="ssoId" id="ssoId" class="form-control" placeholder="kód alebo meno" required autofocus/>
+        <label for="password" class="sr-only">Heslo</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="heslo"/>
+        <!--<br>-->
+        <button type="submit" id="login_button" class="btn btn-lg btn-primary btn-block">Prihlás ma</button>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
-</section>
-<footer>(c)2016 me73</footer>
+</div>
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">Obedový systém, verzia 1.0, pre K-system spol. s r.o.</p>
+    </div>
+</footer>
 </body>
 </html>
