@@ -1,8 +1,7 @@
 package eu.me73.luncheon.lunch.impl;
 
-import static eu.me73.luncheon.commons.DummyConfig.FIRST_YEAR_OF_ORDER_IMPORTING;
-
 import ch.qos.logback.classic.Logger;
+import eu.me73.luncheon.commons.LuncheonConfig;
 import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
 import eu.me73.luncheon.repository.lunch.LunchDaoService;
@@ -27,6 +26,9 @@ public class LunchServicesImpl implements LunchService {
 
     @Autowired
     LunchDaoService service;
+
+    @Autowired
+    LuncheonConfig config;
 
     @Override
     public void save(final Lunch lunch) {
@@ -72,7 +74,7 @@ public class LunchServicesImpl implements LunchService {
             if (dividedLunchDay.length == 8) {
                 int counter = 0;
                 LocalDate date = LocalDate.parse(dividedLunchDay[0], DateTimeFormatter.ofPattern("dd.MM.yyyy", Locale.ENGLISH));
-                if (date.getYear() >= FIRST_YEAR_OF_ORDER_IMPORTING) {
+                if (date.getYear() >= config.getYear()) {
                     for (String sLunch : dividedLunchDay) {
                         if (counter == 0) {
                             counter++;

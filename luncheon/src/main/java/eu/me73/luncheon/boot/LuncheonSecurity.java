@@ -27,6 +27,14 @@ public class LuncheonSecurity extends WebSecurityConfigurerAdapter {
                 .usernameParameter("ssoId").passwordParameter("password")
                 .and().exceptionHandling().accessDeniedPage("/Access_Denied")
                 .and().csrf().disable();
+
+        http.sessionManagement()
+                .maximumSessions(1)
+                .expiredUrl("/login")
+                .and()
+                .invalidSessionUrl("/login")
+                .sessionFixation()
+                .migrateSession();
     }
 
     @Override

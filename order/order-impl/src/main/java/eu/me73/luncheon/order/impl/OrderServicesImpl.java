@@ -1,9 +1,8 @@
 package eu.me73.luncheon.order.impl;
 
-import static eu.me73.luncheon.commons.DummyConfig.FIRST_YEAR_OF_ORDER_IMPORTING;
-
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.commons.DateUtils;
+import eu.me73.luncheon.commons.LuncheonConfig;
 import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
 import eu.me73.luncheon.order.api.Order;
@@ -45,6 +44,9 @@ public class OrderServicesImpl implements OrderService {
 
     @Autowired
     DateUtils dateUtils;
+
+    @Autowired
+    LuncheonConfig config;
 
     @Override
     public void save(final Order order) {
@@ -91,14 +93,14 @@ public class OrderServicesImpl implements OrderService {
             if (s.length >= 4) {
                 LocalDate date = LocalDate.parse(remakeOldDateString(s[0]), FORMATTER);
                 final int meal = Integer.parseInt(s[3]);
-                if ((meal != 99) && (date.getYear() >= FIRST_YEAR_OF_ORDER_IMPORTING)) {
+                if ((meal != 99) && (date.getYear() >= config.getYear())) {
                     Order order = this.updateOrder(xid++, date, s[1], Integer.parseInt(s[2]), meal);
                     orders.add(order);
                     if (LOG.isTraceEnabled()) {
                         LOG.trace("Adding order {}, orders count {}", order, orders.size());
                     }
                 } else {
-                    if ((meal == 99) && (date.getYear() >= FIRST_YEAR_OF_ORDER_IMPORTING)) {
+                    if ((meal == 99) && (date.getYear() >= config.getYear())) {
                         Order order = this.updateOrder(xid++, date, s[1], Integer.parseInt(s[2]), meal);
                         if (orders.contains(order)) {
                             orders.remove(order);

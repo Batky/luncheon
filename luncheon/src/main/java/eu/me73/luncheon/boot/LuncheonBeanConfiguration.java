@@ -7,6 +7,7 @@ import eu.me73.luncheon.user.impl.UserServicesImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 public class LuncheonBeanConfiguration {
@@ -25,6 +26,11 @@ public class LuncheonBeanConfiguration {
     @Primary
     public UserService userService() {
         return new UserServicesImpl();
+    }
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 
 //    @Bean

@@ -29,7 +29,7 @@ public class OrderEntity implements Serializable {
     @Column(name = "meal")
     Long meal;
 
-    @Column(name = "user")
+    @Column(name = "user_id")
     Long user;
 
     @Column(name = "changed")
