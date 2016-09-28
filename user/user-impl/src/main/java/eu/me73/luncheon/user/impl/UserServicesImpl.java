@@ -61,12 +61,20 @@ public class UserServicesImpl implements UserService {
 
     @Override
     public User getUserByCard(String card) {
-        return service
-                .findByBarCode(card)
-                .stream()
-                .map(User::new)
-                .collect(Collectors.toList())
-                .get(0);
+        Collection<UserEntity> userEntity = service.findByBarCode(card);
+        User user = null;
+        if (Objects.nonNull(userEntity) && userEntity.size() > 0) {
+            user = userEntity
+                    .stream()
+                    .map(User::new)
+                    .collect(Collectors.toList())
+                    .get(0);
+        } else {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("User with card nr.:{} not found", card);
+            }
+        }
+        return user;
     }
 
     @Override

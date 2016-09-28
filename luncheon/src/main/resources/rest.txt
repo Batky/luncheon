@@ -2,7 +2,8 @@ lunches - page lunches.html
 lunches/all GET - all lunches
 lunches/lunch POST - one lunch JSON
 lunches/lunches POST - list of lunches JSON
-lunches/date/{date} GET - list of lunches from {date} pattern="yyyymmdd"
+lunches/date/{date} GET - list of lunches from {date} pattern="yyyymmdd" for two weeks
+lunches/exact/date/{date} GET - list lunches from {date} pattern="yyyymmdd" only one day
 lunches/file/import GET - reimport lunches from file
 lunches/id/{id} GET - return lunch with id
 
