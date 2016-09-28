@@ -22,6 +22,8 @@ public class UserServicesImpl implements UserService {
 
     private final Logger LOG = (Logger) LoggerFactory.getLogger(UserServicesImpl.class);
 
+    private User actualUser;
+
     @Autowired
     private UserStorage userStorage;
 
@@ -149,5 +151,20 @@ public class UserServicesImpl implements UserService {
             user = new User(userEntity);
         }
         return user;
+    }
+
+    @Override
+    public void logInUser(User user) {
+        this.actualUser = user;
+    }
+
+    @Override
+    public void logOutUser() {
+        this.actualUser = null;
+    }
+
+    @Override
+    public User getActualUser() {
+        return Objects.nonNull(this.actualUser) ? this.actualUser : null;
     }
 }

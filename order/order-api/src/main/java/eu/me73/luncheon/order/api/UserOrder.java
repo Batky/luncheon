@@ -1,9 +1,11 @@
 package eu.me73.luncheon.order.api;
 
+import eu.me73.luncheon.lunch.api.Lunch;
+
 public class UserOrder {
 
     private Long user;
-    private Long lunch;
+    private Lunch lunch;
     private boolean ordered;
     private boolean changeable;
 
@@ -13,7 +15,7 @@ public class UserOrder {
     public UserOrder(
             final Long user,
             final boolean ordered,
-            final Long lunch,
+            final Lunch lunch,
             final boolean changeable) {
         this.user = user;
         this.ordered = ordered;
@@ -37,11 +39,11 @@ public class UserOrder {
         this.ordered = ordered;
     }
 
-    public Long getLunch() {
+    public Lunch getLunch() {
         return lunch;
     }
 
-    public void setLunch(Long lunch) {
+    public void setLunch(Lunch lunch) {
         this.lunch = lunch;
     }
 

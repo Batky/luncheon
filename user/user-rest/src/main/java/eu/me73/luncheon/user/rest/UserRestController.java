@@ -7,6 +7,7 @@ import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Objects;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -83,5 +84,13 @@ public class UserRestController {
             LOG.warn("Error occurred by importing from file ", e);
         }
         return count + " users imported from file.";
+    }
+
+    @RequestMapping(value = "users/actual", method = RequestMethod.GET, produces = "application/json")
+    public User getUserId() {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for actual user.");
+        }
+        return userServices.getActualUser();
     }
 }

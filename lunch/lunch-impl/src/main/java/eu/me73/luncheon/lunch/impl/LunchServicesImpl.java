@@ -127,11 +127,31 @@ public class LunchServicesImpl implements LunchService {
         if (index == 99) {
             return null;
         }
-        return service
-                .findByDateAndSoupOrderById(date, soup)
-                .stream()
-                .map(Lunch::new)
-                .collect(Collectors.toList()).get(index-1);
+
+        Collection<LunchEntity> lunches = service.findByDateAndSoupOrderById(date, soup);
+        if (Objects.isNull(lunches) || lunches.isEmpty() || lunches.size() == index) {
+
+            return null;
+        }
+
+        Lunch lunch = null;
+
+        try {
+            lunch = service
+                    .findByDateAndSoupOrderById(date, soup)
+                    .stream()
+                    .map(Lunch::new)
+                    .collect(Collectors.toList()).get(index - 1);
+        } catch (final Exception e) {
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Cannot find a lunch for date {}, reason {}", date, e.getCause());
+            }
+            if (LOG.isTraceEnabled()) {
+                LOG.trace("Exception by searching lunches: ", e);
+            }
+        }
+
+        return lunch;
     }
 
     @Override

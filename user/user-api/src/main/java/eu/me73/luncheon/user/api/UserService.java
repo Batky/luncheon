@@ -47,4 +47,10 @@ public interface UserService {
     User getUserById(final Long userId);
 
     User getUserByPid(final String pid);
+
+    void logInUser(final User user);
+
+    void logOutUser();
+
+    User getActualUser();
 }

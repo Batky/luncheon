@@ -1,33 +1,58 @@
 package eu.me73.luncheon.user.impl;
 
+import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.repository.users.UserRelation;
 import eu.me73.luncheon.user.api.Role;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserStorage;
 import java.util.ArrayList;
 import java.util.Collection;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DummyUserStorage implements UserStorage {
 
+    private final Logger LOG = (Logger) LoggerFactory.getLogger(DummyUserStorage.class);
+
+
     @Override
     public User getUserByCard(final String card) {
-        if (card.equals("123")) {
-            User user = new User();
-            user.setFirstName("Jozef");
-            user.setRelation(UserRelation.EMPLOYEE);
-            user.setLastName("Bacigal");
-            user.setId(666L);
-            user.setBarCode("123");
-            user.setPid("018");
-            user.setLoginName("jozef.bacigal");
-            ArrayList<Role> roles = new ArrayList<>();
-            roles.add(new Role("ROLE_USER"));
-            user.setAuthorities(roles);
-            return user;
+        User user = null;
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Storage search for card {} user", card);
         }
-        return null;
+        switch (card) {
+            case "123": {
+                user = new User();
+                user.setFirstName("Jozef");
+                user.setRelation(UserRelation.EMPLOYEE);
+                user.setLastName("Bacigal");
+                user.setId(666L);
+                user.setBarCode("123");
+                user.setPid("018");
+                user.setLoginName("jozef.bacigal");
+                ArrayList<Role> roles = new ArrayList<>();
+                roles.add(new Role("ROLE_USER"));
+                user.setAuthorities(roles);
+                break;
+            }
+            case "power": {
+                user = new User();
+                user.setFirstName("Lubomir");
+                user.setRelation(UserRelation.EMPLOYEE);
+                user.setLastName("Repisky");
+                user.setId(999L);
+                user.setBarCode("123");
+                user.setPid("698");
+                user.setLoginName("lubomir.repisky");
+                ArrayList<Role> roles = new ArrayList<>();
+                roles.add(new Role("ROLE_ADMIN"));
+                user.setAuthorities(roles);
+                break;
+            }
+        }
+        return user;
     }
 
     @Override

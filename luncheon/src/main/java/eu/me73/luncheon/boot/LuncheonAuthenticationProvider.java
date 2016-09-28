@@ -37,16 +37,22 @@ public class LuncheonAuthenticationProvider implements AuthenticationProvider {
                     ArrayList<Role> roles = new ArrayList<>();
                     roles.add(new Role("ROLE_USER"));
                     user.setAuthorities(roles);
+                    userService.logInUser(user);
                 }
             }
         } else {
             user = userService.getUserByCredentialsFromStorage(username, password);
+            if (Objects.nonNull(user)) {
+                user.setId(1L);
+                userService.logInUser(user);
+            }
         }
 
         if (user == null) {
             return null;
         }
 
+        userService.logInUser(user);
         Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
 
         return new UsernamePasswordAuthenticationToken(user, password, authorities);

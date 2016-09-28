@@ -15,15 +15,23 @@ public class LuncheonSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     LuncheonAuthenticationProvider authenticationProvider;
 
+    @Autowired
+    LuncheonAuthenticationSuccessHandler luncheonAuthenticationSuccessHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/", "/home").access("hasRole('USER')")
-                .antMatchers("/users/**").access("hasRole('USER')")
-                .antMatchers("/lunches/**").access("hasRole('USER')")
-                .antMatchers("/orders/**").access("hasRole('USER')")
-                .and().formLogin().loginPage("/login")
+                .antMatchers("/", "/home").access("hasAnyRole('USER','ADMIN')")
+                .antMatchers("/users/**").access("hasAnyRole('USER','ADMIN')")
+                .antMatchers("/lunches/**").access("hasRole('ADMIN')")
+                .antMatchers("/orders/**").access("hasAnyRole('USER')")
+                .and()
+                .formLogin()
+                .loginPage("/login")
+//                .successHandler(luncheonAuthenticationSuccessHandler)
+//                .defaultSuccessUrl("/")
+//                .failureUrl("/login")
                 .usernameParameter("ssoId").passwordParameter("password")
                 .and().exceptionHandling().accessDeniedPage("/Access_Denied")
                 .and().csrf().disable();
