@@ -153,7 +153,6 @@ function postLunches() {
         lunches.push(lunchSoup);
     }
     var jsonLunches = JSON.stringify(lunches);
-    console.log(jsonLunches);
     $.ajax({
         url:urlPostLunches,
         type:"POST",
