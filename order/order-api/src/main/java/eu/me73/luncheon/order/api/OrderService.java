@@ -17,7 +17,7 @@ public interface OrderService {
 
     Collection<UserOrder> getOrdersForUser(Long id, LocalDate fromDate, LocalDate toDate);
 
-    void storeOrdersForUser(Collection<UserOrder> userOrders);
+    String storeOrdersForUser(Collection<UserOrder> userOrders);
 
     void delete(final Collection<Order> orders);
 

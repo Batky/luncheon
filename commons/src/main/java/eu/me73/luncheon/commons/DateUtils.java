@@ -74,7 +74,7 @@ public class DateUtils {
 
     public boolean itsChangeable(final LocalDate date) {
 
-        LocalDate actualDate = LocalDate.now();
+        LocalDate actualDate = LocalDate.now().plusDays(1);
         LocalTime actualTime = LocalTime.now();
 
         if (date.isBefore(actualDate)) {

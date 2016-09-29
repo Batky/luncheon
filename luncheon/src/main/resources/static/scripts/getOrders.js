@@ -182,6 +182,13 @@ function gatherOrders() {
             "Content-Type": "application/json; charset=utf-8"
         },
         data:jsonLunchesOrders,
-        dataType:"json"
-    })
+        dataType:"json",
+        complete: function (data) {
+            if (data.status == 201) {
+                alert("Zmeny na obedoch sa úspešne uložili");
+            } else {
+                alert("Chyba na strane servera !");
+            }
+        }
+    });
 }

@@ -85,11 +85,11 @@ public class OrderRestController {
 
     @RequestMapping(value = "orders/store/user", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveUsersLunches(@RequestBody List<UserOrder> userOrders) {
+    public String saveUsersLunches(@RequestBody List<UserOrder> userOrders) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request to store {} user orders", userOrders.size());
         }
-        orderService.storeOrdersForUser(userOrders);
+        return orderService.storeOrdersForUser(userOrders);
     }
 
     @Async

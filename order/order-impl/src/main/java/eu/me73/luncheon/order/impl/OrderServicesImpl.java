@@ -138,11 +138,11 @@ public class OrderServicesImpl implements OrderService {
     }
 
     @Override
-    public void storeOrdersForUser(final Collection<UserOrder> userOrders) {
+    public String storeOrdersForUser(final Collection<UserOrder> userOrders) {
         Objects.requireNonNull(userOrders, "If storing users orders collection cannot be null");
         if (userOrders.isEmpty()) {
             LOG.warn("User orders collection is empty nothing to store");
-            return;
+            return "0";
         }
 
         ArrayList<UserOrder> userOrderArrayList = userOrders
@@ -151,7 +151,7 @@ public class OrderServicesImpl implements OrderService {
                 .collect(Collectors.toCollection(ArrayList::new));
 
         if (userOrderArrayList.isEmpty()) {
-            return;
+            return "0";
         }
 
         Long id = userOrderArrayList.get(0).getUser();
@@ -181,7 +181,7 @@ public class OrderServicesImpl implements OrderService {
 
         if (updatedUserOrders.isEmpty()) {
             LOG.info("Nothing to store to orders for user {}", id);
-            return;
+            return "0";
         }
 
         Collection<Order> updatedOrders = createOrdersFromUserOrders(updatedUserOrders);
@@ -195,6 +195,7 @@ public class OrderServicesImpl implements OrderService {
         }
 
         save(updatedOrders);
+        return String.valueOf(updatedOrders.size());
     }
 
     private Collection<Order> createOrdersFromUserOrders(Collection<UserOrder> updatedUserOrders) {
