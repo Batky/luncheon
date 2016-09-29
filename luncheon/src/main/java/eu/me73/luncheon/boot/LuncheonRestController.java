@@ -58,4 +58,10 @@ public class LuncheonRestController {
     String getOrders() {
         return "pages/orders.html";
     }
+
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    String getOrdersAdmin() {
+        return "pages/ordersadmin.html";
+    }
+
 }

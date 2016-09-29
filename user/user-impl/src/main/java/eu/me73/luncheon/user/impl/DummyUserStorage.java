@@ -48,6 +48,7 @@ public class DummyUserStorage implements UserStorage {
                 user.setLoginName("lubomir.repisky");
                 ArrayList<Role> roles = new ArrayList<>();
                 roles.add(new Role("ROLE_ADMIN"));
+                roles.add(new Role("ROLE_USER"));
                 user.setAuthorities(roles);
                 break;
             }

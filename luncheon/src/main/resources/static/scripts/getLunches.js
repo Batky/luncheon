@@ -21,6 +21,10 @@ $(document).ready(function(){
     $("#datetimepicker1").change(function () {
         fillModalForm(fromPickerDate($("#datetimepicker1").val()), true);
     })
+
+    $("#changebtn").click(function(){
+        location.href = "http://localhost:8080/admin";
+    });
 });
 
 function createTable() {
@@ -162,7 +166,8 @@ function postLunches() {
         },
         data:jsonLunches,
         dataType:"json"
-    })
+    });
+    location.reload();
 }
 
 function lunch(id, soup, date, description) {

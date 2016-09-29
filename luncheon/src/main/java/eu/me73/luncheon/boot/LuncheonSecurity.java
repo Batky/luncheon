@@ -26,6 +26,7 @@ public class LuncheonSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/**").access("hasAnyRole('USER','ADMIN')")
                 .antMatchers("/lunches/**").access("hasRole('ADMIN')")
                 .antMatchers("/orders/**").access("hasAnyRole('USER')")
+                .antMatchers("/admin/**").access("hasRole('ADMIN')")
                 .and()
                 .formLogin()
                 .loginPage("/login")
