@@ -1,17 +1,23 @@
 var urlDaily = "http://localhost:8080/orders/daily/";
-var urlDailySum = "http://localhost:8080orders/daily/summary/";
+var urlDailySum = "http://localhost:8080/orders/daily/summary/";
 var urlPostLunches = "http://localhost:8080/lunches/lunches";
 var dailyJson;
 var summaryJson;
+var tableDaily = "#daily";
+var tableSummary = "#summary";
 
 $(document).ready(function(){
 
     $("#datetimepicker")
         .val(toPickerDate(dateToRestString(new Date())));
 
+    $("#printheader").text("Denný prehľad " + $("#datetimepicker").val());
+
     $("#datetimepicker")
         .change(function () {
-            readData(fromPickerDate($("#datetimepicker").val()));
+            var valueDate = $("#datetimepicker").val();
+            readData(fromPickerDate(valueDate));
+            $("#printheader").text("Denný prehľad " + valueDate);
         });
 
     readData(dateToRestString(new Date()));
@@ -20,20 +26,66 @@ $(document).ready(function(){
         location.href = "/logout";
     });
 
-    createTable();
+    $("#backbtn").click(function () {
+        window.history.back();
+    })
 
 });
 
 function readData(date) {
-    $.get(urlDaily + date, function (json) {
-        dailyJson = json;
+
+    $(tableDaily + " tr").remove();
+    $(tableSummary + " tr").remove();
+
+    $.when(
+
+        $.get(urlDaily + date, function (json) {
+            dailyJson = json;
+        }),
+
+        $.get(urlDailySum + date, function (json2) {
+            summaryJson = json2;
+        })
+
+    ).then( function () {
+
+        createTable(dailyJson);
+        createTableSummary(summaryJson);
+
     });
-    $.get(urlDailySum + date), function (json) {
-        summaryJson = json;
+
+}
+
+function createTable(json) {
+    $(tableDaily + " > tbody:last-child").append("<tr><th class='danger'>Meno</th><th class='danger'>Polievka</th><th class='danger'>Hlavné jedlo</th></tr>");
+    for (var index = 0; index < json.length; index++) {
+        $(tableDaily + " > tbody:last-child")
+            .append(
+                "<tr>" +
+                "<td width='70%'>" + json[index].name + "</td>" +
+                "<td width='15%'>" + json[index].soup + "</td>" +
+                "<td width='15%'>" + json[index].meal + "</td>" +
+                "</tr>");
     }
 }
 
-function createTable() {
+function createTableSummary(json) {
+    $(tableSummary + " > tbody:last-child").append("<tr><th class='danger'>Označenie</th><th class='danger'>Názov</th><th class='danger'>Počet</th></tr>");
+    for (var index = 0; index < json.length; index++) {
+        $(tableSummary + " > tbody:last-child")
+            .append(
+                "<tr>" +
+                "<td width='15%'>" + json[index].mark + "</td>" +
+                "<td width='70%'>" + json[index].meal + "</td>" +
+                "<td width='15%'>" + json[index].count + "</td>" +
+                "</tr>");
+        if (index == 1) {
+            $(tableSummary + " > tbody:last-child")
+                .append("<tr><td colspan='3'></td> </tr>");
+        }
+    }
+}
+
         // var index;
         // var lastDate = json[0].date;
         // var soupIndex = 1;
@@ -84,7 +136,6 @@ function createTable() {
         //         }
         //     }
         // }
-}
 
 function compareArrayDate(dateArray1, dateArray2) {
     return (dateArray1[0] === dateArray2[0] && dateArray1[1] === dateArray2[1] && dateArray1[2] === dateArray2[2])
