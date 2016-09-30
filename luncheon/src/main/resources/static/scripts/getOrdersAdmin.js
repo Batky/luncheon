@@ -1,7 +1,9 @@
-var urlOrders = "http://localhost:8080/orders/date/";
+var urlOrders = "http://localhost:8080/orders/exact/date/";
 var urlUser = "http://localhost:8080/users/actual";
+var urlUserId = "http://localhost:8080/users/id/";
 var ulrUserAdd = "/user/";
 var urlStoreUser = "http://localhost:8080/orders/store/user";
+var urlAllUsers = "http://localhost:8080/users/all";
 var actualDate = new Date();
 var actualDateChanged = (actualDate.getFullYear()) +
     ('0' + (actualDate.getMonth() + 1)).slice(-2) +
@@ -14,12 +16,26 @@ var tableBtn = "#btn";
 
 $(document).ready(function(){
 
-    $("#logout").click(function(){
-        location.href = "/logout";
+    $("#datetimepicker")
+        .val(toPickerDate(dateToRestString(new Date())));
+
+    $("#datetimepicker")
+        .change(function () {
+            var valueDate = $("#datetimepicker").val();
+            actualDateChanged = fromPickerDate(valueDate);
+            createTable(user);
+        });
+
+    $("#backbtn").click(function () {
+        window.history.back();
     });
 
-    $("#store").click(function(){
-        gatherOrders();
+    $("#btn1").click(function () {
+        deleteOrders();
+    });
+
+    $.get(urlAllUsers, function (json) {
+        createTableUsers(json);
     });
 
     $.getJSON(urlUser, function (json) {
@@ -28,9 +44,28 @@ $(document).ready(function(){
         createTable(user);
     });
 
-    setClicks();
+    $(document).on('click', '#users > tbody > tr',  function() {
+
+        $(tableName+ 1 + " tr").remove();
+        var str = $(this).text();
+        console.log(str);
+        var num = str.split("@",1);
+        console.log(num[0]);
+        $.getJSON(urlUserId+ num[0], function (json) {
+            user = json;
+            $("#userHeader").text("Zoznam obedov - " + user.longName);
+            createTable(user);
+        });
+    });
 
 });
+
+function createTableUsers(json) {
+    for (var index=0;index < json.length; index++){
+        $("#users > tbody:last-child")
+            .append("<tr><td hidden>"+json[index].id+"@</td><td>" + json[index].lastName + " " + json[index].firstName + "</td></tr>");
+    }
+}
 
 function create(json) {
     lunchesJson = json;
@@ -58,11 +93,11 @@ function create(json) {
                     checked = "checked"
                 }
                 disabled = "";
-                if (!changeable) {
-                    disabled = " disabled";
-                    $(tableBtn+day).attr("disabled", true);
-                    // $(tableName+day).attr("hidden", true);
-                }
+                // if (!changeable) {
+                //     disabled = " disabled";
+                //     $(tableBtn+day).attr("disabled", true);
+                //     // $(tableName+day).attr("hidden", true);
+                // }
                 var radios = "<input type='radio' name='soup" + datepart + "' " + checked + disabled + ">";
                 if (soupIndex === 1) {
                     $(tableName+day+" > tbody:last-child")
@@ -83,9 +118,9 @@ function create(json) {
                     checked = "checked"
                 }
                 disabled = "";
-                if (!changeable) {
-                    disabled = " disabled"
-                }
+                // if (!changeable) {
+                //     disabled = " disabled"
+                // }
 
                 var radiom = "<input type='radio' name='meal" + datepart + "' " + checked + disabled + ">";
                 if (mealIndex === 1) {
@@ -118,9 +153,9 @@ function create(json) {
                     checked = "checked"
                 }
                 disabled = "";
-                if (!changeable) {
-                    disabled = " disabled"
-                }
+                // if (!changeable) {
+                //     disabled = " disabled"
+                // }
                 var radios1 = "<input type='radio' name='soup" + datepart + "' " + checked + disabled + ">";
                 if (soupIndex === 1) {
                     $(tableName+day+" > tbody:last-child")
@@ -141,9 +176,9 @@ function create(json) {
                     checked = "checked"
                 }
                 disabled = "";
-                if (!changeable) {
-                    disabled = " disabled"
-                }
+                // if (!changeable) {
+                //     disabled = " disabled"
+                // }
                 var radiom1 = "<input type='radio' name='meal" + datepart + "' " + checked + disabled + ">";
                 if (mealIndex === 1) {
                     $(tableName+day+" > tbody:last-child")
@@ -165,6 +200,7 @@ function create(json) {
 
 function createTable(user) {
     var url = urlOrders + actualDateChanged + ulrUserAdd + user.id;
+    console.log(url);
     $.get(url , function(jsonUserOrder) {
         create(jsonUserOrder);
     });
@@ -223,35 +259,18 @@ function deleteOrders(number) {
     saveOrders();
 }
 
-function setClicks() {
-    $("#btn1").click(function () {
-        deleteOrders(1);
-    });
-    $("#btn2").click(function () {
-        deleteOrders(2);
-    });
-    $("#btn3").click(function () {
-        deleteOrders(3);
-    });
-    $("#btn4").click(function () {
-        deleteOrders(4);
-    });
-    $("#btn5").click(function () {
-        deleteOrders(5);
-    });
-    $("#btn6").click(function () {
-        deleteOrders(6);
-    });
-    $("#btn7").click(function () {
-        deleteOrders(7);
-    });
-    $("#btn8").click(function () {
-        deleteOrders(8);
-    });
-    $("#btn9").click(function () {
-        deleteOrders(9);
-    });
-    $("#btn10").click(function () {
-        deleteOrders(10);
-    })
+function toPickerDate(date) {
+    return date.substr(0,4) + "-" + date.substr(4,2) + "-" + date.substr(6,2);
+}
+
+function fromPickerDate(date) {
+    return date.substr(0,4) + date.substr(5,2) + date.substr(8,2);
+}
+
+function dateToRestString(date) {
+    var result = (date.getFullYear()) +
+        ('0' + (date.getMonth() + 1)).slice(-2) +
+        ('0' + (date.getDate())).slice(-2);
+    console.log(result);
+    return result;
 }

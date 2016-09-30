@@ -13,102 +13,35 @@
     <div class="page-header">
         <h1 id="userHeader">Zoznam obedov</h1>
     </div>
-    <p class="lead">Zoznam obedov pre aktuálny týždeň a nasledujúci najbližší týždeň</p>
-    <button type="submit" class="btn btn-danger" id="logout">Odhlás ma</button>
-    <button type="submit" class="btn btn-info" id="store">Ulož zmeny</button>
+
+    <div class='input-group date'>
+        <label for="datetimepicker" class="lead">Zoznam obedov na deň:</label>
+        <input type='date' class="form-control" id='datetimepicker'/>
+    </div>
+    <hr>
+    <button type="submit" class="btn btn-warning" id="backbtn">Späť</button>
 </div>
+
 <div class="container">
     <hr>
 </div>
 <div class="container">
-    <blockquote style="display: none">
-        <p id="table1"></p>
-        <button type="submit" class="btn btn-danger btn-xs" id="btn1" name="delButton">Zrus obed</button>
-    </blockquote>
-    <table class="table table-condensed" id="day1">
-        <tbody></tbody>
-    </table>
+    <div class="col-md-4">
+        <table class="table table-condensed table-striped" id="users">
+            <tbody><th class="danger">Zoznam užívateľov</th></tbody>
+        </table>
+    </div>
+<div class="col-md-8">
+    <!--<div class="container">-->
+        <blockquote style="display: none">
+            <p id="table1"></p>
+            <button type="submit" class="btn btn-danger btn-xs" id="btn1" name="delButton">Zrus obed</button>
+        </blockquote>
+        <table class="table table-condensed" id="day1">
+            <tbody><th class="danger" colspan="3">Objednané obedy</th> </tbody>
+        </table>
+    <!--</div>-->
 </div>
-<div class="container">
-    <blockquote style="display: none">
-        <p id="table2"></p>
-        <button type="submit" class="btn btn-danger btn-xs" id="btn2" name="delButton">Zrus obed</button>
-    </blockquote>
-    <table class="table table-condensed" id="day2">
-        <tbody></tbody>
-    </table>
-</div>
-<div class="container">
-    <blockquote style="display: none">
-        <p id="table3">Hide</p>
-        <button type="submit" class="btn btn-danger btn-xs" id="btn3" name="delButton">Zrus obed</button>
-    </blockquote>
-    <table class="table table-condensed" id="day3">
-        <tbody></tbody>
-    </table>
-</div>
-<div class="container">
-    <blockquote style="display: none">
-        <p id="table4">Hide</p>
-        <button type="submit" class="btn btn-danger btn-xs" id="btn4" name="delButton">Zrus obed</button>
-    </blockquote>
-    <table class="table table-condensed" id="day4">
-        <tbody></tbody>
-    </table>
-</div>
-<div class="container">
-    <blockquote style="display: none">
-        <p id="table5">Hide</p>
-        <button type="submit" class="btn btn-danger btn-xs" id="btn5" name="delButton">Zrus obed</button>
-    </blockquote>
-    <table class="table table-condensed" id="day5">
-        <tbody></tbody>
-    </table>
-</div>
-<div class="container">
-    <blockquote style="display: none">
-        <p id="table6">Hide</p>
-        <button type="submit" class="btn btn-danger btn-xs" id="btn6" name="delButton">Zrus obed</button>
-    </blockquote>
-    <table class="table table-condensed" id="day6">
-        <tbody></tbody>
-    </table>
-</div>
-<div class="container">
-    <blockquote style="display: none">
-        <p id="table7">Hide</p>
-        <button type="submit" class="btn btn-danger btn-xs" id="btn7" name="delButton">Zrus obed</button>
-    </blockquote>
-    <table class="table table-condensed" id="day7">
-        <tbody></tbody>
-    </table>
-</div>
-<div class="container">
-    <blockquote style="display: none">
-        <p id="table8">Hide</p>
-        <button type="submit" class="btn btn-danger btn-xs" id="btn8" name="delButton">Zrus obed</button>
-    </blockquote>
-    <table class="table table-condensed" id="day8">
-        <tbody></tbody>
-    </table>
-</div>
-<div class="container">
-    <blockquote style="display: none">
-        <p id="table9">Hide</p>
-        <button type="submit" class="btn btn-danger btn-xs" id="btn9" name="delButton">Zrus obed</button>
-    </blockquote>
-    <table class="table table-condensed" id="day9">
-        <tbody></tbody>
-    </table>
-</div>
-<div class="container">
-    <blockquote style="display: none">
-        <p id="table10">Hide</p>
-        <button type="submit" class="btn btn-danger btn-xs" id="btn10" name="delButton">Zrus obed</button>
-    </blockquote>
-    <table class="table table-condensed" id="day10">
-        <tbody></tbody>
-    </table>
 </div>
 
 <script src="../js/jquery.min.js"></script>

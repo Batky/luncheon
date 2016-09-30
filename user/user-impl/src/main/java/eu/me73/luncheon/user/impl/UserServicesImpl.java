@@ -55,7 +55,7 @@ public class UserServicesImpl implements UserService {
     @Override
     public Collection<User> getAllUsers() {
         return service
-                .findAll()
+                .findAllByOrderByLastNameAscFirstNameAsc()
                 .stream()
                 .map(User::new)
                 .collect(Collectors.toList());

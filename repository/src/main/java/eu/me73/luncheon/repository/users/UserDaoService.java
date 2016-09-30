@@ -7,4 +7,6 @@ public interface UserDaoService extends JpaRepository<UserEntity, Long> {
 
     Collection<UserEntity> findByBarCode(String barCode);
     UserEntity findByPid(String pid);
+
+    Collection<UserEntity> findAllByOrderByLastNameAscFirstNameAsc();
 }
