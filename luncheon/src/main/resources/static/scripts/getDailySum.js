@@ -1,9 +1,8 @@
 var urlDaily = "http://localhost:8080/orders/daily/";
-var urlOneLunch = "http://localhost:8080/lunches/exact/date/";
+var urlDailySum = "http://localhost:8080orders/daily/summary/";
 var urlPostLunches = "http://localhost:8080/lunches/lunches";
-var actualDate = new Date();
-var actualDateChanged = dateToRestString(actualDate);
-urlDaily = urlDaily + actualDateChanged;
+var dailyJson;
+var summaryJson;
 
 $(document).ready(function(){
 
@@ -12,26 +11,29 @@ $(document).ready(function(){
 
     $("#datetimepicker")
         .change(function () {
-            createTable(fromPickerDate($("#datetimepicker").val()));
+            readData(fromPickerDate($("#datetimepicker").val()));
         });
 
-    createTable(fromPickerToArray);
+    readData(dateToRestString(new Date()));
 
     $("#logout").click(function(){
         location.href = "/logout";
     });
 
-    // $("#datetimepicker").change(function () {
-    //     createTable($("#datetimepicker").val());
-    // });
-    //
-    // $("#changebtn").click(function(){
-    //     location.href = "http://localhost:8080/admin";
-    // });
+    createTable();
+
 });
 
-function createTable(date) {
-    $.get(urlDaily + date , function(json ) {
+function readData(date) {
+    $.get(urlDaily + date, function (json) {
+        dailyJson = json;
+    });
+    $.get(urlDailySum + date), function (json) {
+        summaryJson = json;
+    }
+}
+
+function createTable() {
         // var index;
         // var lastDate = json[0].date;
         // var soupIndex = 1;
@@ -82,7 +84,6 @@ function createTable(date) {
         //         }
         //     }
         // }
-    });
 }
 
 function compareArrayDate(dateArray1, dateArray2) {
@@ -103,6 +104,7 @@ function fromPickerToArray() {
     dateArray.push(date.substr(0,4));
     dateArray.push(date.substr(5,2));
     dateArray.push(date.substr(8,2));
+    return dateArray;
 }
 
 function cleanup() {
@@ -189,7 +191,9 @@ function lunch(id, soup, date, description) {
 }
 
 function dateToRestString(date) {
-    return (date.getFullYear()) +
+    var result = (date.getFullYear()) +
         ('0' + (date.getMonth() + 1)).slice(-2) +
         ('0' + (date.getDate())).slice(-2);
+    console.log(result);
+    return result;
 }
