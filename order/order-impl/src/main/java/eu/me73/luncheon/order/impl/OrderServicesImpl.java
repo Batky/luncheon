@@ -5,9 +5,12 @@ import eu.me73.luncheon.commons.DateUtils;
 import eu.me73.luncheon.commons.LuncheonConfig;
 import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
+import eu.me73.luncheon.order.api.DailyReport;
+import eu.me73.luncheon.order.api.DailyReportSummary;
 import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.api.UserOrder;
+import eu.me73.luncheon.repository.lunch.LunchEntity;
 import eu.me73.luncheon.repository.order.OrderDaoService;
 import eu.me73.luncheon.repository.order.OrderEntity;
 import eu.me73.luncheon.user.api.UserService;
@@ -18,7 +21,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,6 +53,10 @@ public class OrderServicesImpl implements OrderService {
 
     @Autowired
     LuncheonConfig config;
+
+    private  Map<Long, String> numberingMap = new HashMap<>();
+    private final String [] soupStrings = {"A","B"};
+    private final String [] mealStrings = {"1","2","3","4","5"};
 
     @Override
     public void save(final Order order) {
@@ -277,6 +287,71 @@ public class OrderServicesImpl implements OrderService {
         return fromEntity(service.findOne(id));
     }
 
+    @Override
+    public Collection<DailyReport> createReport(final LocalDate date) {
+
+        Collection<OrderEntity> orders = service.findByDateOrderByUser(date);
+        Collection<LunchEntity> soups = lunchService.findByDateAndSoupOrderById(date, true);
+        Collection<LunchEntity> meals = lunchService.findByDateAndSoupOrderById(date, false);
+
+        if (Objects.isNull(orders) || Objects.isNull(soups) || Objects.isNull(meals)) {
+            return null;
+        }
+
+        int index = 0;
+        for (LunchEntity soup : soups) {
+            numberingMap.put(soup.getId(), soupStrings[index]);
+            index++;
+        }
+
+        index = 0;
+        for (LunchEntity meal : meals) {
+            numberingMap.put(meal.getId(), mealStrings[index]);
+            index++;
+        }
+
+        return orders.stream()
+                .map(this::dailyReportFromEntity)
+                .collect(Collectors.toList())
+                .stream()
+                .sorted()
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public Collection<DailyReportSummary> createDailySummary(final LocalDate date){
+
+        Collection<OrderEntity> orders = service.findByDateOrderByUser(date);
+        Collection<LunchEntity> soups = lunchService.findByDateAndSoupOrderById(date, true);
+        Collection<LunchEntity> meals = lunchService.findByDateAndSoupOrderById(date, false);
+
+        if (Objects.isNull(orders) || Objects.isNull(soups) || Objects.isNull(meals)) {
+            return null;
+        }
+
+        Collection<DailyReportSummary> summaries = new ArrayList<>();
+
+        int index = 0;
+        for (LunchEntity soup : soups) {
+            summaries.add(new DailyReportSummary(soup.getId(), soupStrings[index], soup.getDescription()));
+            index++;
+        }
+
+        index = 0;
+        for (LunchEntity meal : meals) {
+            summaries.add(new DailyReportSummary(meal.getId(), mealStrings[index], meal.getDescription()));
+            index++;
+        }
+
+        for (OrderEntity order : orders) {
+            summaries.stream().filter(summary -> summary.getId() == order.getSoup()).forEach(DailyReportSummary::incCount);
+            summaries.stream().filter(summary -> summary.getId() == order.getMeal()).forEach(DailyReportSummary::incCount);
+        }
+
+        return summaries;
+    }
+
     private boolean lunchInOrders(final Collection<Order> orders, final Lunch lunch) {
         for (Order order : orders) {
             if (lunch.equals(order.getSoup()) || lunch.equals(order.getMeal())) {
@@ -299,6 +374,30 @@ public class OrderServicesImpl implements OrderService {
         return order;
     }
 
+    private DailyReport dailyReportFromEntity(final OrderEntity entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+        DailyReport dailyReport = new DailyReport();
+        dailyReport.setName(userService.getUserById(entity.getUser()).getLongName());
+        dailyReport.setSoup(numberingMap.get(entity.getSoup()));
+        dailyReport.setMeal(numberingMap.get(entity.getMeal()));
+        return dailyReport;
+    }
+
+    private String soupName(final OrderEntity entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+        return lunchService.getLunchById(entity.getSoup()).getDescription();
+    }
+
+    private String mealName(final OrderEntity entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+        return lunchService.getLunchById(entity.getMeal()).getDescription();
+    }
 
     private CharSequence remakeOldDateString(final String oldDateString) {
         String replaced = oldDateString.substring(0, oldDateString.length() - 7).replaceAll("\\s", "");

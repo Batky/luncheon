@@ -107,7 +107,7 @@ public class User implements UserDetails {
     }
 
     public String getLongName() {
-        return firstName + SPACE + lastName;
+        return lastName + SPACE + firstName;
     }
 
     public UserEntity toEntity() {

@@ -25,6 +25,10 @@ $(document).ready(function(){
     $("#changebtn").click(function(){
         location.href = "http://localhost:8080/admin";
     });
+
+    $("#daily").click(function(){
+        location.href = "http://localhost:8080/daily";
+    });
 });
 
 function createTable() {

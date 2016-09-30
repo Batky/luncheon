@@ -3,7 +3,11 @@ package eu.me73.luncheon.order.rest;
 import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileName;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import eu.me73.luncheon.commons.DateUtils;
+import eu.me73.luncheon.order.api.DailyReport;
+import eu.me73.luncheon.order.api.DailyReportSummary;
 import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.api.UserOrder;
@@ -118,6 +122,24 @@ public class OrderRestController {
             LOG.warn("Error occurred by importing from file ", e);
         }
         return count + " orders imported from file.";
+    }
+
+    @RequestMapping(value = "orders/daily/{date}", method = RequestMethod.GET, produces = "application/json")
+    public Collection<DailyReport> getDailyReport(@PathVariable String date) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for daily orders report, date: {}", date);
+        }
+        LocalDate dt = dateUtils.getLocalDate(date);
+        return Objects.nonNull(dt) ? orderService.createReport(dt) : null;
+    }
+
+    @RequestMapping(value = "orders/daily/summary/{date}", method = RequestMethod.GET, produces = "application/json")
+    public Collection<DailyReportSummary> getDailyReportSummary(@PathVariable String date) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for daily orders report summary, date: {}", date);
+        }
+        LocalDate dt = dateUtils.getLocalDate(date);
+        return Objects.nonNull(dt) ? orderService.createDailySummary(dt) : null;
     }
 
 }

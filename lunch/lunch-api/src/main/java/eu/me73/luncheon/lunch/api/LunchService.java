@@ -1,5 +1,6 @@
 package eu.me73.luncheon.lunch.api;
 
+import eu.me73.luncheon.repository.lunch.LunchEntity;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -27,4 +28,6 @@ public interface LunchService {
     Lunch getLunchByDayIndex(final LocalDate date, final int index, final boolean soup);
 
     Collection<Lunch> getLunchByDate(final LocalDate date);
+
+    Collection<LunchEntity> findByDateAndSoupOrderById(final LocalDate date, final boolean soup);
 }

@@ -162,4 +162,10 @@ public class LunchServicesImpl implements LunchService {
                 .map(Lunch::new)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Collection<LunchEntity> findByDateAndSoupOrderById(LocalDate date, boolean soup) {
+        return service
+                .findByDateAndSoupOrderById(date, soup);
+    }
 }

@@ -28,4 +28,8 @@ public interface OrderService {
                       final int meal);
 
     Order getOrderForId(final Long id);
+
+    Collection<DailyReport> createReport(final LocalDate date);
+
+    Collection<DailyReportSummary> createDailySummary(LocalDate date);
 }
