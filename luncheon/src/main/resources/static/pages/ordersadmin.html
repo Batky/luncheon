@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container static">
     <div class="page-header">
         <h1 id="userHeader">Zoznam obedov</h1>
     </div>
@@ -25,23 +25,24 @@
 <div class="container">
     <hr>
 </div>
-<div class="container">
+
+<div class="container floating">
     <div class="col-md-4">
         <table class="table table-condensed table-striped" id="users">
-            <tbody><th class="danger">Zoznam užívateľov</th></tbody>
+            <tbody><tr><th class="danger">Zoznam užívateľov</th></tr></tbody>
         </table>
     </div>
-<div class="col-md-8">
-    <!--<div class="container">-->
-        <blockquote style="display: none">
+    <div class="col-md-8">
+        <blockquote>
             <p id="table1"></p>
-            <button type="submit" class="btn btn-danger btn-xs" id="btn1" name="delButton">Zrus obed</button>
+            <button type="submit" class="btn btn-danger btn-xs" id="btnDel" name="delButton">Zrus obed</button>
+            <button type="submit" class="btn btn-success btn-xs" id="btnSave" name="delButton">Ulož zmeny</button>
         </blockquote>
         <table class="table table-condensed" id="day1">
-            <tbody><th class="danger" colspan="3">Objednané obedy</th> </tbody>
+            <tbody>
+            </tbody>
         </table>
-    <!--</div>-->
-</div>
+    </div>
 </div>
 
 <script src="../js/jquery.min.js"></script>

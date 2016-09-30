@@ -10,9 +10,6 @@ var actualDateChanged = (actualDate.getFullYear()) +
     ('0' + (actualDate.getDate())).slice(-2);
 var user;
 var lunchesJson;
-var tableName = "#day";
-var tableHeader = "#table";
-var tableBtn = "#btn";
 
 $(document).ready(function(){
 
@@ -21,6 +18,9 @@ $(document).ready(function(){
 
     $("#datetimepicker")
         .change(function () {
+            $("#day1")
+                .find("tr")
+                .remove();
             var valueDate = $("#datetimepicker").val();
             actualDateChanged = fromPickerDate(valueDate);
             createTable(user);
@@ -30,8 +30,12 @@ $(document).ready(function(){
         window.history.back();
     });
 
-    $("#btn1").click(function () {
+    $("#btnDel").click(function () {
         deleteOrders();
+    });
+
+    $("#btnSave").click(function () {
+        gatherOrders();
     });
 
     $.get(urlAllUsers, function (json) {
@@ -46,11 +50,11 @@ $(document).ready(function(){
 
     $(document).on('click', '#users > tbody > tr',  function() {
 
-        $(tableName+ 1 + " tr").remove();
+        $("#day1")
+            .find("tr")
+            .remove();
         var str = $(this).text();
-        console.log(str);
         var num = str.split("@",1);
-        console.log(num[0]);
         $.getJSON(urlUserId+ num[0], function (json) {
             user = json;
             $("#userHeader").text("Zoznam obedov - " + user.longName);
@@ -58,11 +62,28 @@ $(document).ready(function(){
         });
     });
 
+    var top = $('.floating').offset().top;
+    // $('.trigger').click(function () {
+    //     $('.static').css('position','');
+    //     $('.left2').toggle('slow',function(){
+    //         top = $('.static').offset().top;
+    //     });
+    //
+    //
+    // });
+
+    // $(document).scroll(function(){
+    //     $('.floating').css('position','');
+    //     top = $('.floating').offset().top;
+    //     $('.floating').css('position','absolute');   $('.floating').css('top',Math.max(top,$(document).scrollTop()));
+    // });
+
 });
 
 function createTableUsers(json) {
     for (var index=0;index < json.length; index++){
-        $("#users > tbody:last-child")
+        $("#users")
+            .find("> tbody:last-child")
             .append("<tr><td hidden>"+json[index].id+"@</td><td>" + json[index].lastName + " " + json[index].firstName + "</td></tr>");
     }
 }
@@ -70,21 +91,18 @@ function createTableUsers(json) {
 function create(json) {
     lunchesJson = json;
     var checked = "";
-    var disabled = "";
     var index;
     var lastDate = lunchesJson[0].lunch.date;
     var soupIndex = 1;
     var mealIndex = 1;
     var day = 1;
     var textDate = lastDate[2] + "." + lastDate[1] + "." + lastDate[0];
-    $(tableHeader+day).text("Dátum: "+textDate);
-    $(tableHeader+day).parent().show();
-    $(tableName+day+" > tbody:last-child")
+    $("#day1")
+        .find("> tbody:last-child")
         .append("<tr><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th><th class='danger'>Objednávka</th></tr>");
     var datepart = 1;
     for (index = 0; index < lunchesJson.length; index++) {
         var lunch = lunchesJson[index].lunch;
-        var changeable = lunchesJson[index].changeable;
         var ordered = lunchesJson[index].ordered;
         if (compareArrayDate(lunch.date, lastDate)) {
             if (lunch.soup) {
@@ -92,18 +110,14 @@ function create(json) {
                 if (ordered) {
                     checked = "checked"
                 }
-                disabled = "";
-                // if (!changeable) {
-                //     disabled = " disabled";
-                //     $(tableBtn+day).attr("disabled", true);
-                //     // $(tableName+day).attr("hidden", true);
-                // }
-                var radios = "<input type='radio' name='soup" + datepart + "' " + checked + disabled + ">";
+                var radios = "<input type='radio' name='soup" + datepart + "' " + checked + ">";
                 if (soupIndex === 1) {
-                    $(tableName+day+" > tbody:last-child")
+                    $("#day1")
+                        .find("> tbody:last-child")
                         .append("<tr><td colspan='3' class='info'>Polievky</td></tr>");
                 }
-                $(tableName+day+" > tbody:last-child")
+                $("#day1")
+                    .find("> tbody:last-child")
                     .append(
                         "<tr>" +
                         "<td style='display:none;'>" + lunch.id + "</td>" +
@@ -117,17 +131,14 @@ function create(json) {
                 if (ordered) {
                     checked = "checked"
                 }
-                disabled = "";
-                // if (!changeable) {
-                //     disabled = " disabled"
-                // }
-
-                var radiom = "<input type='radio' name='meal" + datepart + "' " + checked + disabled + ">";
+                var radiom = "<input type='radio' name='meal" + datepart + "' " + checked + ">";
                 if (mealIndex === 1) {
-                    $(tableName+day+" > tbody:last-child")
+                    $("#day1")
+                        .find("> tbody:last-child")
                         .append("<tr><td colspan='3' class='info'>Hlavné jedlá</td></tr>");
                 }
-                $(tableName+day+" > tbody:last-child")
+                $("#day1")
+                    .find("> tbody:last-child")
                     .append(
                         "<tr>" +
                         "<td style='display:none;'>" + lunch.id + "</td>" +
@@ -143,25 +154,22 @@ function create(json) {
             day++;
             lastDate = lunch.date;
             textDate = lastDate[2] + "." + lastDate[1] + "." + lastDate[0];
-            $(tableHeader+day).text("Dátum: "+textDate);
-            $(tableHeader+day).parent().show();
-            $(tableName+day+" > tbody:last-child")
+            $("#day1")
+                .find("> tbody:last-child")
                 .append("<tr><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th><th class='danger'>Objednávka</th></tr>")
             if (lunch.soup) {
                 checked = "";
                 if (ordered) {
                     checked = "checked"
                 }
-                disabled = "";
-                // if (!changeable) {
-                //     disabled = " disabled"
-                // }
-                var radios1 = "<input type='radio' name='soup" + datepart + "' " + checked + disabled + ">";
+                var radios1 = "<input type='radio' name='soup" + datepart + "' " + checked + ">";
                 if (soupIndex === 1) {
-                    $(tableName+day+" > tbody:last-child")
+                    $("#day1")
+                        .find("> tbody:last-child")
                         .append("<tr><td colspan='3' class='info'>Polievky</td></tr>");
                 }
-                $(tableName+day+" > tbody:last-child")
+                $("#day1")
+                    .find("> tbody:last-child")
                     .append(
                         "<tr>" +
                         "<td style='display:none;'>" + lunch.id + "</td>" +
@@ -175,16 +183,14 @@ function create(json) {
                 if (ordered) {
                     checked = "checked"
                 }
-                disabled = "";
-                // if (!changeable) {
-                //     disabled = " disabled"
-                // }
-                var radiom1 = "<input type='radio' name='meal" + datepart + "' " + checked + disabled + ">";
+                var radiom1 = "<input type='radio' name='meal" + datepart + "' " + checked + ">";
                 if (mealIndex === 1) {
-                    $(tableName+day+" > tbody:last-child")
+                    $("#day1")
+                        .find("> tbody:last-child")
                         .append("<tr><td colspan='3' class='info'>Hlavné jedlá</td></tr>");
                 }
-                $(tableName+day+" > tbody:last-child")
+                $("#day1")
+                    .find("> tbody:last-child")
                     .append(
                         "<tr>" +
                         "<td style='display:none;'>" + lunch.id + "</td>" +
@@ -210,8 +216,11 @@ function compareArrayDate(dateArray1, dateArray2) {
     return (dateArray1[0] === dateArray2[0] && dateArray1[1] === dateArray2[1] && dateArray1[2] === dateArray2[2])
 }
 
-function saveOrders() {
+function saveOrders(refresh) {
     var jsonLunchesOrders = JSON.stringify(lunchesJson);
+    console.log(jsonLunchesOrders);
+    console.log(urlStoreUser);
+    $.when(
     $.ajax({
         url: urlStoreUser,
         type: "POST",
@@ -224,39 +233,42 @@ function saveOrders() {
         complete: function (data) {
             if (data.status == 201) {
                 alert("Zmeny na obedoch sa úspešne uložili");
-                location.reload();
+                // location.reload();
             } else {
                 alert("Obed sa nepodarilo ulozit, skontroluj vyber !");
             }
+        }
+    })).then(function () {
+        if (refresh) {
+            $("#day1")
+                .find("tr")
+                .remove();
+            createTable(user);
         }
     });
 }
 function gatherOrders() {
     var index = 0;
+    console.log(lunchesJson);
     $('input:radio').each(function () {
         lunchesJson[index].ordered = !!$(this).prop('checked');
         index++;
     });
-    saveOrders();
+    console.log(lunchesJson);
+    saveOrders(false);
 }
 
-function deleteOrders(number) {
-    var findDay = 1;
+function deleteOrders() {
     var firstDate = lunchesJson[0].lunch.date;
     for(var i=0;i<lunchesJson.length;i++){
         if (compareArrayDate(firstDate, lunchesJson[i].lunch.date)) {
-            if (number == findDay) {
-                lunchesJson[i].ordered = false;
-            }
+            lunchesJson[i].ordered = false;
         } else {
             firstDate = lunchesJson[i].lunch.date;
-            findDay++;
-            if (number == findDay) {
-                lunchesJson[i].ordered = false;
-            }
+            lunchesJson[i].ordered = false;
         }
     }
-    saveOrders();
+    saveOrders(true);
 }
 
 function toPickerDate(date) {

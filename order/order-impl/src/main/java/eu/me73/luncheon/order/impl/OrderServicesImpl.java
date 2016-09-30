@@ -157,7 +157,7 @@ public class OrderServicesImpl implements OrderService {
 
         ArrayList<UserOrder> userOrderArrayList = userOrders
                 .stream()
-                .filter(UserOrder::isChangeable)
+//                .filter(UserOrder::isChangeable)
                 .collect(Collectors.toCollection(ArrayList::new));
 
         if (userOrderArrayList.isEmpty()) {
