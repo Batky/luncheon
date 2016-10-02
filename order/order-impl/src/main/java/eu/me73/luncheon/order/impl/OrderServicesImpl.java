@@ -7,10 +7,12 @@ import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
 import eu.me73.luncheon.order.api.DailyReport;
 import eu.me73.luncheon.order.api.DailyReportSummary;
+import eu.me73.luncheon.order.api.MonthlyReport;
 import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.api.UserOrder;
 import eu.me73.luncheon.repository.lunch.LunchEntity;
+import eu.me73.luncheon.repository.order.MonthlyReportEntity;
 import eu.me73.luncheon.repository.order.OrderDaoService;
 import eu.me73.luncheon.repository.order.OrderEntity;
 import eu.me73.luncheon.user.api.UserService;
@@ -350,6 +352,19 @@ public class OrderServicesImpl implements OrderService {
         }
 
         return summaries;
+    }
+
+    @Override
+    public Collection<MonthlyReport> createMonthlyReport(final LocalDate date) {
+        Collection<MonthlyReport> monthlyReports = new ArrayList<>();
+        Collection<MonthlyReportEntity> orderEntities = service.findMonthlyOrders(date.withDayOfMonth(1), date.withDayOfMonth(date.lengthOfMonth()));
+        for (MonthlyReportEntity orderEntity : orderEntities) {
+            MonthlyReport monthlyReport = new MonthlyReport();
+            monthlyReport.setName(orderEntity.getLast() + " " + orderEntity.getFirst());
+            monthlyReport.setCount(orderEntity.getCount());
+            monthlyReports.add(monthlyReport);
+        }
+        return monthlyReports;
     }
 
     private boolean lunchInOrders(final Collection<Order> orders, final Lunch lunch) {

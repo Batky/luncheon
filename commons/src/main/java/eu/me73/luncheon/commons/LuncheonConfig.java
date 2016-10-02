@@ -7,6 +7,9 @@ public class LuncheonConfig {
 
     private Integer ordering;
     private Integer year;
+    private Double employee;
+    private Double visitor;
+    private Double partial;
 
     public Integer getOrdering() {
         return ordering;
@@ -22,5 +25,29 @@ public class LuncheonConfig {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public Double getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Double employee) {
+        this.employee = employee;
+    }
+
+    public Double getVisitor() {
+        return visitor;
+    }
+
+    public void setVisitor(Double visitor) {
+        this.visitor = visitor;
+    }
+
+    public Double getPartial() {
+        return partial;
+    }
+
+    public void setPartial(Double partial) {
+        this.partial = partial;
     }
 }

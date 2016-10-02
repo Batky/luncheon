@@ -1,5 +1,6 @@
 package eu.me73.luncheon.order.api;
 
+import eu.me73.luncheon.repository.order.OrderEntity;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -31,5 +32,7 @@ public interface OrderService {
 
     Collection<DailyReport> createReport(final LocalDate date);
 
-    Collection<DailyReportSummary> createDailySummary(LocalDate date);
+    Collection<DailyReportSummary> createDailySummary(final LocalDate date);
+
+    Collection<MonthlyReport> createMonthlyReport(final LocalDate date);
 }

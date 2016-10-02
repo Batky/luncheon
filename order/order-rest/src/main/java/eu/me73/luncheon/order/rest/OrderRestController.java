@@ -8,9 +8,11 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import eu.me73.luncheon.commons.DateUtils;
 import eu.me73.luncheon.order.api.DailyReport;
 import eu.me73.luncheon.order.api.DailyReportSummary;
+import eu.me73.luncheon.order.api.MonthlyReport;
 import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.api.UserOrder;
+import eu.me73.luncheon.repository.order.OrderEntity;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -140,6 +142,14 @@ public class OrderRestController {
         }
         LocalDate dt = dateUtils.getLocalDate(date);
         return Objects.nonNull(dt) ? orderService.createDailySummary(dt) : null;
+    }
+
+    @RequestMapping(value = "orders/monthly/summary", method = RequestMethod.GET, produces = "application/json")
+    public Collection<MonthlyReport> getMonthlyReport() {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for monthly orders report summary");
+        }
+        return orderService.createMonthlyReport(LocalDate.of(2016, 1, 1));
     }
 
 }
