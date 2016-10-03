@@ -138,12 +138,13 @@ public class OrderRestController {
         return Objects.nonNull(dt) ? orderService.createDailySummary(dt) : null;
     }
 
-    @RequestMapping(value = "orders/monthly/summary", method = RequestMethod.GET, produces = "application/json")
-    public Collection<MonthlyReport> getMonthlyReport() {
+    @RequestMapping(value = "orders/monthly/summary/{date}", method = RequestMethod.GET, produces = "application/json")
+    public Collection<MonthlyReport> getMonthlyReport(@PathVariable String date) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Rest request for monthly orders report summary");
+            LOG.debug("Rest request for monthly orders report summary for date {}", date);
         }
-        return orderService.createMonthlyReport(LocalDate.of(2016, 1, 1));
+        LocalDate dt = dateUtils.getLocalDate(date);
+        return Objects.nonNull(dt) ?  orderService.createMonthlyReport(dt) : null;
     }
 
 }

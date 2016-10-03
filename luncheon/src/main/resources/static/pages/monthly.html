@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesačný sumár</title>
+    <link rel="stylesheet" type="text/css" href="../css/luncheon.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container visible-print-block">
+    <div class="page-header">
+        <h1 id="printheader"></h1>
+    </div>
+</div>
+<div class="container hidden-print">
+    <div class="page-header">
+        <h1>Mesačný prehľad obedov</h1>
+    </div>
+    <div class='input-group date'>
+        <label for="datetimepicker" class="lead">Zoznam obedov na mesiac:</label>
+        <input type='date' class="form-control" id='datetimepicker'/>
+    </div>
+    <hr>
+    <button type="submit" class="btn btn-danger" id="logout">Odhlás ma</button>
+    <button type="submit" class="btn btn-warning" id="backbtn">Späť</button>
+</div>
+<div class="container">
+    <hr>
+</div>
+<div class="container">
+    <table class="table table-condensed table-striped" id="summary">
+        <tbody></tbody>
+    </table>
+</div>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../scripts/getMonthlySum.js"></script>
+</body>
+</html>

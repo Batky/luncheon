@@ -1,7 +1,7 @@
-var urlOrders = "http://localhost:8080/orders/date/";
-var urlUser = "http://localhost:8080/users/actual";
+var urlOrders = "http://obedy.kudela.sk:8080/orders/date/";
+var urlUser = "http://obedy.kudela.sk:8080/users/actual";
 var ulrUserAdd = "/user/";
-var urlStoreUser = "http://localhost:8080/orders/store/user";
+var urlStoreUser = "http://obedy.kudela.sk:8080/orders/store/user";
 var actualDate = new Date();
 var actualDateChanged = (actualDate.getFullYear()) +
     ('0' + (actualDate.getMonth() + 1)).slice(-2) +

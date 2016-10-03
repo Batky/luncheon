@@ -69,4 +69,8 @@ public class LuncheonRestController {
         return "pages/daily.html";
     }
 
+    @RequestMapping(value = "/monthly", method = RequestMethod.GET)
+    String getOrdersMonthly() {
+        return "pages/monthly.html";
+    }
 }

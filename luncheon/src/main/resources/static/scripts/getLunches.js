@@ -1,6 +1,6 @@
-var urlLunches = "http://localhost:8080/lunches/date/";
-var urlOneLunch = "http://localhost:8080/lunches/exact/date/";
-var urlPostLunches = "http://localhost:8080/lunches/lunches";
+var urlLunches = "http://obedy.kudela.sk:8080/lunches/date/";
+var urlOneLunch = "http://obedy.kudela.sk:8080/lunches/exact/date/";
+var urlPostLunches = "http://obedy.kudela.sk:8080/lunches/lunches";
 var actualDate = new Date();
 var actualDateChanged = (actualDate.getFullYear()) +
     ('0' + (actualDate.getMonth() + 1)).slice(-2) +
@@ -20,7 +20,7 @@ $(document).ready(function(){
     });
     $("#datetimepicker1").change(function () {
         fillModalForm(fromPickerDate($("#datetimepicker1").val()), true);
-    })
+    });
 
     $("#changebtn").click(function(){
         location.href = "http://localhost:8080/admin";
@@ -28,6 +28,10 @@ $(document).ready(function(){
 
     $("#daily").click(function(){
         location.href = "http://localhost:8080/daily";
+    });
+
+    $("#monthly").click(function(){
+        location.href = "http://localhost:8080/monthly";
     });
 });
 
