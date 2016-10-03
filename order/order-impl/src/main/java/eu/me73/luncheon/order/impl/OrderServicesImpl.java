@@ -18,7 +18,10 @@ import eu.me73.luncheon.repository.users.UserRelation;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -356,17 +359,22 @@ public class OrderServicesImpl implements OrderService {
         for(Object[] tuple : tuples) {
             User user = userService.getUserById((Long) tuple[0]);
             double price = config.getEmployee();
+            boolean employee = true;
             if (user.getRelation().equals(UserRelation.PARTIAL)) {
                 price = config.getPartial();
+                employee = false;
             } else {
                 if (user.getRelation().equals(UserRelation.VISITOR)) {
                     price = config.getVisitor();
+                    employee = false;
                 }
             }
             MonthlyReport monthlyReport = new MonthlyReport(
+                    user.getPid(),
                     user.getLongName(),
                     (Long) tuple[1],
-                    price
+                    price,
+                    employee
             );
             monthlyReports.add(monthlyReport);
         }
@@ -375,6 +383,48 @@ public class OrderServicesImpl implements OrderService {
                 .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
                 .sorted((o1, o2) -> Double.compare(o1.getPrice(),o2.getPrice()))
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Override
+    public String createOlympFile(final LocalDate date) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Trying to create export file {}", config.getExport());
+        }
+        BufferedWriter myFile = null;
+        try {
+            myFile = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(config.getExport()), "UTF8"));
+            myFile.write("##&\tOSCISLO\tZR_STRAVNE");
+            myFile.newLine();
+            Collection<MonthlyReport> summary = createMonthlyReport(date);
+            if (LOG.isTraceEnabled()) {
+                LOG.debug("Getting month summary, number of objects: {}", summary.size());
+            }
+            final BufferedWriter finalMyFile = myFile;
+            summary.forEach((ms) -> {
+                try {
+                    if (ms.getEmployee()) {
+                        String newLine = " \t" + ms.getPid() + "\t";
+                        newLine += Double.toString(ms.getSum());
+                        finalMyFile.write(newLine);
+                        finalMyFile.newLine();
+                        if (LOG.isTraceEnabled()) {
+                            LOG.trace("Writing line: {}", newLine);
+                        }
+                    }
+                } catch (IOException e) {
+                    LOG.warn("IO Exception error by creating export file {}", config.getExport());
+                    if (LOG.isTraceEnabled()) {
+                        LOG.trace("Exception: ", e);
+                    }
+                }
+            });
+            myFile.close();
+        } catch (final IOException ex) {
+            if (LOG.isTraceEnabled()) {
+                LOG.trace("Exception: ", ex);
+            }
+        }
+        return config.getExport();
     }
 
     private boolean lunchInOrders(final Collection<Order> orders, final Lunch lunch) {

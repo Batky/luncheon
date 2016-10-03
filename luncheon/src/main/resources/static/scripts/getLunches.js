@@ -1,6 +1,8 @@
-var urlLunches = "http://obedy.kudela.sk:8080/lunches/date/";
-var urlOneLunch = "http://obedy.kudela.sk:8080/lunches/exact/date/";
-var urlPostLunches = "http://obedy.kudela.sk:8080/lunches/lunches";
+var urlLunches = "/lunches/date/";
+var urlOneLunch = "/lunches/exact/date/";
+var urlPostLunches = "/lunches/lunches";
+var urlOlymp = "/orders/monthly/olymp/";
+
 var actualDate = new Date();
 var actualDateChanged = (actualDate.getFullYear()) +
     ('0' + (actualDate.getMonth() + 1)).slice(-2) +
@@ -8,6 +10,9 @@ var actualDateChanged = (actualDate.getFullYear()) +
 urlLunches = urlLunches + actualDateChanged;
 
 $(document).ready(function(){
+
+    var pathname = window.location.pathname;
+    console.log(pathname);
 
     createTable();
 
@@ -23,17 +28,33 @@ $(document).ready(function(){
     });
 
     $("#changebtn").click(function(){
-        location.href = "http://localhost:8080/admin";
+        location.href = "/admin";
     });
 
     $("#daily").click(function(){
-        location.href = "http://localhost:8080/daily";
+        location.href = "/daily";
     });
 
     $("#monthly").click(function(){
-        location.href = "http://localhost:8080/monthly";
+        location.href = "/monthly";
     });
+
+    $("#olymp").click(function () {
+        location.href = "/orders/monthly/olymp/" + getDateMonthBack();
+    })
 });
+
+function getDateMonthBack() {
+    if (actualDate.getMonth() == 0) {
+        return (actualDate.getFullYear() - 1) +
+            ('0' + (actualDate.getMonth() + 12)).slice(-2) +
+            ('0' + (actualDate.getDate())).slice(-2);
+    } else {
+        return (actualDate.getFullYear()) +
+            ('0' + (actualDate.getMonth())).slice(-2) +
+            ('0' + (actualDate.getDate())).slice(-2);
+    }
+}
 
 function createTable() {
     $.get(urlLunches , function(json ) {

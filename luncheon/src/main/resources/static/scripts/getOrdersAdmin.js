@@ -1,9 +1,9 @@
-var urlOrders = "http://obedy.kudela.sk:8080/orders/exact/date/";
-var urlUser = "http://obedy.kudela.sk:8080/users/actual";
-var urlUserId = "http://obedy.kudela.sk:8080/users/id/";
+var urlOrders = "/orders/exact/date/";
+var urlUser = "/users/actual";
+var urlUserId = "/users/id/";
 var ulrUserAdd = "/user/";
-var urlStoreUser = "http://obedy.kudela.sk:8080/orders/store/user";
-var urlAllUsers = "http://obedy.kudela.sk:8080/users/all";
+var urlStoreUser = "/orders/store/user";
+var urlAllUsers = "/users/all";
 var actualDate = new Date();
 var actualDateChanged = (actualDate.getFullYear()) +
     ('0' + (actualDate.getMonth() + 1)).slice(-2) +

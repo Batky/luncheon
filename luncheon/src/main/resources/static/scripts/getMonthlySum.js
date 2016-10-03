@@ -1,4 +1,4 @@
-var urlMonthlySum = "http://obedy.kudela.sk:8080/orders/monthly/summary/";
+var urlMonthlySum = "/orders/monthly/summary/";
 var summaryJson;
 var tableSummary = "#summary";
 

@@ -1,6 +1,6 @@
-var urlDaily = "http://obedy.kudela.sk:8080/orders/daily/";
-var urlDailySum = "http://obedy.kudela.sk:8080/orders/daily/summary/";
-var urlPostLunches = "http://obedy.kudela.sk:8080/lunches/lunches";
+var urlDaily = "/orders/daily/";
+var urlDailySum = "/orders/daily/summary/";
+var urlPostLunches = "/lunches/lunches";
 var dailyJson;
 var summaryJson;
 var tableDaily = "#daily";

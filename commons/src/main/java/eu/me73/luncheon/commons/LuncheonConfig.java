@@ -10,6 +10,7 @@ public class LuncheonConfig {
     private Double employee;
     private Double visitor;
     private Double partial;
+    private String export;
 
     public Integer getOrdering() {
         return ordering;
@@ -49,5 +50,13 @@ public class LuncheonConfig {
 
     public void setPartial(Double partial) {
         this.partial = partial;
+    }
+
+    public String getExport() {
+        return export;
+    }
+
+    public void setExport(String exportName) {
+        this.export = exportName;
     }
 }

@@ -17,6 +17,8 @@ orders/store/user POST - save all changes in user orders
 orders/id/{id} GET - return order by id
 orders/daily/{date} GET - returns daily orders pattern yyyymmdd
 orders/daily/summary/{date} GET - returns daily orders summary pattern yyyymmdd
+orders/monthly/olymp/{date} GET - create and return olymp export file
+orders/monthly/summary/{date} GET - returns monthly summary
 
 users/all GET - return all users in DB
 users/card/{card} GET - user JSON by card

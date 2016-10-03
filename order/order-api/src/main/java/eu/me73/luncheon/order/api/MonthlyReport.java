@@ -2,21 +2,27 @@ package eu.me73.luncheon.order.api;
 
 public class MonthlyReport {
 
+    private String pid;
     private String name;
     private Long count;
     private Double price;
     private Double sum;
+    private Boolean employee;
 
     public MonthlyReport() {
     }
 
-    public MonthlyReport(final String name,
+    public MonthlyReport(final String pid,
+                         final String name,
                          final Long count,
-                         final Double price) {
+                         final Double price,
+                         final Boolean employee) {
         this.name = name;
         this.count = count;
         this.price = price;
         this.sum = Math.round(count * price * 100) / 100.0;
+        this.pid = pid;
+        this.employee = employee;
     }
 
     public String getName() {
@@ -51,12 +57,31 @@ public class MonthlyReport {
         this.sum = sum;
     }
 
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public Boolean getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Boolean employee) {
+        this.employee = employee;
+    }
+
     @Override
     public String toString() {
         return "MonthlyReport{" +
-                "name='" + name + '\'' +
+                "pid='" + pid + '\'' +
+                ", name='" + name + '\'' +
                 ", count=" + count +
                 ", price=" + price +
+                ", sum=" + sum +
+                ", employee=" + employee +
                 '}';
     }
 
@@ -67,17 +92,17 @@ public class MonthlyReport {
 
         MonthlyReport that = (MonthlyReport) o;
 
+        if (pid != null ? !pid.equals(that.pid) : that.pid != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (count != null ? !count.equals(that.count) : that.count != null) return false;
-        return price != null ? price.equals(that.price) : that.price == null;
+        return employee != null ? employee.equals(that.employee) : that.employee == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (count != null ? count.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
+        int result = pid != null ? pid.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (employee != null ? employee.hashCode() : 0);
         return result;
     }
 }

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
@@ -36,4 +35,6 @@ public interface OrderService {
     Collection<DailyReportSummary> createDailySummary(final LocalDate date);
 
     Collection<MonthlyReport> createMonthlyReport(final LocalDate date);
+
+    String createOlympFile(final LocalDate date);
 }

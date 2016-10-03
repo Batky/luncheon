@@ -6,17 +6,25 @@ import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.commons.DateUtils;
 import eu.me73.luncheon.order.api.*;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -145,6 +153,28 @@ public class OrderRestController {
         }
         LocalDate dt = dateUtils.getLocalDate(date);
         return Objects.nonNull(dt) ?  orderService.createMonthlyReport(dt) : null;
+    }
+
+    @RequestMapping(value = "orders/monthly/olymp/{date}", method = RequestMethod.GET)
+    public void downloadOlympFile(HttpServletResponse response, @PathVariable String date) throws IOException {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for olymp file for date {}", date);
+        }
+        LocalDate dt = dateUtils.getLocalDate(date);
+        String fileName = Objects.nonNull(dt) ? orderService.createOlympFile(dt) : null;
+        Objects.requireNonNull(fileName, "Cannot find export olymp file");
+        File file = new File(fileName);
+
+        if(!file.exists()){
+            LOG.warn("Sorry. The export olymp file does not exist");
+        } else {
+            String mimeType = "application/octet-stream";
+            response.setContentType(mimeType);
+            response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
+            response.setContentLength((int) file.length());
+            InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+            FileCopyUtils.copy(inputStream, response.getOutputStream());
+        }
     }
 
 }
