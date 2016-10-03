@@ -3,19 +3,13 @@ package eu.me73.luncheon.order.rest;
 import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileName;
 
 import ch.qos.logback.classic.Logger;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import eu.me73.luncheon.commons.DateUtils;
-import eu.me73.luncheon.order.api.DailyReport;
-import eu.me73.luncheon.order.api.DailyReportSummary;
-import eu.me73.luncheon.order.api.MonthlyReport;
-import eu.me73.luncheon.order.api.Order;
-import eu.me73.luncheon.order.api.OrderService;
-import eu.me73.luncheon.order.api.UserOrder;
-import eu.me73.luncheon.repository.order.OrderEntity;
+import eu.me73.luncheon.order.api.*;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

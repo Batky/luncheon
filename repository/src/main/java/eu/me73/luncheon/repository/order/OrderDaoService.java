@@ -2,10 +2,14 @@ package eu.me73.luncheon.repository.order;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import eu.me73.luncheon.repository.users.UserEntity;
+import org.springframework.data.util.Pair;
 
 public interface OrderDaoService extends JpaRepository<OrderEntity, Long> {
 
@@ -16,11 +20,9 @@ public interface OrderDaoService extends JpaRepository<OrderEntity, Long> {
 //            "where o.date BETWEEN :from_date and :to_date " +
 //            "group by o.user_id " +
 //            "order by o.user_id")
-    @Query("select u.lastname, u.firstName, count(o.meal) " +
+    @Query("select o.user as id, count(o.meal) as count " +
             "from OrderEntity as o " +
-            "inner join UserEntity as u " +
             "where o.date BETWEEN :from_date and :to_date " +
-            "group by u.lastName, u.firstName, o.user " +
-            "order by u.lastName, u.firstName")
-    Collection<MonthlyReportEntity> findMonthlyOrders(@Param("from_date") LocalDate fdate, @Param("to_date") LocalDate tdate);
+            "group by o.user ")
+    Collection<OrderEntity> findByDateGreaterThanEqualAndDateLessThanEqualOrderByDate(@Param(value = "from_date") LocalDate fdate, @Param(value = "to_date") LocalDate tdate);
 }

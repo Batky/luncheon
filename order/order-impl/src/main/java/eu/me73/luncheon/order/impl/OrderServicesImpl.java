@@ -12,9 +12,11 @@ import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.api.UserOrder;
 import eu.me73.luncheon.repository.lunch.LunchEntity;
-import eu.me73.luncheon.repository.order.MonthlyReportEntity;
+import eu.me73.luncheon.repository.order.MonthlyEntity;
 import eu.me73.luncheon.repository.order.OrderDaoService;
 import eu.me73.luncheon.repository.order.OrderEntity;
+import eu.me73.luncheon.repository.users.UserRelation;
+import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,7 +25,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -32,6 +33,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -357,13 +359,29 @@ public class OrderServicesImpl implements OrderService {
     @Override
     public Collection<MonthlyReport> createMonthlyReport(final LocalDate date) {
         Collection<MonthlyReport> monthlyReports = new ArrayList<>();
-        Collection<MonthlyReportEntity> orderEntities = service.findMonthlyOrders(date.withDayOfMonth(1), date.withDayOfMonth(date.lengthOfMonth()));
-        for (MonthlyReportEntity orderEntity : orderEntities) {
-            MonthlyReport monthlyReport = new MonthlyReport();
-            monthlyReport.setName(orderEntity.getLast() + " " + orderEntity.getFirst());
-            monthlyReport.setCount(orderEntity.getCount());
-            monthlyReports.add(monthlyReport);
+        Collection<OrderEntity> maps = service.findByDateGreaterThanEqualAndDateLessThanEqualOrderByDate(date.withDayOfMonth(1), date.withDayOfMonth(date.lengthOfMonth()));
+
+        for (OrderEntity map : maps) {
+            LOG.info("");
         }
+//        for (HashMap<Long, Long> map : maps) {
+//            for (Map.Entry<Long, Long> entry : map.entrySet()) {
+//                MonthlyReport monthlyReport = new MonthlyReport();
+//                User user = userService.getUserById(entry.getKey());
+//                monthlyReport.setName(user.getLongName());
+//                monthlyReport.setCount(entry.getValue());
+//                double price = config.getEmployee();
+//                if (user.getRelation().equals(UserRelation.PARTIAL)) {
+//                    price = config.getPartial();
+//                } else {
+//                    if (user.getRelation().equals(UserRelation.VISITOR)) {
+//                        price = config.getVisitor();
+//                    }
+//                }
+//                monthlyReport.setPrice(price);
+//                monthlyReports.add(monthlyReport);
+//            }
+//        }
         return monthlyReports;
     }
 

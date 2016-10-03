@@ -3,7 +3,7 @@ package eu.me73.luncheon.order.api;
 public class MonthlyReport {
 
     private String name;
-    private Integer count;
+    private Long count;
     private Double price;
 
     public MonthlyReport() {
@@ -17,11 +17,11 @@ public class MonthlyReport {
         this.name = name;
     }
 
-    public Integer getCount() {
+    public Long getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
+    public void setCount(Long count) {
         this.count = count;
     }
 
