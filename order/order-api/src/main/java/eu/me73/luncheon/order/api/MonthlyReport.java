@@ -5,8 +5,18 @@ public class MonthlyReport {
     private String name;
     private Long count;
     private Double price;
+    private Double sum;
 
     public MonthlyReport() {
+    }
+
+    public MonthlyReport(final String name,
+                         final Long count,
+                         final Double price) {
+        this.name = name;
+        this.count = count;
+        this.price = price;
+        this.sum = Math.round(count * price * 100) / 100.0;
     }
 
     public String getName() {
@@ -31,6 +41,14 @@ public class MonthlyReport {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getSum() {
+        return sum;
+    }
+
+    public void setSum(Double sum) {
+        this.sum = sum;
     }
 
     @Override

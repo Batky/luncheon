@@ -20,7 +20,7 @@ $(document).ready(function(){
     });
     $("#datetimepicker1").change(function () {
         fillModalForm(fromPickerDate($("#datetimepicker1").val()), true);
-    })
+    });
 
     $("#changebtn").click(function(){
         location.href = "http://localhost:8080/admin";
@@ -28,6 +28,10 @@ $(document).ready(function(){
 
     $("#daily").click(function(){
         location.href = "http://localhost:8080/daily";
+    });
+
+    $("#monthly").click(function(){
+        location.href = "http://localhost:8080/monthly";
     });
 });
 

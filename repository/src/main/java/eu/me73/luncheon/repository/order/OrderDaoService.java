@@ -15,14 +15,10 @@ public interface OrderDaoService extends JpaRepository<OrderEntity, Long> {
 
     Collection<OrderEntity> findByUserAndDateGreaterThanEqualAndDateLessThanEqualOrderByDate(Long id, LocalDate from, LocalDate to);
     Collection<OrderEntity> findByDateOrderByUser(LocalDate date);
-//    @Query("select o.user_id, count(o.meal) " +
-//            "from OrderEntity as o " +
-//            "where o.date BETWEEN :from_date and :to_date " +
-//            "group by o.user_id " +
-//            "order by o.user_id")
+
     @Query("select o.user as id, count(o.meal) as count " +
             "from OrderEntity as o " +
             "where o.date BETWEEN :from_date and :to_date " +
             "group by o.user ")
-    Collection<OrderEntity> findByDateGreaterThanEqualAndDateLessThanEqualOrderByDate(@Param(value = "from_date") LocalDate fdate, @Param(value = "to_date") LocalDate tdate);
+    Collection<Object[]> findByDateGreaterThanEqualAndDateLessThanEqualOrderByDate(@Param(value = "from_date") LocalDate fdate, @Param(value = "to_date") LocalDate tdate);
 }

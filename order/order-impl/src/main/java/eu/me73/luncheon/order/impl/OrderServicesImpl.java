@@ -12,7 +12,6 @@ import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.api.UserOrder;
 import eu.me73.luncheon.repository.lunch.LunchEntity;
-import eu.me73.luncheon.repository.order.MonthlyEntity;
 import eu.me73.luncheon.repository.order.OrderDaoService;
 import eu.me73.luncheon.repository.order.OrderEntity;
 import eu.me73.luncheon.repository.users.UserRelation;
@@ -22,18 +21,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -359,30 +350,31 @@ public class OrderServicesImpl implements OrderService {
     @Override
     public Collection<MonthlyReport> createMonthlyReport(final LocalDate date) {
         Collection<MonthlyReport> monthlyReports = new ArrayList<>();
-        Collection<OrderEntity> maps = service.findByDateGreaterThanEqualAndDateLessThanEqualOrderByDate(date.withDayOfMonth(1), date.withDayOfMonth(date.lengthOfMonth()));
 
-        for (OrderEntity map : maps) {
-            LOG.info("");
+        Collection<Object[]> tuples = service.findByDateGreaterThanEqualAndDateLessThanEqualOrderByDate(date.withDayOfMonth(1), date.withDayOfMonth(date.lengthOfMonth()));
+
+        for(Object[] tuple : tuples) {
+            User user = userService.getUserById((Long) tuple[0]);
+            double price = config.getEmployee();
+            if (user.getRelation().equals(UserRelation.PARTIAL)) {
+                price = config.getPartial();
+            } else {
+                if (user.getRelation().equals(UserRelation.VISITOR)) {
+                    price = config.getVisitor();
+                }
+            }
+            MonthlyReport monthlyReport = new MonthlyReport(
+                    user.getLongName(),
+                    (Long) tuple[1],
+                    price
+            );
+            monthlyReports.add(monthlyReport);
         }
-//        for (HashMap<Long, Long> map : maps) {
-//            for (Map.Entry<Long, Long> entry : map.entrySet()) {
-//                MonthlyReport monthlyReport = new MonthlyReport();
-//                User user = userService.getUserById(entry.getKey());
-//                monthlyReport.setName(user.getLongName());
-//                monthlyReport.setCount(entry.getValue());
-//                double price = config.getEmployee();
-//                if (user.getRelation().equals(UserRelation.PARTIAL)) {
-//                    price = config.getPartial();
-//                } else {
-//                    if (user.getRelation().equals(UserRelation.VISITOR)) {
-//                        price = config.getVisitor();
-//                    }
-//                }
-//                monthlyReport.setPrice(price);
-//                monthlyReports.add(monthlyReport);
-//            }
-//        }
-        return monthlyReports;
+        return monthlyReports
+                .stream()
+                .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
+                .sorted((o1, o2) -> Double.compare(o1.getPrice(),o2.getPrice()))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private boolean lunchInOrders(final Collection<Order> orders, final Lunch lunch) {
