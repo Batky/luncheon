@@ -10,11 +10,14 @@ var actualDateChanged = (actualDate.getFullYear()) +
     ('0' + (actualDate.getDate())).slice(-2);
 var user;
 var lunchesJson;
+var lastSelectedRow;
 
 $(document).ready(function(){
 
     $("#datetimepicker")
         .val(toPickerDate(dateToRestString(new Date())));
+
+    $("#tableDate").text($("#datetimepicker").val());
 
     $("#datetimepicker")
         .change(function () {
@@ -22,6 +25,7 @@ $(document).ready(function(){
                 .find("tr")
                 .remove();
             var valueDate = $("#datetimepicker").val();
+            $("#tableDate").text(valueDate);
             actualDateChanged = fromPickerDate(valueDate);
             createTable(user);
         });
@@ -45,10 +49,15 @@ $(document).ready(function(){
     $.getJSON(urlUser, function (json) {
         user = json;
         $("#userHeader").text("Zoznam obedov - " + user.longName);
+        $("#tableName").text(user.longName);
         createTable(user);
     });
 
     $(document).on('click', '#users > tbody > tr',  function() {
+
+        $(lastSelectedRow).removeClass("selectedRow");
+        $(this).addClass("selectedRow");
+        lastSelectedRow = $(this);
 
         $("#day1")
             .find("tr")
@@ -58,26 +67,10 @@ $(document).ready(function(){
         $.getJSON(urlUserId+ num[0], function (json) {
             user = json;
             $("#userHeader").text("Zoznam obedov - " + user.longName);
+            $("#tableName").text(user.longName);
             createTable(user);
         });
     });
-
-    var top = $('.floating').offset().top;
-    // $('.trigger').click(function () {
-    //     $('.static').css('position','');
-    //     $('.left2').toggle('slow',function(){
-    //         top = $('.static').offset().top;
-    //     });
-    //
-    //
-    // });
-
-    // $(document).scroll(function(){
-    //     $('.floating').css('position','');
-    //     top = $('.floating').offset().top;
-    //     $('.floating').css('position','absolute');   $('.floating').css('top',Math.max(top,$(document).scrollTop()));
-    // });
-
 });
 
 function createTableUsers(json) {

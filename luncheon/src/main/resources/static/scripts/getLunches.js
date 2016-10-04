@@ -1,7 +1,6 @@
 var urlLunches = "/lunches/date/";
 var urlOneLunch = "/lunches/exact/date/";
 var urlPostLunches = "/lunches/lunches";
-var urlOlymp = "/orders/monthly/olymp/";
 
 var actualDate = new Date();
 var actualDateChanged = (actualDate.getFullYear()) +
@@ -186,17 +185,22 @@ function postLunches() {
         lunches.push(lunchSoup);
     }
     var jsonLunches = JSON.stringify(lunches);
-    $.ajax({
-        url:urlPostLunches,
-        type:"POST",
-        headers: {
-            "Accept" : "application/json; charset=utf-8",
-            "Content-Type": "application/json; charset=utf-8"
-        },
-        data:jsonLunches,
-        dataType:"json"
-    });
-    location.reload();
+    $.when(
+        $.ajax({
+            url:urlPostLunches,
+            type:"POST",
+            headers: {
+                "Accept" : "application/json; charset=utf-8",
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            data:jsonLunches,
+            dataType:"json"
+        })
+    ).then(
+        function () {
+            location.reload();
+        }
+    );
 }
 
 function lunch(id, soup, date, description) {

@@ -26,22 +26,31 @@
     <hr>
 </div>
 
-<div class="container floating">
-    <div class="col-md-4">
-        <table class="table table-condensed table-striped" id="users">
-            <tbody><tr><th class="danger">Zoznam užívateľov</th></tr></tbody>
-        </table>
-    </div>
-    <div class="col-md-8">
-        <blockquote>
-            <p id="table1"></p>
-            <button type="submit" class="btn btn-danger btn-xs" id="btnDel" name="delButton">Zrus obed</button>
-            <button type="submit" class="btn btn-success btn-xs" id="btnSave" name="delButton">Ulož zmeny</button>
-        </blockquote>
-        <table class="table table-condensed" id="day1">
-            <tbody>
-            </tbody>
-        </table>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table table-condensed table-striped" id="users">
+                <tbody>
+                <tr>
+                    <th class="danger">Zoznam užívateľov</th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-8">
+            <div class="panel" data-spy="affix" data-offset-top="300">
+            <blockquote >
+                <p id="tableDate"></p>
+                <p id="tableName"></p>
+                <button type="submit" class="btn btn-danger btn-xs" id="btnDel" name="delButton">Zrus obed</button>
+                <button type="submit" class="btn btn-success btn-xs" id="btnSave" name="delButton">Ulož zmeny</button>
+            </blockquote>
+            <table class="table table-condensed" id="day1">
+                <tbody>
+                </tbody>
+            </table>
+            </div>
+        </div>
     </div>
 </div>
 
