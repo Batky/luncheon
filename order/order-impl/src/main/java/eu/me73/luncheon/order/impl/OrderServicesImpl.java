@@ -53,7 +53,7 @@ public class OrderServicesImpl implements OrderService {
     LuncheonConfig config;
 
     private  Map<Long, String> numberingMap = new HashMap<>();
-    private final String [] soupStrings = {"A","B"};
+    private final String [] soupStrings = {"1","2"};
     private final String [] mealStrings = {"1","2","3","4","5"};
 
     @Override
@@ -358,6 +358,12 @@ public class OrderServicesImpl implements OrderService {
 
         for(Object[] tuple : tuples) {
             User user = userService.getUserById((Long) tuple[0]);
+            if (Objects.isNull(user)) {
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("Cannot find user with id {}", tuple[0]);
+                }
+                continue;
+            }
             double price = config.getEmployee();
             boolean employee = true;
             if (user.getRelation().equals(UserRelation.PARTIAL)) {

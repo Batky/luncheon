@@ -48,7 +48,6 @@ $(document).ready(function(){
 
     $.getJSON(urlUser, function (json) {
         user = json;
-        $("#userHeader").text("Zoznam obedov - " + user.longName);
         $("#tableName").text(user.longName);
         createTable(user);
     });
@@ -66,7 +65,6 @@ $(document).ready(function(){
         var num = str.split("@",1);
         $.getJSON(urlUserId+ num[0], function (json) {
             user = json;
-            $("#userHeader").text("Zoznam obedov - " + user.longName);
             $("#tableName").text(user.longName);
             createTable(user);
         });

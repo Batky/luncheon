@@ -10,9 +10,6 @@ urlLunches = urlLunches + actualDateChanged;
 
 $(document).ready(function(){
 
-    var pathname = window.location.pathname;
-    console.log(pathname);
-
     createTable();
 
     $("#logout").click(function(){

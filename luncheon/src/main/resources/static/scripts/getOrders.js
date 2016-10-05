@@ -11,11 +11,21 @@ var lunchesJson;
 var tableName = "#day";
 var tableHeader = "#table";
 var tableBtn = "#btn";
+var changeWasMade = false;
+var succesfull = true;
 
 $(document).ready(function(){
 
     $("#logout").click(function(){
-        location.href = "/logout";
+        if (changeWasMade) {
+            if (confirm("Obedy boli zmenené prajete si ich uložiť?")) {
+                gatherOrders();
+            } else {
+                location.href = "/logout";
+            }
+        } else {
+            location.href = "/logout";
+        }
     });
 
     $("#store").click(function(){
@@ -30,6 +40,10 @@ $(document).ready(function(){
 
     setClicks();
 
+    $(document).on('click', "input[name*='rdbtn']" ,function () {
+        changeWasMade = true;
+    });
+
 });
 
 function create(json) {
@@ -42,14 +56,21 @@ function create(json) {
     var mealIndex = 1;
     var day = 1;
     var textDate = lastDate[2] + "." + lastDate[1] + "." + lastDate[0];
-    $(tableHeader+day).text("Dátum: "+textDate);
-    $(tableHeader+day).parent().show();
-    $(tableName+day+" > tbody:last-child")
-        .append("<tr><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th><th class='danger'>Objednávka</th></tr>");
+    if (lunchesJson[0].changeable) {
+        $(tableHeader + day).text("Dátum: " + textDate);
+        $(tableHeader + day).parent().show();
+        $(tableName + day + " > tbody:last-child")
+            .append("<tr><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th><th class='danger'>Objednávka</th></tr>");
+    }
     var datepart = 1;
     for (index = 0; index < lunchesJson.length; index++) {
         var lunch = lunchesJson[index].lunch;
         var changeable = lunchesJson[index].changeable;
+        if (!changeable) {
+            day = 0;
+            datepart = 0;
+            continue;
+        }
         var ordered = lunchesJson[index].ordered;
         if (compareArrayDate(lunch.date, lastDate)) {
             if (lunch.soup) {
@@ -57,13 +78,14 @@ function create(json) {
                 if (ordered) {
                     checked = "checked"
                 }
-                disabled = "";
-                if (!changeable) {
-                    disabled = " disabled";
-                    $(tableBtn+day).attr("disabled", true);
-                    // $(tableName+day).attr("hidden", true);
-                }
-                var radios = "<input type='radio' name='soup" + datepart + "' " + checked + disabled + ">";
+                // disabled = "";
+                // if (!changeable) {
+                //     disabled = " disabled";
+                //     $(tableBtn+day).attr("disabled", true);
+                //     // $(tableName+day).attr("hidden", true);
+                // }
+                var radioname = 'rdbtnsoup' + datepart;
+                var radios = "<input type='radio' name='" + radioname + "'" + checked + " >";
                 if (soupIndex === 1) {
                     $(tableName+day+" > tbody:last-child")
                         .append("<tr><td colspan='3' class='info'>Polievky</td></tr>");
@@ -77,17 +99,21 @@ function create(json) {
                         "<td width='10%'>" + radios + "</td>" +
                         "</tr>");
                 soupIndex++;
+                if (ordered) {
+                    $(document).find("input[name='"+radioname+"']").prop(checked, true);
+                }
             } else {
                 checked = "";
                 if (ordered) {
                     checked = "checked"
                 }
-                disabled = "";
-                if (!changeable) {
-                    disabled = " disabled"
-                }
+                // disabled = "";
+                // if (!changeable) {
+                //     disabled = " disabled"
+                // }
 
-                var radiom = "<input type='radio' name='meal" + datepart + "' " + checked + disabled + ">";
+                var radioname = 'rdbtnmeal' + datepart;
+                var radiom = "<input type='radio' name='" + radioname + "'" + checked + " >";
                 if (mealIndex === 1) {
                     $(tableName+day+" > tbody:last-child")
                         .append("<tr><td colspan='3' class='info'>Hlavné jedlá</td></tr>");
@@ -100,6 +126,9 @@ function create(json) {
                         "<td>" + lunch.description + "</td>" +
                         "<td width='10%'>" + radiom + "</td>" + "</tr>");
                 mealIndex++;
+                if (ordered) {
+                    $(document).find("input[name='"+radioname+"']").prop(checked, true);
+                }
             }
         } else {
             datepart++;
@@ -117,11 +146,12 @@ function create(json) {
                 if (ordered) {
                     checked = "checked"
                 }
-                disabled = "";
-                if (!changeable) {
-                    disabled = " disabled"
-                }
-                var radios1 = "<input type='radio' name='soup" + datepart + "' " + checked + disabled + ">";
+                // disabled = "";
+                // if (!changeable) {
+                //     disabled = " disabled"
+                // }
+                var radioname = 'rdbtnsoup' + datepart;
+                var radios1 = "<input type='radio' name='" + radioname + "'" + checked + " >";
                 if (soupIndex === 1) {
                     $(tableName+day+" > tbody:last-child")
                         .append("<tr><td colspan='3' class='info'>Polievky</td></tr>");
@@ -135,16 +165,20 @@ function create(json) {
                         "<td width='10%'>" + radios1 + "</td>" +
                         "</tr>");
                 soupIndex++;
+                if (ordered) {
+                    $(document).find("input[name='"+radioname+"']").prop(checked, true);
+                }
+
             } else {
                 checked = "";
                 if (ordered) {
                     checked = "checked"
                 }
-                disabled = "";
-                if (!changeable) {
-                    disabled = " disabled"
-                }
-                var radiom1 = "<input type='radio' name='meal" + datepart + "' " + checked + disabled + ">";
+                // disabled = "";
+                // if (!changeable) {
+                //     disabled = " disabled"
+                // }
+                var radiom1 = "<input type='radio' name='" + radioname + "'" + checked + " >";;
                 if (mealIndex === 1) {
                     $(tableName+day+" > tbody:last-child")
                         .append("<tr><td colspan='3' class='info'>Hlavné jedlá</td></tr>");
@@ -158,6 +192,10 @@ function create(json) {
                         "<td width='10%'>"+radiom1+"</td>" +
                         "</tr>");
                 mealIndex++;
+                if (ordered) {
+                    $(document).find("input[name='"+radioname+"']").prop(checked, true);
+                }
+
             }
         }
     }
@@ -176,6 +214,7 @@ function compareArrayDate(dateArray1, dateArray2) {
 
 function saveOrders() {
     var jsonLunchesOrders = JSON.stringify(lunchesJson);
+    $.when (
     $.ajax({
         url: urlStoreUser,
         type: "POST",
@@ -188,15 +227,27 @@ function saveOrders() {
         complete: function (data) {
             if (data.status == 201) {
                 alert("Zmeny na obedoch sa úspešne uložili");
-                location.reload();
+                succesfull = true;
             } else {
                 alert("Obed sa nepodarilo ulozit, skontroluj vyber !");
+                succesfull = false;
             }
+        }
+    })
+    ).then(function () {
+        if (succesfull) {
+            location.href = "/logout";
         }
     });
 }
 function gatherOrders() {
     var index = 0;
+    for(var i=0;i<lunchesJson.length;i++) {
+        if (lunchesJson[i].changeable) {
+            break;
+        }
+        index++;
+    }
     $('input:radio').each(function () {
         lunchesJson[index].ordered = !!$(this).prop('checked');
         index++;
@@ -205,6 +256,14 @@ function gatherOrders() {
 }
 
 function deleteOrders(number) {
+    var counter = 0;
+    for(var i=0;i<lunchesJson.length;i++) {
+        if (lunchesJson[i].changeable) {
+            break;
+        }
+        counter++;
+    }
+    number = number + (counter / 7);
     var findDay = 1;
     var firstDate = lunchesJson[0].lunch.date;
     for(var i=0;i<lunchesJson.length;i++){
@@ -220,7 +279,38 @@ function deleteOrders(number) {
             }
         }
     }
-    saveOrders();
+    changeWasMade = true;
+    $("#day1")
+        .find("tr")
+        .remove();
+    $("#day2")
+        .find("tr")
+        .remove();
+    $("#day3")
+        .find("tr")
+        .remove();
+    $("#day4")
+        .find("tr")
+        .remove();
+    $("#day5")
+        .find("tr")
+        .remove();
+    $("#day6")
+        .find("tr")
+        .remove();
+    $("#day7")
+        .find("tr")
+        .remove();
+    $("#day8")
+        .find("tr")
+        .remove();
+    $("#day9")
+        .find("tr")
+        .remove();
+    $("#day10")
+        .find("tr")
+        .remove();
+    create(lunchesJson);
 }
 
 function setClicks() {

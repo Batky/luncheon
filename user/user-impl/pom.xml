@@ -15,6 +15,10 @@
             <groupId>eu.me73.luncheon</groupId>
             <artifactId>user-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>eu.me73.luncheon</groupId>
+            <artifactId>commons</artifactId>
+        </dependency>
     </dependencies>
 
 

@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Denný sumár</title>
-    <link rel="stylesheet" type="text/css" href="../css/luncheon.css">
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/luncheon.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../css/luncheon-print.css" media="print">
 </head>
 <body>
 
 <div class="container visible-print-block">
     <div class="page-header">
-        <h1 id="printheader"></h1>
+        <h3 id="printheader"></h3>
     </div>
 </div>
 <div class="container hidden-print">
@@ -22,12 +23,12 @@
         <label for="datetimepicker" class="lead">Zoznam obedov na deň:</label>
         <input type='date' class="form-control" id='datetimepicker'/>
     </div>
-    <hr>
-    <button type="submit" class="btn btn-danger" id="logout">Odhlás ma</button>
+    <hr class="hidden-print">
     <button type="submit" class="btn btn-warning" id="backbtn">Späť</button>
+    <button type="submit" class="btn btn-danger pull-right" id="logout">Odhlás ma</button>
 </div>
-<div class="container">
-    <hr>
+<div class="container hidden-print">
+    <hr class="hidden-print">
 </div>
 <div class="container">
     <table class="table table-condensed table-striped" id="daily">
