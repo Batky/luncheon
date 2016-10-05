@@ -59,11 +59,6 @@ body {
     border-top-right-radius: 0;
 }
 
-.affix {
-    top: 15px;
-    width: 748px;
-}
-
 .selectedRow {
     color: red;
     font-weight: bold;

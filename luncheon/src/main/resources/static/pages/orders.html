@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aktuálne obedy pre užívateľa</title>
     <link rel="stylesheet" type="text/css" href="../css/luncheon.css">
+    <link rel="stylesheet" type="text/css" href="../css/luncheon-ordering-affix.css">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 </head>
 <body>
 
 
-<div class="container" >
+<div class="container" data-spy="affix" data-offset-top="50">
     <div class="col-md-12">
-    <!--<div class="panel"data-spy="affix" data-offset-top="300">-->
+    <div class="panel" >
     <div class="page-header">
         <h1 id="userHeader">Zoznam obedov</h1>
     </div>
     <p class="lead">Zoznam obedov pre aktuálny týždeň a nasledujúci najbližší týždeň</p>
     <button type="submit" class="btn btn-info" id="store">Ulož zmeny</button>
     <button type="submit" class="btn btn-danger pull-right" id="logout">Odhlás ma</button>
-    <!--</div>-->
+    </div>
     </div>
 </div>
 <div class="container">
