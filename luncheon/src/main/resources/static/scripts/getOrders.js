@@ -19,7 +19,7 @@ $(document).ready(function(){
     $("#logout").click(function(){
         if (changeWasMade) {
             if (confirm("Obedy boli zmenené prajete si ich uložiť?")) {
-                gatherOrders();
+                gatherOrders(true);
             } else {
                 location.href = "/logout";
             }
@@ -29,12 +29,13 @@ $(document).ready(function(){
     });
 
     $("#store").click(function(){
-        gatherOrders();
+        gatherOrders(true);
     });
 
     $.getJSON(urlUser, function (json) {
         user = json;
-        $("#userHeader").text("Zoznam obedov - " + user.longName);
+        $("#userHeader").text("Zoznam obedov: " + user.longName);
+        $("#userHeaderNav").text("Zoznam obedov: " + user.longName);
         createTable(user);
     });
 
@@ -240,7 +241,7 @@ function saveOrders() {
         }
     });
 }
-function gatherOrders() {
+function gatherOrders(save) {
     var index = 0;
     for(var i=0;i<lunchesJson.length;i++) {
         if (lunchesJson[i].changeable) {
@@ -252,10 +253,13 @@ function gatherOrders() {
         lunchesJson[index].ordered = !!$(this).prop('checked');
         index++;
     });
-    saveOrders();
+    if (save) {
+        saveOrders();
+    }
 }
 
 function deleteOrders(number) {
+    gatherOrders(false);
     var counter = 0;
     for(var i=0;i<lunchesJson.length;i++) {
         if (lunchesJson[i].changeable) {
