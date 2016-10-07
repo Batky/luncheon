@@ -6,6 +6,10 @@ var actualDate = new Date();
 var actualDateChanged = (actualDate.getFullYear()) +
     ('0' + (actualDate.getMonth() + 1)).slice(-2) +
     ('0' + (actualDate.getDate())).slice(-2);
+var actualDateArray = [];
+actualDateArray[0] = actualDate.getFullYear();
+actualDateArray[1] = actualDate.getMonth() + 1;
+actualDateArray[2] = actualDate.getDate();
 var user;
 var lunchesJson;
 var tableName = "#day";
@@ -34,8 +38,7 @@ $(document).ready(function(){
 
     $.getJSON(urlUser, function (json) {
         user = json;
-        $("#userHeader").text("Zoznam obedov: " + user.longName);
-        $("#userHeaderNav").text("Zoznam obedov: " + user.longName);
+        $("#userHeaderName").text(user.longName);
         createTable(user);
     });
 
@@ -47,8 +50,24 @@ $(document).ready(function(){
 
 });
 
+function setHeader(json) {
+    for (var i=0; i< json.length; i++) {
+        if (compareArrayDate(json[i].lunch.date, actualDateArray)) {
+            if (json[i].ordered) {
+                $("#userHeader").text("Na dnes máš objednané:");
+                if (json[i].lunch.soup) {
+                    $("#userHeaderSoup").text("Polievka: " + json[i].lunch.description);
+                } else {
+                    $("#userHeaderMeal").text("Hlavné jedlo: " + json[i].lunch.description);
+                }
+            }
+        }
+    }
+}
+
 function create(json) {
     lunchesJson = json;
+    setHeader(json);
     var checked = "";
     var disabled = "";
     var index;

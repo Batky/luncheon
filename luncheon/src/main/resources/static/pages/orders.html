@@ -12,17 +12,19 @@
 
 <!--background-color:beige;color:#444444;-->
 <div class="container-fluid" style="height:200px;">
-    <h1 class="text-center">Zoznam obedov</h1>
-    <h3 class="text-center" id="userHeader"></h3>
-    <p class="text-center">Aktuálny zoznam obedov, ktoré je možné si v túto chvíľu objednať.</p>
-    <p class="text-center">Pri akejkoľvek zmene obeda, musíte tieto zmeny uložiť.</p>
+    <h1 class="text-center" id="userHeaderName">Zoznam obedov pre </h1>
+    <p class="text-center" id="userHeader" style="font-size: 18px">Na dnes nemáš nič objednané</p>
+    <p class="text-center" id="userHeaderSoup" style="font-size: 20px"></p>
+    <p class="text-center" id="userHeaderMeal" style="font-size: 20px"></p>
+    <!--<p class="text-center">Aktuálny zoznam obedov, ktoré je možné si v túto chvíľu objednať.</p>-->
+    <!--<p class="text-center">Pri akejkoľvek zmene obeda, musíte tieto zmeny uložiť.</p>-->
 </div>
 
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <p class="navbar-brand" id="userHeaderNav">ZOZNAM OBEDOV - </p>
-        </div>
+        <!--<div class="navbar-header">-->
+            <!--<p class="navbar-brand" id="userHeaderNav">ZOZNAM OBEDOV - </p>-->
+        <!--</div>-->
         <ul class="nav navbar-nav">
             <li><a href="#" id="store"><span class="glyphicon glyphicon-save"></span>Ulož zmeny</a></li>
             <!--<li class="active"><a href="#">Home</a></li>-->
@@ -30,7 +32,7 @@
             <!--<li><a href="#">Page 2</a></li>-->
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span>Odhlásenie</a></li>
+            <li class="active"><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span>Odhlásenie</a></li>
         </ul>
     </div>
 </nav>

@@ -5,25 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aktualne obedy</title>
     <link rel="stylesheet" type="text/css" href="../css/luncheon.css">
+    <link rel="stylesheet" type="text/css" href="../css/luncheon-ordering-affix.css">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 </head>
 <body>
 
-<div class="container">
-    <div class="page-header">
-        <h1>Zoznam obedov</h1>
+<!--background-color:beige;color:#444444;-->
+<div class="container-fluid" style="height:200px;">
+    <h1 class="text-center">Zoznam obedov</h1>
+    <h3 class="text-center" id="userHeader"></h3>
+    <p class="text-center">Zoznam obedov pre aktuálny týždeň a nasledujúci najbližší týždeň</p>
+    <!--<p class="text-center"></p>-->
+</div>
+
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
+    <div class="container-fluid">
+        <!--<div class="navbar-header">-->
+            <!--<p class="navbar-brand" id="userHeaderNav">Zoznam obedov</p>-->
+        <!--</div>-->
+        <ul class="nav navbar-nav">
+            <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span>Pridaj alebo oprav obed</a></li>
+            <li><a href="#" id="daily"><span class="glyphicon glyphicon-list-alt"></span> Denný prehľad</a></li>
+            <li><a href="#" id="monthly"><span class="glyphicon glyphicon-calendar"></span> Mesačný prehľad</a></li>
+            <li><a href="#" id="olymp"><span class="glyphicon glyphicon-floppy-save"></span> Export do olympu</a></li>
+            <li><a href="#" id="changebtn"><span class="glyphicon glyphicon-cutlery"></span> Zmena obedu stravníka</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span> Odhlásenie</a></li>
+        </ul>
     </div>
-    <p class="lead">Zoznam obedov pre aktuálny týždeň a nasledujúci najbližší týždeň</p>
-    <button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#myModal">Pridaj alebo oprav obed</button>
-    <button type="submit" class="btn btn-info" id="daily">Denný prehľad</button>
-    <button type="submit" class="btn btn-info" id="monthly">Mesačný prehľad</button>
-    <button type="submit" class="btn btn-info" id="olymp">Export do olympu</button>
-    <button type="submit" class="btn btn-success" id="changebtn">Zmena obedu stravníka</button>
-    <button type="submit" class="btn btn-danger pull-right" id="logout">Odhlás ma</button>
-</div>
-<div class="container">
-    <hr>
-</div>
+</nav>
+
+<!--<div class="container">-->
+    <!--<div class="page-header">-->
+        <!--<h1>Zoznam obedov</h1>-->
+    <!--</div>-->
+    <!--<p class="lead">Zoznam obedov pre aktuálny týždeň a nasledujúci najbližší týždeň</p>-->
+    <!--<button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#myModal">Pridaj alebo oprav obed</button>-->
+    <!--<button type="submit" class="btn btn-info" id="daily">Denný prehľad</button>-->
+    <!--<button type="submit" class="btn btn-info" id="monthly">Mesačný prehľad</button>-->
+    <!--<button type="submit" class="btn btn-info" id="olymp">Export do olympu</button>-->
+    <!--<button type="submit" class="btn btn-success" id="changebtn">Zmena obedu stravníka</button>-->
+    <!--<button type="submit" class="btn btn-danger pull-right" id="logout">Odhlás ma</button>-->
+<!--</div>-->
+<!--<div class="container">-->
+    <!--<hr>-->
+<!--</div>-->
 <div class="container">
     <blockquote style="display: none">
         <p id="table1"></p>
