@@ -6,6 +6,8 @@
     <title>Mesačný sumár</title>
     <link rel="stylesheet" type="text/css" href="../css/luncheon.css">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/luncheon-ordering-affix.css">
+    <link rel="stylesheet" type="text/css" href="../themes/smoothness/jquery-ui.min.css">
 </head>
 <body>
 
@@ -14,21 +16,56 @@
         <h1 id="printheader"></h1>
     </div>
 </div>
-<div class="container hidden-print">
-    <div class="page-header">
-        <h1>Mesačný prehľad obedov</h1>
-    </div>
-    <div class='input-group date'>
-        <label for="datetimepicker" class="lead">Zoznam obedov na mesiac:</label>
-        <input type='date' class="form-control" id='datetimepicker'/>
-    </div>
-    <hr>
-    <button type="submit" class="btn btn-warning" id="backbtn">Späť</button>
-    <button type="submit" class="btn btn-danger pull-right" id="logout">Odhlás ma</button>
+<div class="container-fluid hidden-print" style="height:200px;">
+    <h1 class="text-center">Mesačný prehľad obedov</h1>
+    <!--<h3 class="text-center" id="userHeader"></h3>-->
+    <!--<p class="text-center">Zoznam obedov pre aktuálny týždeň a nasledujúci najbližší týždeň</p>-->
+    <!--<p class="text-center"></p>-->
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4">
+            <div class="input-group">
+                <input type="text" class="form-control" id='datetimepicker' />
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button" id="select">Vyber</button>
+                </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+    <!--<div class='input-group date' style="text-align: center">-->
+    <!--<label for="datetimepicker" class="lead">Zoznam obedov na deň:</label>-->
+    <!--<input type='date' class="form-control" id='datetimepicker' style="align-content: center"/>-->
+    <!--</div>-->
 </div>
-<div class="container">
-    <hr>
-</div>
+<nav class="navbar navbar-inverse hidden-print" data-spy="affix" data-offset-top="197">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li><a href="#" id="backbtn"><span class="glyphicon glyphicon-arrow-left"></span> Späť</a></li>
+            <li><a href="#" id="olymp"><span class="glyphicon glyphicon-floppy-save"></span> Export do olympu</a></li>
+            <!--<li><a href="#" id="daily"><span class="glyphicon glyphicon-list-alt"></span> Denný prehľad</a></li>-->
+            <!--<li><a href="#" id="monthly"><span class="glyphicon glyphicon-calendar"></span> Mesačný prehľad</a></li>-->
+            <!--<li><a href="#" id="olymp"><span class="glyphicon glyphicon-floppy-save"></span> Export do olympu</a></li>-->
+            <!--<li><a href="#" id="changebtn"><span class="glyphicon glyphicon-cutlery"></span> Zmena obedu stravníka</a></li>-->
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span> Odhlásenie</a></li>
+        </ul>
+    </div>
+</nav>
+<!--<div class="container hidden-print">-->
+    <!--<div class="page-header">-->
+        <!--<h1>Mesačný prehľad obedov</h1>-->
+    <!--</div>-->
+    <!--<div class='input-group date'>-->
+        <!--<label for="datetimepicker" class="lead">Zoznam obedov na mesiac:</label>-->
+        <!--<input type='date' class="form-control" id='datetimepicker'/>-->
+    <!--</div>-->
+    <!--<hr>-->
+    <!--<button type="submit" class="btn btn-warning" id="backbtn">Späť</button>-->
+    <!--<button type="submit" class="btn btn-danger pull-right" id="logout">Odhlás ma</button>-->
+<!--</div>-->
+<!--<div class="container">-->
+    <!--<hr>-->
+<!--</div>-->
 <div class="container">
     <table class="table table-condensed table-striped" id="summary">
         <tbody></tbody>
@@ -36,6 +73,7 @@
 </div>
 <script src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery-ui.js"></script>
 <script src="../scripts/getMonthlySum.js"></script>
 </body>
 </html>

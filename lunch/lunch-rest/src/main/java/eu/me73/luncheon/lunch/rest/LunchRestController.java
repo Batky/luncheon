@@ -87,6 +87,15 @@ public class LunchRestController {
         return Objects.nonNull(dt) ? lunchService.getAllBetweenDates(dateUtils.getFirstDate(dt), dateUtils.getLastDate(dt)) : null;
     }
 
+    @RequestMapping(value = "lunches/week/{date}", method = RequestMethod.GET)
+    public Collection<Lunch> getLunchesFromDateForWeek(@PathVariable String date) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Request for one week lunches for date: {}", date);
+        }
+        LocalDate dt = dateUtils.getLocalDate(date);
+        return Objects.nonNull(dt) ? lunchService.getAllBetweenDates(dateUtils.getFirstDate(dt), dateUtils.getFirstDate(dt).plusDays(5)) : null;
+    }
+
     @Async
     @RequestMapping(value = "lunches/file/import", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)

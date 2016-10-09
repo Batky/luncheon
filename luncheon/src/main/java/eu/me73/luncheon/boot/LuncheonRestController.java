@@ -21,14 +21,22 @@ public class LuncheonRestController {
     String getIndex() {
         boolean isUser = false;
         boolean isAdmin = false;
+        boolean isSpecial = false;
         for (GrantedAuthority grantedAuthority : service.getActualUser().getAuthorities()) {
-            if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
+            if (grantedAuthority.getAuthority().equals("ROLE_SPECIAL")) {
+                isSpecial = true;
+                break;
+            } else if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
                 isUser = true;
                 break;
             } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
                 isAdmin = true;
                 break;
             }
+        }
+        if (isSpecial) {
+            LOG.info("Special user logged in !");
+            return "/security";
         }
         LOG.info("Loged user is {}", isAdmin ? "admin" : "user");
         return isAdmin ? "/lunches" : "/orders";
@@ -72,5 +80,15 @@ public class LuncheonRestController {
     @RequestMapping(value = "/monthly", method = RequestMethod.GET)
     String getOrdersMonthly() {
         return "pages/monthly.html";
+    }
+
+    @RequestMapping(value = "/weekly", method = RequestMethod.GET)
+    String getOrdersWeekly() {
+        return "pages/weekly.html";
+    }
+
+    @RequestMapping(value = "/security", method = RequestMethod.GET)
+    String getSecurityPage() {
+        return "pages/admin.html";
     }
 }

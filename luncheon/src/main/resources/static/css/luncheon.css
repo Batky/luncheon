@@ -6,8 +6,8 @@ html {
 }
 
 body {
-    color: #515151;
-    background-color: #eee;
+    color: white;
+    /*background-color: #eee;*/
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     font-family: 'Open Sans', sans-serif;
@@ -60,7 +60,12 @@ body {
 }
 
 .selectedRow {
-    color: red;
+    color: white;
+    background-color: #ffc400 ;
     font-weight: bold;
+}
+
+.navbar-bg-color {
+    background-color: #ffc400;
 }
 

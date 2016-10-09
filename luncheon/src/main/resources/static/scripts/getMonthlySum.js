@@ -1,8 +1,27 @@
 var urlMonthlySum = "/orders/monthly/summary/";
 var summaryJson;
 var tableSummary = "#summary";
+var changeTime = function () {
+    var valueDate = $("#datetimepicker").val();
+    readData(fromPickerDate(valueDate));
+    $("#printheader").text("Mesačný prehľad " + valueDate);
+};
 
 $(document).ready(function(){
+
+    $("#datetimepicker").datepicker({
+        dateFormat: "mm.yy",
+        dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
+        dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
+        dayNamesShort: [ "Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob" ],
+        firstDay: 1,
+        monthNames: [ "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December" ],
+        monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec" ],
+        showWeek: false,
+        weekHeader: "T"
+    });
+
+    $("#datetimepicker").datepicker().show();
 
     $("#datetimepicker")
         .val(toPickerDate(dateToRestString(new Date())));
@@ -10,11 +29,9 @@ $(document).ready(function(){
     $("#printheader").text("Mesačný prehľad " + $("#datetimepicker").val());
 
     $("#datetimepicker")
-        .change(function () {
-            var valueDate = $("#datetimepicker").val();
-            readData(fromPickerDate(valueDate));
-            $("#printheader").text("Mesačný prehľad " + valueDate);
-        });
+        .change(changeTime);
+
+    $("#select").click(changeTime);
 
     readData(dateToRestString(new Date()));
 
@@ -24,6 +41,10 @@ $(document).ready(function(){
 
     $("#backbtn").click(function () {
         window.history.back();
+    });
+
+    $("#olymp").click(function () {
+        location.href = "/orders/monthly/olymp/" + fromPickerDate($("#datetimepicker").val());
     })
 
 });
@@ -87,17 +108,31 @@ function createTableSummary(json) {
 }
 
 function toPickerDate(date) {
-    return date.substr(0,4) + "-" + date.substr(4,2) + "-" + date.substr(6,2);
+    return date.substr(4,2) + "." + date.substr(0,4);
+    // return date.substr(0,4) + "-" + date.substr(4,2) + "-" + date.substr(6,2);
 }
 
 function fromPickerDate(date) {
-    return date.substr(0,4) + date.substr(5,2) + date.substr(8,2);
+    var toDate = date.substr(3,4) + date.substr(0,2) + "01";
+    return toDate;
+    // return date.substr(0,4) + date.substr(5,2) + date.substr(8,2);
 }
 
 function dateToRestString(date) {
     var result = (date.getFullYear()) +
         ('0' + (date.getMonth() + 1)).slice(-2) +
         ('0' + (date.getDate())).slice(-2);
-    console.log(result);
     return result;
+}
+
+function getDateMonthBack() {
+    if (actualDate.getMonth() == 0) {
+        return (actualDate.getFullYear() - 1) +
+            ('0' + (actualDate.getMonth() + 12)).slice(-2) +
+            ('0' + (actualDate.getDate())).slice(-2);
+    } else {
+        return (actualDate.getFullYear()) +
+            ('0' + (actualDate.getMonth())).slice(-2) +
+            ('0' + (actualDate.getDate())).slice(-2);
+    }
 }

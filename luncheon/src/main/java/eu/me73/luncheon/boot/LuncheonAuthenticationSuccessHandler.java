@@ -47,14 +47,20 @@ public class LuncheonAuthenticationSuccessHandler implements AuthenticationSucce
         protected String determineTargetUrl(Authentication authentication) {
             boolean isUser = false;
             boolean isAdmin = false;
+            boolean isSpecial = false;
             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
             for (GrantedAuthority grantedAuthority : authorities) {
-                if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
-                    isUser = true;
+                if (grantedAuthority.getAuthority().equals("ROLE_SPECIAL")) {
+                    isSpecial = true;
                     break;
-                } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
-                    isAdmin = true;
-                    break;
+                } else {
+                    if (grantedAuthority.getAuthority().equals("ROLE_USER")) {
+                        isUser = true;
+                        break;
+                    } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
+                        isAdmin = true;
+                        break;
+                    }
                 }
             }
 
@@ -64,6 +70,9 @@ public class LuncheonAuthenticationSuccessHandler implements AuthenticationSucce
             } else if (isAdmin) {
                 LOG.info("Admin is logged in");
                 return "/lunches";
+            } else if (isSpecial) {
+                LOG.info("Special adminitrator is logged in");
+                return "/security";
             } else {
                 throw new IllegalStateException();
             }

@@ -56,9 +56,9 @@ function setHeader(json) {
             if (json[i].ordered) {
                 $("#userHeader").text("Na dnes máš objednané:");
                 if (json[i].lunch.soup) {
-                    $("#userHeaderSoup").text("Polievka: " + json[i].lunch.description);
+                    $("#userHeaderSoup").text(json[i].lunch.description);
                 } else {
-                    $("#userHeaderMeal").text("Hlavné jedlo: " + json[i].lunch.description);
+                    $("#userHeaderMeal").text(json[i].lunch.description);
                 }
             }
         }

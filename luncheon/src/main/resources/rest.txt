@@ -6,6 +6,7 @@ lunches/date/{date} GET - list of lunches from {date} pattern="yyyymmdd" for two
 lunches/exact/date/{date} GET - list lunches from {date} pattern="yyyymmdd" only one day
 lunches/file/import GET - reimport lunches from file
 lunches/id/{id} GET - return lunch with id
+lunches/week/{date} GET - returns lunches for one week
 
 orders/all GET - all orders
 orders/order POST - sav one order JSON

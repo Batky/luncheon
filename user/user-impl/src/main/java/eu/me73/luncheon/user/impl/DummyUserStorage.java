@@ -67,7 +67,7 @@ public class DummyUserStorage implements UserStorage {
             if (password.equals(config.getPowerPassword())) {
                 user = new User();
                 user.setFirstName("Power");
-                user.setRelation(UserRelation.EMPLOYEE);
+                user.setRelation(UserRelation.POWER_USER);
                 user.setLastName("User");
                 user.setId(999L);
                 user.setBarCode("power");
@@ -83,13 +83,14 @@ public class DummyUserStorage implements UserStorage {
                 if (password.equals(config.getAdminPassword())) {
                     user = new User();
                     user.setFirstName("Admin");
-                    user.setRelation(UserRelation.EMPLOYEE);
+                    user.setRelation(UserRelation.ADMIN);
                     user.setLastName("User");
                     user.setId(999L);
                     user.setBarCode("admin");
                     user.setPid("adm");
                     user.setLoginName("admin.user");
                     ArrayList<Role> roles = new ArrayList<>();
+                    roles.add(new Role("ROLE_SPECIAL"));
                     roles.add(new Role("ROLE_ADMIN"));
                     roles.add(new Role("ROLE_USER"));
                     user.setAuthorities(roles);

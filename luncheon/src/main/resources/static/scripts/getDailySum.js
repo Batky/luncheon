@@ -7,6 +7,20 @@ var tableSummary = "#summary";
 
 $(document).ready(function(){
 
+    $("#datetimepicker").datepicker({
+        dateFormat: "dd.mm.yy",
+        dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
+        dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
+        dayNamesShort: [ "Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob" ],
+        firstDay: 1,
+        monthNames: [ "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December" ],
+        monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec" ],
+        showWeek: false,
+        weekHeader: "T"
+    });
+
+    $("#datetimepicker").datepicker().show();
+
     $("#datetimepicker")
         .val(toPickerDate(dateToRestString(new Date())));
 
@@ -18,6 +32,12 @@ $(document).ready(function(){
             readData(fromPickerDate(valueDate));
             $("#printheader").text("Denný prehľad " + valueDate);
         });
+
+    $("#select").click(function () {
+        var valueDate = $("#datetimepicker").val();
+        readData(fromPickerDate(valueDate));
+        $("#printheader").text("Denný prehľad " + valueDate);
+    });
 
     readData(dateToRestString(new Date()));
 
@@ -86,11 +106,12 @@ function createTableSummary(json) {
 }
 
 function toPickerDate(date) {
-    return date.substr(0,4) + "-" + date.substr(4,2) + "-" + date.substr(6,2);
+    var toDate = date.substr(6,2) + "." + date.substr(4,2) + "." + date.substr(0,4);
+    return toDate;
 }
 
 function fromPickerDate(date) {
-    return date.substr(0,4) + date.substr(5,2) + date.substr(8,2);
+    return date.substr(6,4) + date.substr(3,2) + date.substr(0,2);
 }
 
 function dateToRestString(date) {

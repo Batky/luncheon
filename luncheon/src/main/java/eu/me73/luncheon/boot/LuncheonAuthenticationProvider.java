@@ -46,12 +46,17 @@ public class LuncheonAuthenticationProvider implements AuthenticationProvider {
                 user.setId(userService.getUserByCard(user.getBarCode()).getId());
             }
         } else {
+            boolean saved = false;
             user = userService.getUserByCredentialsFromStorage(username, password);
             if (Objects.nonNull(user)) {
                 if (Objects.isNull(userService.getUserByCard(user.getBarCode()))) {
                     userService.save(user);
+                    saved = true;
                 }
                 user.setId(userService.getUserByCard(user.getBarCode()).getId());
+                if (!saved) {
+                    userService.save(user);
+                }
             }
         }
 

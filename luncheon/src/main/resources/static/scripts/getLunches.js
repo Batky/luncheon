@@ -35,22 +35,11 @@ $(document).ready(function(){
         location.href = "/monthly";
     });
 
-    $("#olymp").click(function () {
-        location.href = "/orders/monthly/olymp/" + getDateMonthBack();
-    })
-});
+    $("#week").click(function () {
+        location.href = "/weekly";
+    });
 
-function getDateMonthBack() {
-    if (actualDate.getMonth() == 0) {
-        return (actualDate.getFullYear() - 1) +
-            ('0' + (actualDate.getMonth() + 12)).slice(-2) +
-            ('0' + (actualDate.getDate())).slice(-2);
-    } else {
-        return (actualDate.getFullYear()) +
-            ('0' + (actualDate.getMonth())).slice(-2) +
-            ('0' + (actualDate.getDate())).slice(-2);
-    }
-}
+});
 
 function createTable() {
     $.get(urlLunches , function(json ) {

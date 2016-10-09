@@ -53,12 +53,40 @@ public class UserServicesImpl implements UserService {
     }
 
     @Override
-    public Collection<User> getAllUsers() {
-        return service
-                .findAllByOrderByLastNameAscFirstNameAsc()
+    public Collection<User> getAllUsersForPower() {
+//        return service
+//                .findAllByOrderByLastNameAscFirstNameAsc()
+//                .stream()
+//                .map(User::new)
+//                .collect(Collectors.toList());
+        Collection<User> users = service
+                .findByRelationOrRelationOrderByLastNameAscFirstNameAsc(UserRelation.EMPLOYEE, UserRelation.PARTIAL)
                 .stream()
                 .map(User::new)
                 .collect(Collectors.toList());
+
+        Collection<User> visitors = service
+                .findByRelationOrderByLastNameAscFirstNameAsc(UserRelation.VISITOR)
+                .stream()
+                .map(User::new)
+                .collect(Collectors.toList());
+
+        Collection<User> allUsers = new ArrayList<>();
+
+        for (User user : users) {
+            allUsers.add(user);
+        }
+
+        for (User visitor : visitors) {
+            allUsers.add(visitor);
+        }
+
+        return allUsers;
+    }
+
+    @Override
+    public Collection<User> getAllUsersForAdmin() {
+        return service.findAllByOrderByLastNameAscFirstNameAsc().stream().map(User::new).collect(Collectors.toList());
     }
 
     @Override

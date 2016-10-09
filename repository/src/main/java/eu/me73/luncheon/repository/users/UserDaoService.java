@@ -9,4 +9,6 @@ public interface UserDaoService extends JpaRepository<UserEntity, Long> {
     UserEntity findByPid(String pid);
 
     Collection<UserEntity> findAllByOrderByLastNameAscFirstNameAsc();
+    Collection<UserEntity> findByRelationOrderByLastNameAscFirstNameAsc(UserRelation relation);
+    Collection<UserEntity> findByRelationOrRelationOrderByLastNameAscFirstNameAsc(UserRelation relationOne, UserRelation relationTwo);
 }

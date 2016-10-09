@@ -7,7 +7,6 @@ import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Objects;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -29,7 +28,7 @@ public class UserRestController {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for all users.");
         }
-        return userServices.getAllUsers();
+        return userServices.getAllUsersForPower();
     }
 
     @RequestMapping(value = "users/card/{card}", method = RequestMethod.GET, produces = "application/json")
@@ -92,5 +91,13 @@ public class UserRestController {
             LOG.debug("Rest request for actual user.");
         }
         return userServices.getActualUser();
+    }
+
+    @RequestMapping(value = "security/users", method = RequestMethod.GET, produces = "application/json")
+    public Collection<User> getAllUsersForAdmin() {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for all users for special admin.");
+        }
+        return userServices.getAllUsersForAdmin();
     }
 }

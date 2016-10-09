@@ -23,7 +23,8 @@ public interface UserService {
      * All database stored of users
      * @return collection od users
      */
-    Collection<User> getAllUsers();
+    Collection<User> getAllUsersForPower();
+    Collection<User> getAllUsersForAdmin();
     User getUserByCard(final String card);
 
     /**

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denný sumár</title>
+    <link rel="stylesheet" type="text/css" href="../css/luncheon.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../css/luncheon-print-weekly.css" media="print">
+    <link rel="stylesheet" type="text/css" href="../css/luncheon-ordering-affix.css">
+    <link rel="stylesheet" type="text/css" href="../themes/smoothness/jquery-ui.min.css">
+</head>
+<body>
+
+<div class="container-fluid hidden-print" style="height:200px;">
+    <h1 class="text-center">Týždenný prehľad obedov</h1>
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4">
+            <div class="input-group">
+                <input type="text" class="form-control" id='datetimepicker' />
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button" id="select">Vyber</button>
+                </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+</div>
+<nav class="navbar navbar-inverse hidden-print" data-spy="affix" data-offset-top="197">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li><a href="#" id="backbtn"><span class="glyphicon glyphicon-arrow-left"></span> Späť</a></li>
+            <!--<li><a href="#" id="daily"><span class="glyphicon glyphicon-list-alt"></span> Denný prehľad</a></li>-->
+            <!--<li><a href="#" id="monthly"><span class="glyphicon glyphicon-calendar"></span> Mesačný prehľad</a></li>-->
+            <!--<li><a href="#" id="olymp"><span class="glyphicon glyphicon-floppy-save"></span> Export do olympu</a></li>-->
+            <!--<li><a href="#" id="changebtn"><span class="glyphicon glyphicon-cutlery"></span> Zmena obedu stravníka</a></li>-->
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span> Odhlásenie</a></li>
+        </ul>
+    </div>
+</nav>
+<!--<div class="container">-->
+    <!--<table class="table table-condensed table-hover" id="lunches">-->
+        <!--<tbody></tbody>-->
+    <!--</table>-->
+<!--</div>-->
+<div class="container">
+    <blockquote style="display: none">
+        <p id="table1"></p>
+    </blockquote>
+    <table class="table table-condensed" id="day1">
+        <tbody></tbody>
+    </table>
+</div>
+<div class="container">
+    <blockquote style="display: none">
+        <p id="table2"></p>
+    </blockquote>
+    <table class="table table-condensed" id="day2">
+        <tbody></tbody>
+    </table>
+</div>
+<div class="container">
+    <blockquote style="display: none">
+        <p id="table3">Hide</p>
+    </blockquote>
+    <table class="table table-condensed" id="day3">
+        <tbody></tbody>
+    </table>
+</div>
+<div class="container">
+    <blockquote style="display: none">
+        <p id="table4">Hide</p>
+    </blockquote>
+    <table class="table table-condensed" id="day4">
+        <tbody></tbody>
+    </table>
+</div>
+<div class="container">
+    <blockquote style="display: none">
+        <p id="table5">Hide</p>
+    </blockquote>
+    <table class="table table-condensed" id="day5">
+        <tbody></tbody>
+    </table>
+</div>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery-ui.js"></script>
+<script src="../scripts/weekly.js"></script>
+</body>
+</html>

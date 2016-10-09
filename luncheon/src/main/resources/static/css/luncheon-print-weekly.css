@@ -1,0 +1,27 @@
+@media print {
+
+    tr:nth-child(even) td {
+        background-color: lightgray !important;
+        -webkit-print-color-adjust: exact;
+    }
+    td {
+        font-size: 10px;
+        size: 12px;
+    }
+    th {
+        font-size: 12px;
+        size: 12px;
+    }
+
+    p {
+        font-size: 10px;
+        size: 10px;
+    }
+
+    blockquote {
+        font-size: 12px;
+        size: 12px;
+        height: 15px;
+    }
+
+}
