@@ -70,9 +70,13 @@ function createTable(json) {
     var textDate = lastDate[2] + "." + lastDate[1] + "." + lastDate[0];
     var tableName = "#day";
     var tableHeader = "#table";
-    $(tableHeader+day).text("Dátum: "+textDate);
+    var tableHeaderT = "#tableT";
+    var dayName = "#dayName";
+    $(tableHeader + day).text(getSlovakDayFromStringDDdotMMdotYYYY(textDate));
+    $(dayName + day).text(getSlovakDayFromStringDDdotMMdotYYYY(textDate) + " " + textDate);
+    $(tableHeaderT + day).text(textDate);
     $(tableHeader+day).parent().show();
-    $(tableName+day+" > tbody:last-child").append("<tr><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th></tr>");
+    $(tableName+day+" > tbody:last-child").append("<tr class='hidden-print'><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th></tr>");
     for (index = 0; index < json.length; index++) {
         if (compareArrayDate(json[index].date, lastDate)) {
             if (json[index].soup) {
@@ -94,9 +98,11 @@ function createTable(json) {
             day++;
             lastDate = json[index].date;
             textDate = lastDate[2] + "." + lastDate[1] + "." + lastDate[0];
-            $(tableHeader+day).text("Dátum: "+textDate);
+            $(tableHeader + day).text(getSlovakDayFromStringDDdotMMdotYYYY(textDate));
+            $(dayName + day).text(getSlovakDayFromStringDDdotMMdotYYYY(textDate) + " " + textDate);
+            $(tableHeaderT + day).text(textDate);
             $(tableHeader+day).parent().show();
-            $(tableName+day+" > tbody:last-child").append("<tr><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th></tr>")
+            $(tableName+day+" > tbody:last-child").append("<tr class='hidden-print'><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th></tr>")
             if (json[index].soup) {
                 if (soupIndex === 1) {
                     $(tableName+day+" > tbody:last-child").append("<tr><td colspan='2' class='info'>Polievky</td></tr>");

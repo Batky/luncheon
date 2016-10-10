@@ -9,20 +9,50 @@ var changeTime = function () {
 
 $(document).ready(function(){
 
-    $("#datetimepicker").datepicker({
-        dateFormat: "mm.yy",
-        dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
-        dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
-        dayNamesShort: [ "Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob" ],
-        firstDay: 1,
-        monthNames: [ "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December" ],
-        monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec" ],
-        showWeek: false,
-        weekHeader: "T"
+    // $("#datetimepicker").datepicker({
+    //     dateFormat: "mm.yy",
+    //     dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
+    //     dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
+    //     dayNamesShort: [ "Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob" ],
+    //     firstDay: 1,
+    //     monthNames: [ "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December" ],
+    //     monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec" ],
+    //     showWeek: false,
+    //     weekHeader: "T"
+    // });
+
+    $("#datetimepicker").MonthPicker({
+        Button: false,
+        MonthFormat: 'mm.yy',
+        i18n: {
+            year: 'Rok',
+            prevYear: 'Predch. rok',
+            nextYear: 'Ďalší rok',
+            next12Years: 'Skoč vpred o 12 rokov',
+            prev12Years: 'Skoč vzad o 12 rokov',
+            nextLabel: 'Ďalší',
+            prevLabel: 'Predch.',
+            buttonText: 'Otvor výber mesiaca',
+            jumpYears: 'Skoč roky',
+            backTo: 'Späť na',
+            months: ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'Máj', 'Jún', 'Júl', 'Aug.', 'Sep.', 'Okt.', 'Nov.', 'Dec.']
+        },
+        OnAfterChooseMonth: function(selectedDate) {
+            changeTime();
+        }
+        // dateFormat: "mm.yy",
+        // dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
+        // dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
+        // dayNamesShort: [ "Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob" ],
+        // firstDay: 1,
+        // monthNames: [ "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December" ],
+        // monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec" ],
+        // showWeek: false,
+        // weekHeader: "T"
     });
 
-    $("#datetimepicker").datepicker().show();
-
+    // $("#datetimepicker").datepicker().show();
+    //
     $("#datetimepicker")
         .val(toPickerDate(dateToRestString(new Date())));
 

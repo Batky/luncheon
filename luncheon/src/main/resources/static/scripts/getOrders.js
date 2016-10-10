@@ -14,6 +14,7 @@ var user;
 var lunchesJson;
 var tableName = "#day";
 var tableHeader = "#table";
+var tableHeaderT = "#tableT";
 var tableBtn = "#btn";
 var changeWasMade = false;
 var succesfull = true;
@@ -54,7 +55,7 @@ function setHeader(json) {
     for (var i=0; i< json.length; i++) {
         if (compareArrayDate(json[i].lunch.date, actualDateArray)) {
             if (json[i].ordered) {
-                $("#userHeader").text("Na dnes máš objednané:");
+                $("#userHeader").text("Na dnes (" + getSlovakDay(new Date())+ ") máš objednané:");
                 if (json[i].lunch.soup) {
                     $("#userHeaderSoup").text(json[i].lunch.description);
                 } else {
@@ -77,7 +78,8 @@ function create(json) {
     var day = 1;
     var textDate = lastDate[2] + "." + lastDate[1] + "." + lastDate[0];
     if (lunchesJson[0].changeable) {
-        $(tableHeader + day).text("Dátum: " + textDate);
+        $(tableHeader + day).text(getSlovakDayFromStringDDdotMMdotYYYY(textDate));
+        $(tableHeaderT + day).text(textDate);
         $(tableHeader + day).parent().show();
         $(tableName + day + " > tbody:last-child")
             .append("<tr><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th><th class='danger'>Objednávka</th></tr>");
@@ -157,7 +159,8 @@ function create(json) {
             day++;
             lastDate = lunch.date;
             textDate = lastDate[2] + "." + lastDate[1] + "." + lastDate[0];
-            $(tableHeader+day).text("Dátum: "+textDate);
+            $(tableHeader + day).text(getSlovakDayFromStringDDdotMMdotYYYY(textDate));
+            $(tableHeaderT + day).text(textDate);
             $(tableHeader+day).parent().show();
             $(tableName+day+" > tbody:last-child")
                 .append("<tr><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th><th class='danger'>Objednávka</th></tr>")

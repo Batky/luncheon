@@ -10,6 +10,24 @@ urlLunches = urlLunches + actualDateChanged;
 
 $(document).ready(function(){
 
+    $("#datetimepicker1").datepicker({
+        dateFormat: "dd.mm.yy",
+        dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
+        dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
+        dayNamesShort: [ "Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob" ],
+        firstDay: 1,
+        monthNames: [ "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December" ],
+        monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec" ],
+        showWeek: false,
+        weekHeader: "T"
+    });
+
+    $('#datetimepicker1').css("z-index","100000");
+
+    $("#datetimepicker1").datepicker().show();
+
+    $.fn.modal.Constructor.prototype.enforceFocus = function() {};
+
     createTable();
 
     $("#logout").click(function(){
@@ -19,6 +37,7 @@ $(document).ready(function(){
     $("#myModal").on('show.bs.modal', function () {
         fillModalForm(actualDateChanged, false);
     });
+
     $("#datetimepicker1").change(function () {
         fillModalForm(fromPickerDate($("#datetimepicker1").val()), true);
     });
@@ -51,7 +70,9 @@ function createTable() {
         var textDate = lastDate[2] + "." + lastDate[1] + "." + lastDate[0];
         var tableName = "#day";
         var tableHeader = "#table";
-        $(tableHeader+day).text("Dátum: "+textDate);
+        var tableHeaderT = "#tableT";
+        $(tableHeader + day).text(getSlovakDayFromStringDDdotMMdotYYYY(textDate));
+        $(tableHeaderT + day).text(textDate);
         $(tableHeader+day).parent().show();
         $(tableName+day+" > tbody:last-child").append("<tr><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th></tr>");
         for (index = 0; index < json.length; index++) {
@@ -75,7 +96,8 @@ function createTable() {
                 day++;
                 lastDate = json[index].date;
                 textDate = lastDate[2] + "." + lastDate[1] + "." + lastDate[0];
-                $(tableHeader+day).text("Dátum: "+textDate);
+                $(tableHeader + day).text(getSlovakDayFromStringDDdotMMdotYYYY(textDate));
+                $(tableHeaderT + day).text(textDate);
                 $(tableHeader+day).parent().show();
                 $(tableName+day+" > tbody:last-child").append("<tr><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th></tr>")
                 if (json[index].soup) {
@@ -101,11 +123,15 @@ function compareArrayDate(dateArray1, dateArray2) {
 }
 
 function toPickerDate(date) {
-    return date.substr(0,4) + "-" + date.substr(4,2) + "-" + date.substr(6,2);
+    return date.substr(6,2) + "." + date.substr(4,2) + "." + date.substr(0,4);
 }
 
 function fromPickerDate(date) {
-    return date.substr(0,4) + date.substr(5,2) + date.substr(8,2);
+    return date.substr(6,4) + date.substr(3,2) + date.substr(0,2);
+}
+
+function fromPickerDateToJson(date) {
+    return date.substr(6,4) + "-" + date.substr(3,2) + "-" + date.substr(0,2);
 }
 
 function cleanup() {
@@ -159,8 +185,8 @@ function fillModalForm(date, fromForm){
 }
 
 function postLunches() {
-    // var date = fromPickerDate($("#datetimepicker1").val());
-    var date = $("#datetimepicker1").val();
+    var date = fromPickerDateToJson($("#datetimepicker1").val());
+    // var date = $("#datetimepicker1").val();
     var lunches = [];
     for (index = 1; index < 3; index++) {
         var lunchSoup = new lunch($("#idsoup"+index).val(), true, date, $("#soup"+index).val());
