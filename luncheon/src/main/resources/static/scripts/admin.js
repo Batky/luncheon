@@ -1,6 +1,7 @@
 var urlUsers = "/security/users/";
 var usersJson;
 var tableUsers = "#users";
+var lastSelectedRow;
 
 $(document).ready(function(){
 
@@ -8,6 +9,15 @@ $(document).ready(function(){
 
     $("#logout").click(function(){
         location.href = "/logout";
+    });
+
+    $(document).on('click', '#users > tbody > tr',  function() {
+
+        $(lastSelectedRow).removeClass("selectedRow");
+        $(this).addClass("selectedRow");
+        lastSelectedRow = $(this);
+        var str = $(this).text();
+        console.log(str);
     });
 
 });
@@ -35,6 +45,7 @@ function createTable(json) {
         .append(
             "<tr>" +
             "<th class='danger'>id</th>" +
+            "<th class='danger' hidden>Separator</th>" +
             "<th class='danger'>Osobné č.</th>" +
             "<th class='danger'>Čítačka</th>" +
             "<th class='danger'>Meno</th>" +
@@ -45,6 +56,7 @@ function createTable(json) {
             .append(
                 "<tr>" +
                 "<td width='10%'>" + json[index].id + "</td>" +
+                "<td width='10%' hidden>@</td>" +
                 "<td width='10%'>" + json[index].pid + "</td>" +
                 "<td width='20%'>" + json[index].barCode + "</td>" +
                 "<td width='40%'>" + json[index].longName + "</td>" +
