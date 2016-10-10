@@ -209,8 +209,8 @@ function compareArrayDate(dateArray1, dateArray2) {
 
 function saveOrders(refresh) {
     var jsonLunchesOrders = JSON.stringify(lunchesJson);
-    console.log(jsonLunchesOrders);
-    console.log(urlStoreUser);
+    // console.log(jsonLunchesOrders);
+    // console.log(urlStoreUser);
     $.when(
     $.ajax({
         url: urlStoreUser,
@@ -240,12 +240,12 @@ function saveOrders(refresh) {
 }
 function gatherOrders() {
     var index = 0;
-    console.log(lunchesJson);
+    // console.log(lunchesJson);
     $('input:radio').each(function () {
         lunchesJson[index].ordered = !!$(this).prop('checked');
         index++;
     });
-    console.log(lunchesJson);
+    // console.log(lunchesJson);
     saveOrders(false);
 }
 
