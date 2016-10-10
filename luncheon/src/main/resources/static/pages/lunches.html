@@ -11,19 +11,14 @@
 </head>
 <body>
 
-<!--background-color:beige;color:#444444;-->
 <div class="container-fluid" style="height:200px;">
     <h1 class="text-center">Zoznam obedov</h1>
     <h3 class="text-center" id="userHeader"></h3>
     <p class="text-center">Zoznam obedov pre aktuálny týždeň a nasledujúci najbližší týždeň</p>
-    <!--<p class="text-center"></p>-->
 </div>
 
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
     <div class="container-fluid">
-        <!--<div class="navbar-header">-->
-            <!--<p class="navbar-brand" id="userHeaderNav">Zoznam obedov</p>-->
-        <!--</div>-->
         <ul class="nav navbar-nav">
             <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus"></span>Pridaj alebo oprav obed</a></li>
             <li><a href="#" id="daily"><span class="glyphicon glyphicon-list-alt"></span> Denný prehľad</a></li>
@@ -36,22 +31,6 @@
         </ul>
     </div>
 </nav>
-
-<!--<div class="container">-->
-    <!--<div class="page-header">-->
-        <!--<h1>Zoznam obedov</h1>-->
-    <!--</div>-->
-    <!--<p class="lead">Zoznam obedov pre aktuálny týždeň a nasledujúci najbližší týždeň</p>-->
-    <!--<button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#myModal">Pridaj alebo oprav obed</button>-->
-    <!--<button type="submit" class="btn btn-info" id="daily">Denný prehľad</button>-->
-    <!--<button type="submit" class="btn btn-info" id="monthly">Mesačný prehľad</button>-->
-    <!--<button type="submit" class="btn btn-info" id="olymp">Export do olympu</button>-->
-    <!--<button type="submit" class="btn btn-success" id="changebtn">Zmena obedu stravníka</button>-->
-    <!--<button type="submit" class="btn btn-danger pull-right" id="logout">Odhlás ma</button>-->
-<!--</div>-->
-<!--<div class="container">-->
-    <!--<hr>-->
-<!--</div>-->
 <div class="container">
     <blockquote style="display: none">
         <h3 id="table1"></h3>
@@ -150,7 +129,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Dátum</h4>
                 <div class='input-group date'>
-                    <input type='date' class="form-control" id='datetimepicker1'/>
+                    <input type='text' class="form-control" id='datetimepicker1'/>
                 </div>
             </div>
             <div class="modal-body">
@@ -158,8 +137,6 @@
                     <p>Polievky</p>
                 </blockquote>
                 <div class="form-group">
-                    <!--<label for="soup1" id="idsoup1" class="">-->
-                    <!--<span class="label label-default" id="idsoup1">Default Label</span>-->
                     <input type="hidden" id="idsoup1">
                     <input type="text" id="soup1" placeholder="Polievka č.1" class="form-control">
                 </div>

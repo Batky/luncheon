@@ -1,16 +1,15 @@
 var urlLunches = "/lunches/date/";
 var lunchesJson;
 var tableLunches = "#lunches";
+var dateTimePicker = $("#datetimepicker");
 var changeTime = function () {
     cleanTables();
-    var valueDate = $("#datetimepicker").val();
-    readData(fromPickerDate(valueDate));
-    // $("#printheader").text("Mesačný prehľad " + valueDate);
+    readData(fromPickerDate(dateTimePicker.val()));
 };
 
 $(document).ready(function(){
 
-    $("#datetimepicker").datepicker({
+    dateTimePicker.datepicker({
         dateFormat: "dd.mm.yy",
         dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
         dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
@@ -22,12 +21,12 @@ $(document).ready(function(){
         weekHeader: "T"
     });
 
-    $("#datetimepicker").datepicker().show();
+    dateTimePicker.datepicker().show();
 
-    $("#datetimepicker")
+    dateTimePicker
         .val(toPickerDate(dateToRestString(new Date())));
 
-    readData(fromPickerDate($("#datetimepicker").val()));
+    readData(fromPickerDate(dateTimePicker.val()));
 
     $("#logout").click(function(){
         location.href = "/logout";
@@ -37,8 +36,7 @@ $(document).ready(function(){
         window.history.back();
     });
 
-    $("#datetimepicker")
-        .change(changeTime);
+    dateTimePicker.change(changeTime);
 
     $("#select").click(changeTime);
 });
@@ -101,8 +99,8 @@ function createTable(json) {
             $(tableHeader + day).text(getSlovakDayFromStringDDdotMMdotYYYY(textDate));
             $(dayName + day).text(getSlovakDayFromStringDDdotMMdotYYYY(textDate) + " " + textDate);
             $(tableHeaderT + day).text(textDate);
-            $(tableHeader+day).parent().show();
-            $(tableName+day+" > tbody:last-child").append("<tr class='hidden-print'><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th></tr>")
+            $(tableHeader + day).parent().show();
+            $(tableName + day + " > tbody:last-child").append("<tr class='hidden-print'><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th></tr>")
             if (json[index].soup) {
                 if (soupIndex === 1) {
                     $(tableName+day+" > tbody:last-child").append("<tr><td colspan='2' class='info'>Polievky</td></tr>");
@@ -118,29 +116,11 @@ function createTable(json) {
             }
         }
     }
-
-    // $(tableLunches + " > tbody:last-child")
-    //     .append(
-    //         "<tr>" +
-    //         "<th class='danger'>Datum</th>" +
-    //         "<th class='danger'>Popis</th>" +
-    //         "<th class='danger'>Polievka</th>" +
-    //         "</tr>");
-    // for (var index = 0; index < json.length; index++) {
-    //     $(tableLunches + " > tbody:last-child")
-    //         .append(
-    //             "<tr>" +
-    //             "<td width='20%'>" + json[index].date + "</td>" +
-    //             "<td width='60%'>" + json[index].description + "</td>" +
-    //             "<td width='20%'>" + json[index].soup + "</td>" +
-    //             "</tr>");
-    // }
 }
 
 
 function toPickerDate(date) {
-    var toDate = date.substr(6,2) + "." + date.substr(4,2) + "." + date.substr(0,4);
-    return toDate;
+    return date.substr(6,2) + "." + date.substr(4,2) + "." + date.substr(0,4);
 }
 
 function fromPickerDate(date) {
@@ -149,10 +129,9 @@ function fromPickerDate(date) {
 
 
 function dateToRestString(date) {
-    var result = (date.getFullYear()) +
+    return (date.getFullYear()) +
         ('0' + (date.getMonth() + 1)).slice(-2) +
         ('0' + (date.getDate())).slice(-2);
-    return result;
 }
 
 function compareArrayDate(dateArray1, dateArray2) {

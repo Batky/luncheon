@@ -9,18 +9,6 @@ var changeTime = function () {
 
 $(document).ready(function(){
 
-    // $("#datetimepicker").datepicker({
-    //     dateFormat: "mm.yy",
-    //     dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
-    //     dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
-    //     dayNamesShort: [ "Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob" ],
-    //     firstDay: 1,
-    //     monthNames: [ "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December" ],
-    //     monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec" ],
-    //     showWeek: false,
-    //     weekHeader: "T"
-    // });
-
     $("#datetimepicker").MonthPicker({
         Button: false,
         MonthFormat: 'mm.yy',
@@ -40,15 +28,6 @@ $(document).ready(function(){
         OnAfterChooseMonth: function(selectedDate) {
             changeTime();
         }
-        // dateFormat: "mm.yy",
-        // dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
-        // dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
-        // dayNamesShort: [ "Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob" ],
-        // firstDay: 1,
-        // monthNames: [ "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December" ],
-        // monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec" ],
-        // showWeek: false,
-        // weekHeader: "T"
     });
 
     // $("#datetimepicker").datepicker().show();
@@ -139,20 +118,16 @@ function createTableSummary(json) {
 
 function toPickerDate(date) {
     return date.substr(4,2) + "." + date.substr(0,4);
-    // return date.substr(0,4) + "-" + date.substr(4,2) + "-" + date.substr(6,2);
 }
 
 function fromPickerDate(date) {
-    var toDate = date.substr(3,4) + date.substr(0,2) + "01";
-    return toDate;
-    // return date.substr(0,4) + date.substr(5,2) + date.substr(8,2);
+    return date.substr(3,4) + date.substr(0,2) + "01";
 }
 
 function dateToRestString(date) {
-    var result = (date.getFullYear()) +
+    return (date.getFullYear()) +
         ('0' + (date.getMonth() + 1)).slice(-2) +
         ('0' + (date.getDate())).slice(-2);
-    return result;
 }
 
 function getDateMonthBack() {

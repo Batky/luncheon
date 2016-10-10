@@ -15,5 +15,6 @@ function getSlovakDayFromStringYYYYMMDD(date) {
 }
 
 function getSlovakDayFromStringDDdotMMdotYYYY(date) {
-    return getSlovakDay(new Date(date.substr(6,4) + "/" + date.substr(3,2) + "/" + date.substr(0,2)));
+    var splitDate = date.split(".");
+    return getSlovakDay(new Date(splitDate[2] + "/" + splitDate[1] + "/" + splitDate[0]));
 }
