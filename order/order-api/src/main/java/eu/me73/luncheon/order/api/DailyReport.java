@@ -1,6 +1,6 @@
 package eu.me73.luncheon.order.api;
 
-public class DailyReport implements Comparable<DailyReport>{
+public class DailyReport {
 
     private String name;
     private String soup;
@@ -63,8 +63,4 @@ public class DailyReport implements Comparable<DailyReport>{
         return result;
     }
 
-    @Override
-    public int compareTo(DailyReport o) {
-        return this.name.compareTo(o.getName());
-    }
 }

@@ -306,7 +306,7 @@ public class OrderServicesImpl implements OrderService {
                 .map(this::dailyReportFromEntity)
                 .collect(Collectors.toList())
                 .stream()
-                .sorted()
+                .sorted((o1, o2) -> SVK_COLLATOR.compare(o1.getName(),o2.getName()))
                 .collect(Collectors.toList());
 
     }
