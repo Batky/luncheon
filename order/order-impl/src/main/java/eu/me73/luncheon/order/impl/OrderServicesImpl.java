@@ -131,9 +131,19 @@ public class OrderServicesImpl implements OrderService {
                 .map(this::fromEntity)
                 .collect(Collectors.toList());
 
+        Collection<Order> ordersWithDescription = orders
+                .stream()
+                .filter(order -> (Objects.nonNull(order.getDescription()) && !order.getDescription().isEmpty()))
+                .collect(Collectors.toCollection(ArrayList::new));
+
         Collection<UserOrder> userOrders = lunches
                 .stream()
-                .map(lunch -> new UserOrder(id, lunchInOrders(orders, lunch), lunch, dateUtils.itsChangeable(lunch.getDate())))
+                .map(lunch -> new UserOrder(
+                        id,
+                        lunchInOrders(orders, lunch),
+                        lunch,
+                        dateUtils.itsChangeable(lunch.getDate()),
+                        getDescriptionInOrders(ordersWithDescription, lunch)))
                 .collect(Collectors.toList());
 
         return userOrders;
@@ -434,6 +444,15 @@ public class OrderServicesImpl implements OrderService {
             }
         }
         return false;
+    }
+
+    private String getDescriptionInOrders(final Collection<Order> orders, final Lunch lunch) {
+        for (Order order : orders) {
+            if (lunch.equals(order.getSoup()) || lunch.equals(order.getMeal())) {
+                return order.getDescription();
+            }
+        }
+        return "";
     }
 
     private Order fromEntity(final OrderEntity entity) {

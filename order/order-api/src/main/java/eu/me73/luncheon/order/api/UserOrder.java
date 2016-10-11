@@ -8,6 +8,7 @@ public class UserOrder {
     private Lunch lunch;
     private boolean ordered;
     private boolean changeable;
+    private String description;
 
     public UserOrder() {
     }
@@ -16,11 +17,13 @@ public class UserOrder {
             final Long user,
             final boolean ordered,
             final Lunch lunch,
-            final boolean changeable) {
+            final boolean changeable,
+            final String description) {
         this.user = user;
         this.ordered = ordered;
         this.lunch = lunch;
         this.changeable = changeable;
+        this.description = description;
     }
 
     public Long getUser() {
@@ -57,10 +60,11 @@ public class UserOrder {
 
     @Override
     public String toString() {
-        return "UserOrders{" +
+        return "UserOrder{" +
                 "user=" + user +
-                ", ordered=" + ordered +
                 ", lunch=" + lunch +
+                ", ordered=" + ordered +
+                ", description='" + description + '\'' +
                 '}';
     }
 

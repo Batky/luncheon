@@ -1,14 +1,12 @@
 package eu.me73.luncheon.order.api;
 
 import eu.me73.luncheon.lunch.api.Lunch;
-import eu.me73.luncheon.lunch.api.LunchService;
 import eu.me73.luncheon.repository.order.OrderEntity;
 import eu.me73.luncheon.user.api.User;
-import eu.me73.luncheon.user.api.UserService;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class Order {
 
@@ -18,6 +16,7 @@ public class Order {
     private Lunch soup;
     private Lunch meal;
     private LocalDateTime changed;
+    private String description;
 
     public Order() {
     }
@@ -67,7 +66,15 @@ public class Order {
     }
 
     public void setChanged(LocalDateTime changed) {
-        this.changed = changed;
+        this.changed = this.updateObject(this.changed, changed);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public OrderEntity toEntity() {
@@ -78,6 +85,7 @@ public class Order {
         orderEntity.setMeal(this.meal.getId());
         orderEntity.setUser(this.user.getId());
         orderEntity.setChanged(this.changed);
+        orderEntity.setDescription(this.description);
         return orderEntity;
     }
 

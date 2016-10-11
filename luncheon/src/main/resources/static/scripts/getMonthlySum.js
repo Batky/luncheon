@@ -79,7 +79,15 @@ function readData(date) {
 }
 
 function createTableSummary(json) {
-    $(tableSummary + " > tbody:last-child").append("<tr><th class='danger'>Meno</th><th class='danger'>Počet obedov</th><th class='danger'>Cena</th><th class='danger'>Spolu</th></tr>");
+    $(tableSummary + " > tbody:last-child")
+        .append(
+            "<tr>" +
+            "<th class='danger'>p.č.</th>" +
+            "<th class='danger'>Meno</th>" +
+            "<th class='danger'>Počet obedov</th>" +
+            "<th class='danger'>Cena</th>" +
+            "<th class='danger'>Spolu</th>" +
+            "</tr>");
     var lastPrice = json[0].price;
     var sum  = [];
     sum[0] = 0;
@@ -91,7 +99,7 @@ function createTableSummary(json) {
             $(tableSummary + " > tbody:last-child")
                 .append(
                     "<tr>" +
-                    "<td colspan='2' class = 'text-danger'>Spolu:</td>" +
+                    "<td colspan='3' class = 'text-danger'>Spolu:</td>" +
                     "<td></td>" +
                     "<td class='text-danger'>" + Math.round(sum[i] * 100) / 100 + "</td>" +
                     "</tr>" +
@@ -100,10 +108,12 @@ function createTableSummary(json) {
             lastPrice = json[index].price;
         }
         sum[i] += json[index].sum;
+        var pc = index+1;
         $(tableSummary + " > tbody:last-child")
             .append(
                 "<tr>" +
-                "<td width='60%'>" + json[index].name + "</td>" +
+                "<td width='10%'>" + pc + "</td>" +
+                "<td width='50%'>" + json[index].name + "</td>" +
                 "<td width='10%'>" + json[index].count + "</td>" +
                 "<td width='15%'>" + json[index].price + "</td>" +
                 "<td width='15%'>" + json[index].sum + "</td>" +
@@ -112,7 +122,7 @@ function createTableSummary(json) {
     $(tableSummary + " > tbody:last-child")
         .append(
             "<tr>" +
-            "<td colspan='2' class='text-danger'>Spolu:</td>" +
+            "<td colspan='3' class='text-danger'>Spolu:</td>" +
             "<td></td>" +
             "<td class='text-danger'>" + Math.round(sum[i] * 100) / 100 + "</td>" +
             "</tr>");

@@ -1,13 +1,9 @@
 package eu.me73.luncheon.repository.order;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "t_order")
@@ -34,6 +30,9 @@ public class OrderEntity implements Serializable {
 
     @Column(name = "changed")
     LocalDateTime changed;
+
+    @Column(name = "description")
+    String description;
 
     public OrderEntity() {
     }
@@ -86,6 +85,14 @@ public class OrderEntity implements Serializable {
         this.changed = changed;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "OrderEntity{" +
@@ -95,6 +102,7 @@ public class OrderEntity implements Serializable {
                 ", meal=" + meal +
                 ", user=" + user +
                 ", changed=" + changed +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
