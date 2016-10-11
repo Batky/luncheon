@@ -18,8 +18,8 @@
 <nav class="navbar navbar-inverse hidden-print" data-spy="affix" data-offset-top="197">
     <div class="container-fluid">
         <ul class="nav navbar-nav">
-            <li><a href="#" data-toggle="modal" data-target="#myModal" id="create"><span class="glyphicon glyphicon-plus-sign"></span> Vytvor užívateľa</a></li>
-            <li><a href="#" id="edit"><span class="glyphicon glyphicon-pencil"></span> Zmeň užívateľa</a></li>
+            <li><a href="#" id="create" onclick="openDialogCreate()"><span class="glyphicon glyphicon-plus-sign"></span> Vytvor užívateľa</a></li>
+            <li><a href="#" id="edit" onclick="openDialogUpdate()"><span class="glyphicon glyphicon-pencil"></span> Zmeň užívateľa</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span> Odhlásenie</a></li>
@@ -54,23 +54,19 @@
                     <input type="text" id="barCode" placeholder="Čítačka" class="form-control">
                 </div>
                 <div class="form-group">
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Typ stravníka / užívateľa
-                            <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Kmeňový</a></li>
-                            <li><a href="#">Brigádnik</a></li>
-                            <li><a href="#">Návšteva</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Administrátor</a></li>
-                            <li><a href="#">Super admin</a></li>
-                        </ul>
-                    </div>
+                    <label for="type">Typ stravníka / užívateľa</label>
+                    <select class="form-control" id="type">
+                        <option>Kmeňový</option>
+                        <option>Brigádnik</option>
+                        <option>Návšteva</option>
+                        <option>Administrátor</option>
+                        <option>Super admin</option>
+                    </select>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="postLunches()" data-dismiss="modal">Ulož zmeny</button>
+                <button type="button" class="btn btn-primary" onclick="createUser()" data-dismiss="modal">Ulož zmeny</button>
             </div>
         </div>
     </div>
@@ -78,6 +74,7 @@
 <script src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/jquery-ui.min.js"></script>
+<script src="../scripts/utils.js"></script>
 <script src="../scripts/admin.js"></script>
 </body>
 </html>

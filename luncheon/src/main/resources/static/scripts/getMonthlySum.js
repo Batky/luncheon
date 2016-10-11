@@ -6,10 +6,11 @@ var changeTime = function () {
     readData(fromPickerDate(valueDate));
     $("#printheader").text("Mesačný prehľad " + valueDate);
 };
+var datetimepicker = $("#datetimepicker");
 
 $(document).ready(function(){
 
-    $("#datetimepicker").MonthPicker({
+    datetimepicker.MonthPicker({
         Button: false,
         MonthFormat: 'mm.yy',
         i18n: {
@@ -23,7 +24,8 @@ $(document).ready(function(){
             buttonText: 'Otvor výber mesiaca',
             jumpYears: 'Skoč roky',
             backTo: 'Späť na',
-            months: ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'Máj', 'Jún', 'Júl', 'Aug.', 'Sep.', 'Okt.', 'Nov.', 'Dec.']
+            months: monthNamesShort
+                // ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'Máj', 'Jún', 'Júl', 'Aug.', 'Sep.', 'Okt.', 'Nov.', 'Dec.']
         },
         OnAfterChooseMonth: function(selectedDate) {
             changeTime();
@@ -32,12 +34,12 @@ $(document).ready(function(){
 
     // $("#datetimepicker").datepicker().show();
     //
-    $("#datetimepicker")
+    datetimepicker
         .val(toPickerDate(dateToRestString(new Date())));
 
-    $("#printheader").text("Mesačný prehľad " + $("#datetimepicker").val());
+    $("#printheader").text("Mesačný prehľad " + datetimepicker.val());
 
-    $("#datetimepicker")
+    datetimepicker
         .change(changeTime);
 
     $("#select").click(changeTime);

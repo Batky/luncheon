@@ -4,39 +4,39 @@ var dailyJson;
 var summaryJson;
 var tableDaily = "#daily";
 var tableSummary = "#summary";
+var datetimepicker = $("#datetimepicker");
+var printheader = $("#printheader");
 
 $(document).ready(function(){
 
-    $("#datetimepicker").datepicker({
+    datetimepicker.datepicker({
         dateFormat: "dd.mm.yy",
-        dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
-        dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
-        dayNamesShort: [ "Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob" ],
+        dayNames: dayNames,
+        dayNamesMin: dayNamesMin,
+        dayNamesShort: dayNamesShort,
         firstDay: 1,
-        monthNames: [ "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December" ],
-        monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec" ],
-        showWeek: false,
-        weekHeader: "T"
+        monthNames: monthNames,
+        monthNamesShort: monthNamesShort
     });
 
-    $("#datetimepicker").datepicker().show();
+    datetimepicker.datepicker().show();
 
-    $("#datetimepicker")
+    datetimepicker
         .val(toPickerDate(dateToRestString(new Date())));
 
-    $("#printheader").text("Denný prehľad " + $("#datetimepicker").val());
+    printheader.text("Denný prehľad " + datetimepicker.val());
 
-    $("#datetimepicker")
+    datetimepicker
         .change(function () {
             var valueDate = $("#datetimepicker").val();
             readData(fromPickerDate(valueDate));
-            $("#printheader").text("Denný prehľad " + valueDate);
+            printheader.text("Denný prehľad " + valueDate);
         });
 
     $("#select").click(function () {
         var valueDate = $("#datetimepicker").val();
         readData(fromPickerDate(valueDate));
-        $("#printheader").text("Denný prehľad " + valueDate);
+        printheader.text("Denný prehľad " + valueDate);
     });
 
     readData(dateToRestString(new Date()));
@@ -106,8 +106,7 @@ function createTableSummary(json) {
 }
 
 function toPickerDate(date) {
-    var toDate = date.substr(6,2) + "." + date.substr(4,2) + "." + date.substr(0,4);
-    return toDate;
+    return date.substr(6,2) + "." + date.substr(4,2) + "." + date.substr(0,4);
 }
 
 function fromPickerDate(date) {
@@ -115,9 +114,7 @@ function fromPickerDate(date) {
 }
 
 function dateToRestString(date) {
-    var result = (date.getFullYear()) +
+    return (date.getFullYear()) +
         ('0' + (date.getMonth() + 1)).slice(-2) +
         ('0' + (date.getDate())).slice(-2);
-    console.log(result);
-    return result;
 }

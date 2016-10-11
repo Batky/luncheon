@@ -8,23 +8,23 @@ var actualDateChanged = (actualDate.getFullYear()) +
     ('0' + (actualDate.getDate())).slice(-2);
 urlLunches = urlLunches + actualDateChanged;
 
+var datePicker = $("#datetimepicker1");
+
 $(document).ready(function(){
 
-    $("#datetimepicker1").datepicker({
+    datePicker.datepicker({
         dateFormat: "dd.mm.yy",
-        dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
-        dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
-        dayNamesShort: [ "Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob" ],
+        dayNames: dayNames,
+        dayNamesMin: dayNamesMin,
+        dayNamesShort: dayNamesShort,
         firstDay: 1,
-        monthNames: [ "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December" ],
-        monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec" ],
-        showWeek: false,
-        weekHeader: "T"
+        monthNames: monthNames,
+        monthNamesShort: monthNamesShort
     });
 
-    $('#datetimepicker1').css("z-index","100000");
+    datePicker.css("z-index","100000");
 
-    $("#datetimepicker1").datepicker().show();
+    datePicker.datepicker().show();
 
     $.fn.modal.Constructor.prototype.enforceFocus = function() {};
 
@@ -38,7 +38,7 @@ $(document).ready(function(){
         fillModalForm(actualDateChanged, false);
     });
 
-    $("#datetimepicker1").change(function () {
+    datePicker.change(function () {
         fillModalForm(fromPickerDate($("#datetimepicker1").val()), true);
     });
 
@@ -185,16 +185,15 @@ function fillModalForm(date, fromForm){
 }
 
 function postLunches() {
-    var date = fromPickerDateToJson($("#datetimepicker1").val());
-    // var date = $("#datetimepicker1").val();
+    var date = fromPickerDateToJson(datePicker.val());
     var lunches = [];
     for (index = 1; index < 3; index++) {
-        var lunchSoup = new lunch($("#idsoup"+index).val(), true, date, $("#soup"+index).val());
+        var lunchSoup = new Lunch($("#idsoup"+index).val(), true, date, $("#soup"+index).val());
         lunches.push(lunchSoup);
     }
     for (index = 1; index < 6; index++) {
-        var lunchSoup = new lunch($("#idmeal"+index).val(), false, date, $("#meal"+index).val());
-        lunches.push(lunchSoup);
+        var lunchMeal = new Lunch($("#idmeal"+index).val(), false, date, $("#meal"+index).val());
+        lunches.push(lunchMeal);
     }
     var jsonLunches = JSON.stringify(lunches);
     $.when(
@@ -215,7 +214,7 @@ function postLunches() {
     );
 }
 
-function lunch(id, soup, date, description) {
+function Lunch(id, soup, date, description) {
     this.id = id;
     this.soup = soup;
     this.date = date;

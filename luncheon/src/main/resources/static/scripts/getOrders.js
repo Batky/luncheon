@@ -70,7 +70,6 @@ function create(json) {
     lunchesJson = json;
     setHeader(json);
     var checked = "";
-    var disabled = "";
     var index;
     var lastDate = lunchesJson[0].lunch.date;
     var soupIndex = 1;
@@ -100,12 +99,6 @@ function create(json) {
                 if (ordered) {
                     checked = "checked"
                 }
-                // disabled = "";
-                // if (!changeable) {
-                //     disabled = " disabled";
-                //     $(tableBtn+day).attr("disabled", true);
-                //     // $(tableName+day).attr("hidden", true);
-                // }
                 var radioname = 'rdbtnsoup' + datepart;
                 var radios = "<input type='radio' name='" + radioname + "'" + checked + " >";
                 if (soupIndex === 1) {
@@ -129,11 +122,6 @@ function create(json) {
                 if (ordered) {
                     checked = "checked"
                 }
-                // disabled = "";
-                // if (!changeable) {
-                //     disabled = " disabled"
-                // }
-
                 var radioname = 'rdbtnmeal' + datepart;
                 var radiom = "<input type='radio' name='" + radioname + "'" + checked + " >";
                 if (mealIndex === 1) {
@@ -169,10 +157,6 @@ function create(json) {
                 if (ordered) {
                     checked = "checked"
                 }
-                // disabled = "";
-                // if (!changeable) {
-                //     disabled = " disabled"
-                // }
                 var radioname = 'rdbtnsoup' + datepart;
                 var radios1 = "<input type='radio' name='" + radioname + "'" + checked + " >";
                 if (soupIndex === 1) {
@@ -197,10 +181,6 @@ function create(json) {
                 if (ordered) {
                     checked = "checked"
                 }
-                // disabled = "";
-                // if (!changeable) {
-                //     disabled = " disabled"
-                // }
                 var radiom1 = "<input type='radio' name='" + radioname + "'" + checked + " >";;
                 if (mealIndex === 1) {
                     $(tableName+day+" > tbody:last-child")

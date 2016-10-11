@@ -27,3 +27,4 @@ users/storage/import GET - reimport users from storage
 users/file/import GET - reimport users from file
 users/id/{id} GET - returns user with id
 users/pid/{pid} GET - returns user with pid
+users/user POST - store user

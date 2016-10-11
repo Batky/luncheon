@@ -11,14 +11,12 @@ $(document).ready(function(){
 
     dateTimePicker.datepicker({
         dateFormat: "dd.mm.yy",
-        dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
-        dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
-        dayNamesShort: [ "Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob" ],
+        dayNames: dayNames,
+        dayNamesMin: dayNamesMin,
+        dayNamesShort: dayNamesShort,
         firstDay: 1,
-        monthNames: [ "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December" ],
-        monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec" ],
-        showWeek: false,
-        weekHeader: "T"
+        monthNames: monthNames,
+        monthNamesShort: monthNamesShort
     });
 
     dateTimePicker.datepicker().show();
@@ -139,10 +137,8 @@ function compareArrayDate(dateArray1, dateArray2) {
 }
 
 function cleanTables() {
-    var tableName = "#day";
-    var tableHeader = "#table";
     for (var i=1;i<=5;i++) {
-        $(tableName + i + " tr").remove();
-        $(tableHeader + i + " tr").remove();
+        $("#day" + i + " tr").remove();
+        $("#table" + i + " tr").remove();
     }
 }

@@ -1,19 +1,17 @@
 package eu.me73.luncheon.user.rest;
 
-import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileName;
-
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
-import java.io.IOException;
-import java.util.Collection;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.Collection;
+
+import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileName;
 
 @RestController()
 public class UserRestController {
@@ -99,5 +97,13 @@ public class UserRestController {
             LOG.debug("Rest request for all users for special admin.");
         }
         return userServices.getAllUsersForAdmin();
+    }
+
+    @RequestMapping(value = "users/user", method = RequestMethod.POST, consumes = "application/json")
+    public void saveUser(@RequestBody User user){
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request to POST a user: {}", user);
+        }
+        userServices.save(user);
     }
 }

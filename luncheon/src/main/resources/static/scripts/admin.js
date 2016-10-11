@@ -2,6 +2,11 @@ var urlUsers = "/security/users/";
 var usersJson;
 var tableUsers = "#users";
 var lastSelectedRow;
+var urlUserCard = "users/card/";
+var urlUserId = "users/id/";
+var urlUserPid = "users/pid/";
+var urlStoreUser = "users/user/";
+var selectedUserId = 0;
 
 $(document).ready(function(){
 
@@ -16,8 +21,8 @@ $(document).ready(function(){
         $(lastSelectedRow).removeClass("selectedRow");
         $(this).addClass("selectedRow");
         lastSelectedRow = $(this);
-        var str = $(this).text();
-        console.log(str);
+        var str = $(this).text().split("@");
+        selectedUserId = str[0];
     });
 
 });
@@ -60,30 +65,77 @@ function createTable(json) {
                 "<td width='10%'>" + json[index].pid + "</td>" +
                 "<td width='20%'>" + json[index].barCode + "</td>" +
                 "<td width='40%'>" + json[index].longName + "</td>" +
-                "<td width='20%'>" + slovakRelation(json[index].relation) + "</td>" +
+                "<td width='20%'>" + toSvkRelation(json[index].relation) + "</td>" +
                 "</tr>");
     }
 }
 
-function slovakRelation(relation) {
-    if (relation === 'EMPLOYEE') {
-        return "Kmeňový";
-    } else {
-        if (relation === 'VISITOR') {
-            return "Návšteva";
-        } else {
-            if (relation === 'PARTIAL') {
-                return "Brigádnik";
-            } else {
-                if (relation === 'ADMIN') {
-                    return "Super admin"
-                } else {
-                    if (relation === 'POWER_USER') {
-                        return "Administrátor"
-                    }
-                }
-            }
+function cleanForm() {
+    $("#id").val("");
+    $("#pid").val("");
+    $("#name").val("");
+    $("#lastName").val("");
+    $("#barCode").val("");
+    $("#type").val(svkRelations[0]);
+}
+
+function createUser() {
+    var user = new User(
+        $("#id").val(),
+        $("#pid").val(),
+        $("#name").val(),
+        $("#lastName").val(),
+        $("#barCode").val(),
+        $("#type").val());
+
+    var jsonUser = JSON.stringify(user);
+
+    $.when(
+        $.ajax({
+            url:urlStoreUser,
+            type:"POST",
+            headers: {
+                "Accept" : "application/json; charset=utf-8",
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            data:jsonUser,
+            dataType:"json"
+        })
+    ).then(
+        function () {
+            location.reload();
         }
-        return relation;
-    }
+    );
+}
+
+function User(id, pid, firstName, lastName, barCode, relation) {
+    this.id = id;
+    this.pid = pid;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.barCode = barCode;
+    this.relation = fromSvkRelation(relation);
+}
+
+function openDialogCreate() {
+    cleanForm();
+    $("#myModal").modal("show");
+}
+
+function openDialogUpdate() {
+    $.when(
+        $.get(urlUserId + selectedUserId, function (json) {
+            console.log(json);
+            $("#id").val(json.id);
+            $("#pid").val(json.pid);
+            $("#name").val(json.firstName);
+            $("#lastName").val(json.lastName);
+            $("#barCode").val(json.barCode);
+            $("#type").val(toSvkRelation(json.relation));
+        })
+    ).then(
+        function () {
+            $("#myModal").modal("show");
+        }
+    );
 }
