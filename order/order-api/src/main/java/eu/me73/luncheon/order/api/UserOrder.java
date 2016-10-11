@@ -58,6 +58,14 @@ public class UserOrder {
         this.changeable = changeable;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "UserOrder{" +

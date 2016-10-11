@@ -42,3 +42,7 @@ function toSvkRelation(relation) {
         }
     }
 }
+
+function isRelationVisitor(relation) {
+     return (relation === relations[1]);
+}

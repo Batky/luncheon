@@ -76,7 +76,13 @@ function readData(date) {
 }
 
 function createTable(json) {
-    $(tableDaily + " > tbody:last-child").append("<tr><th class='danger'>Meno</th><th class='danger'>Polievka</th><th class='danger'>Hlavné jedlo</th></tr>");
+    $(tableDaily + " > tbody:last-child")
+        .append(
+            "<tr>" +
+            "<th class='danger'>Meno</th>" +
+            "<th class='danger'>Polievka</th>" +
+            "<th class='danger'>Hlavné jedlo</th>" +
+            "</tr>");
     for (var index = 0; index < json.length; index++) {
         $(tableDaily + " > tbody:last-child")
             .append(

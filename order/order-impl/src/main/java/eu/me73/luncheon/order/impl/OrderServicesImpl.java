@@ -177,7 +177,7 @@ public class OrderServicesImpl implements OrderService {
                 .collect(Collectors.toList());
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Found {} stored orders fro user {} and days from {} to {}",
+            LOG.debug("Found {} stored orders for user {} and days from {} to {}",
                     orders.size(),
                     userOrderArrayList.get(0).getUser(),
                     firstDate,
@@ -230,6 +230,7 @@ public class OrderServicesImpl implements OrderService {
             order.updateUser(userService.getUserById(user));
             order.updateSoup(findSoup(date, updatedUserOrders));
             order.updateMeal(findMeal(date, updatedUserOrders));
+            order.updateDescription(findDescription(date, updatedUserOrders));
             orders.add(order);
         }
 
@@ -242,6 +243,10 @@ public class OrderServicesImpl implements OrderService {
 
     private boolean isSoup(final UserOrder userOrder) {
         return userOrder.getLunch().getSoup();
+    }
+
+    private boolean hasDescription(final UserOrder userOrder) {
+        return (Objects.nonNull(userOrder.getDescription()) && !userOrder.getDescription().isEmpty());
     }
 
     private Lunch findMeal(final LocalDate date, final Collection<UserOrder> updatedUserOrders) {
@@ -258,6 +263,14 @@ public class OrderServicesImpl implements OrderService {
                 .filter(userOrder -> date.equals(gainDateFromUserOrder(userOrder)) && (isSoup(userOrder)))
                 .findFirst();
         return userOrderOptional.isPresent() ? userOrderOptional.get().getLunch() : null;
+    }
+
+    private String findDescription(final LocalDate date, final Collection<UserOrder> updatedUserOrders) {
+        Optional<UserOrder> userOrderOptional = updatedUserOrders
+                .stream()
+                .filter(userOrder -> date.equals(gainDateFromUserOrder(userOrder)) && (hasDescription(userOrder)))
+                .findFirst();
+        return userOrderOptional.isPresent() ? userOrderOptional.get().getDescription() : null;
     }
 
     @Override
@@ -459,12 +472,21 @@ public class OrderServicesImpl implements OrderService {
         if (Objects.isNull(entity)) {
             return null;
         }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Creating order from order entity: {}", entity);
+        }
         Order order = new Order();
         order.setId(entity.getId());
         order.updateDate(entity.getDate());
         order.updateUser(userService.getUserById(entity.getUser()));
         order.updateSoup(lunchService.getLunchById(entity.getSoup()));
         order.updateMeal(lunchService.getLunchById(entity.getMeal()));
+        if (Objects.nonNull(entity.getDescription()) && !entity.getDescription().isEmpty()) {
+            order.updateDescription(entity.getDescription());
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Created order {} from order entity", order);
+        }
         return order;
     }
 
@@ -473,7 +495,14 @@ public class OrderServicesImpl implements OrderService {
             return null;
         }
         DailyReport dailyReport = new DailyReport();
-        dailyReport.setName(userService.getUserById(entity.getUser()).getLongName());
+        User user = userService.getUserById(entity.getUser());
+        if (UserRelation.VISITOR.equals(user.getRelation()) &&
+            Objects.nonNull(entity.getDescription()) &&
+            !entity.getDescription().isEmpty()) {
+                dailyReport.setName(entity.getDescription());
+        } else {
+            dailyReport.setName(user.getLongName());
+        }
         dailyReport.setSoup(numberingMap.get(entity.getSoup()));
         dailyReport.setMeal(numberingMap.get(entity.getMeal()));
         return dailyReport;

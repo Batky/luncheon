@@ -5,33 +5,34 @@ var users = [];
 var usersWithId = [];
 var urlAllUsers = "/users/all";
 var urlStoreUser = "/orders/store/user";
+var urlUserId = "users/id/";
+var datetimepicker = $("#datetimepicker");
 var changeTime = function () {
     cleanTables();
-    var valueDate = $("#datetimepicker").val();
+    var valueDate = datetimepicker.val();
     var valueId = idFromName($("#userpicker").val());
     readData(fromPickerDate(valueDate), valueId);
 };
+var visitor = false;
 
 $(document).ready(function(){
 
-    $("#datetimepicker").datepicker({
+    datetimepicker.datepicker({
         dateFormat: "dd.mm.yy",
-        dayNames: [ "Nedeľa", "Pondelok", "Utorok", "Streda", "Štvrtok", "Piatok", "Sobota" ],
-        dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
-        dayNamesShort: [ "Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob" ],
+        dayNames: dayNames,
+        dayNamesMin: dayNamesMin,
+        dayNamesShort: dayNamesShort,
         firstDay: 1,
-        monthNames: [ "Január", "Február", "Marec", "Apríl", "Máj", "Jún", "Júl", "August", "September", "Október", "November", "December" ],
-        monthNamesShort: [ "Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec" ],
-        showWeek: false,
-        weekHeader: "T"
+        monthNames:monthNames,
+        monthNamesShort: monthNamesShort
     });
 
-    $("#datetimepicker").datepicker().show();
+    datetimepicker.datepicker().show();
 
-    $("#datetimepicker")
+    datetimepicker
         .val(toPickerDate(dateToRestString(new Date())));
 
-    readData(fromPickerDate($("#datetimepicker").val()));
+    // readData(fromPickerDate(datetimepicker.val()));
 
     $("#logout").click(function(){
         location.href = "/logout";
@@ -41,7 +42,7 @@ $(document).ready(function(){
         location.href = "/lunches";
     });
 
-    $("#datetimepicker")
+    datetimepicker
         .change(changeTime);
 
     $("#selectDate")
@@ -57,7 +58,12 @@ $(document).ready(function(){
     });
 
     $("#save").click(function () {
-        gatherOrders();
+        if (visitor) {
+            $("#description").val(getDescription());
+            $("#myModal").modal("show");
+        } else {
+            gatherOrders(false);
+        }
     });
 
     $("#move").click(function () {
@@ -68,9 +74,19 @@ $(document).ready(function(){
 
 function readData(date, userId) {
     $.when(
+
         $.get(urlLunches + date + urlUser + userId, function (json) {
             lunchesJson = json;
+        }),
+
+        $.get(urlUserId + userId, function (json) {
+            if (isRelationVisitor(json.relation)) {
+                visitor = true;
+            } else {
+                visitor = false;
+            }
         })
+
     ).then( function () {
         createTable(lunchesJson);
     });
@@ -136,8 +152,7 @@ function createTable(json) {
 
 
 function toPickerDate(date) {
-    var toDate = date.substr(6,2) + "." + date.substr(4,2) + "." + date.substr(0,4);
-    return toDate;
+    return date.substr(6,2) + "." + date.substr(4,2) + "." + date.substr(0,4);
 }
 
 function fromPickerDate(date) {
@@ -146,10 +161,9 @@ function fromPickerDate(date) {
 
 
 function dateToRestString(date) {
-    var result = (date.getFullYear()) +
+    return (date.getFullYear()) +
         ('0' + (date.getMonth() + 1)).slice(-2) +
         ('0' + (date.getDate())).slice(-2);
-    return result;
 }
 
 function compareArrayDate(dateArray1, dateArray2) {
@@ -157,8 +171,8 @@ function compareArrayDate(dateArray1, dateArray2) {
 }
 
 function cleanTables() {
-    $("#day1 tr").remove();
-    $("#table1 tr").remove();
+    $("#day1").find("tr").remove();
+    $("#table1").find("tr").remove();
 }
 
 function readUsers() {
@@ -193,10 +207,12 @@ function idFromName(name) {
             }
         }
     }
+    return 0;
 }
 
 function saveOrders(refresh, show) {
     var jsonLunchesOrders = JSON.stringify(lunchesJson);
+    console.log(jsonLunchesOrders);
     $.when(
         $.ajax({
             url: urlStoreUser,
@@ -224,10 +240,29 @@ function saveOrders(refresh, show) {
         }
     });
 }
-function gatherOrders() {
+
+function getDescription() {
+    if (visitor) {
+        var description = "";
+        for (var i=0;i<lunchesJson.length;i++) {
+            if (lunchesJson[i].ordered) {
+                description = lunchesJson[i].description;
+                break;
+            }
+        }
+        return description;
+    } else {
+        return "";
+    }
+}
+
+function gatherOrders(withDescription) {
     var index = 0;
     $('input:radio').each(function () {
         lunchesJson[index].ordered = !!$(this).prop('checked');
+        if (withDescription) {
+            lunchesJson[index].description = $("#description").val();
+        }
         index++;
     });
     saveOrders(false, true);
@@ -304,9 +339,6 @@ function noneOrdered(json) {
     return ordered;
 }
 
-function hasOrder(date, user) {
-}
-
 function selectUser() {
     var user = $("#userpicker2").val();
     if (user === "") {
@@ -318,4 +350,8 @@ function selectUser() {
         }
     }
     return 0;
+}
+
+function continueSave() {
+    gatherOrders(true);
 }

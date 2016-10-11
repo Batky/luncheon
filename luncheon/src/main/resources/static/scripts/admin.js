@@ -125,7 +125,6 @@ function openDialogCreate() {
 function openDialogUpdate() {
     $.when(
         $.get(urlUserId + selectedUserId, function (json) {
-            console.log(json);
             $("#id").val(json.id);
             $("#pid").val(json.pid);
             $("#name").val(json.firstName);

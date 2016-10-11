@@ -65,7 +65,7 @@ public class Order {
         return changed;
     }
 
-    public void setChanged(LocalDateTime changed) {
+    public void setChanged(final LocalDateTime changed) {
         this.changed = this.updateObject(this.changed, changed);
     }
 
@@ -73,7 +73,7 @@ public class Order {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void updateDescription(final String description) {
         this.description = description;
     }
 

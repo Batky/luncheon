@@ -57,11 +57,32 @@
         <tbody></tbody>
     </table>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Užívateľ je návšteva, zadaj popis</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" id="description" placeholder="Popis" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="continueSave()">Hotovo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <script src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/jquery-ui.min.js"></script>
+<script src="../scripts/utils.js"></script>
 <script src="../scripts/power.js"></script>
 </body>
 </html>
