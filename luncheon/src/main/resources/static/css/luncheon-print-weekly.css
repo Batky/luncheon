@@ -5,17 +5,21 @@
         -webkit-print-color-adjust: exact;
     }
     td {
-        font-size: 12px;
-        size: 12px;
+        font-size: 16px;
+        size: 10px;
     }
     th {
-        font-size: 12px;
-        size: 12px;
+        font-size: 16px;
+        size: 10px;
     }
 
     p {
-        font-size: 10px;
+        font-size: 16px;
         size: 10px;
+    }
+
+    h4 {
+        font-weight: bold;
     }
 
     blockquote {

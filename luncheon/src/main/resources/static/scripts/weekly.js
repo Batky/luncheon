@@ -77,13 +77,14 @@ function createTable(json) {
         if (compareArrayDate(json[index].date, lastDate)) {
             if (json[index].soup) {
                 if (soupIndex === 1) {
-                    $(tableName+day+" > tbody:last-child").append("<tr><td colspan='2' class='info'>Polievky</td></tr>");
+                    $(tableName+day+" > tbody:last-child").append("<tr class='hidden-print'><td colspan='2' class='info'>Polievky</td></tr>");
                 }
                 $(tableName+day+" > tbody:last-child").append("<tr><td width='10%'>"+soupIndex+"</td><td>"+json[index].description+"</td></tr>");
                 soupIndex++;
             } else {
                 if (mealIndex === 1) {
-                    $(tableName+day+" > tbody:last-child").append("<tr><td colspan='2' class='info'>Hlavné jedlá</td></tr>");
+                    $(tableName+day+" > tbody:last-child").append("<tr class='hidden-print'><td colspan='2' class='info'>Hlavné jedlá</td></tr>");
+                    $(tableName+day+" > tbody:last-child").append("<tr class='visible-print' style='height: 1px'><td colspan='2' class='info'></td></tr>");
                 }
                 $(tableName+day+" > tbody:last-child").append("<tr><td width='10%'>"+mealIndex+"</td><td>"+json[index].description+"</td></tr>");
                 mealIndex++;
@@ -101,13 +102,14 @@ function createTable(json) {
             $(tableName + day + " > tbody:last-child").append("<tr class='hidden-print'><th class='danger'>Číslo</th><th class='danger'>Popis jedla</th></tr>")
             if (json[index].soup) {
                 if (soupIndex === 1) {
-                    $(tableName+day+" > tbody:last-child").append("<tr><td colspan='2' class='info'>Polievky</td></tr>");
+                    $(tableName+day+" > tbody:last-child").append("<tr class='hidden-print'><td colspan='2' class='info'>Polievky</td></tr>");
                 }
                 $(tableName+day+" > tbody:last-child").append("<tr><td width='10%'>"+soupIndex+"</td><td>"+json[index].description+"</td></tr>");
                 soupIndex++;
             } else {
                 if (mealIndex === 1) {
-                    $(tableName+day+" > tbody:last-child").append("<tr><td colspan='2' class='info'>Hlavné jedlá</td></tr>");
+                    $(tableName+day+" > tbody:last-child").append("<tr class='hidden-print'><td colspan='2' class='info'>Hlavné jedlá</td></tr>");
+                    $(tableName+day+" > tbody:last-child").append("<tr class='visible-print' style='height: 1px'><td colspan='2' class='info'></td></tr>");
                 }
                 $(tableName+day+" > tbody:last-child").append("<tr><td width='10%'>"+mealIndex+"</td><td>"+json[index].description+"</td></tr>");
                 mealIndex++;

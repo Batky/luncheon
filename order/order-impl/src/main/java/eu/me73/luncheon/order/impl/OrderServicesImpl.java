@@ -499,7 +499,7 @@ public class OrderServicesImpl implements OrderService {
         if (UserRelation.VISITOR.equals(user.getRelation()) &&
             Objects.nonNull(entity.getDescription()) &&
             !entity.getDescription().isEmpty()) {
-                dailyReport.setName(entity.getDescription());
+                dailyReport.setName(user.getLongName() + " (" + entity.getDescription() + ")");
         } else {
             dailyReport.setName(user.getLongName());
         }
