@@ -28,4 +28,8 @@
         height: 15px;
     }
 
+    .fifth-day {
+        page-break-before: always;
+    }
+
 }
