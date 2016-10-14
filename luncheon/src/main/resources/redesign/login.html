@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prihlásenie</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <p class="navbar-brand">K-system spol. s r.o.</p>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <!--<li><a href="#home">HOME</a></li>-->
+                <!--<li><a href="#band">BAND</a></li>-->
+                <!--<li><a href="#tour">TOUR</a></li>-->
+                <!--<li><a href="#contact">CONTACT</a></li>-->
+                <!--<li class="dropdown">-->
+                    <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">MORE-->
+                        <!--<span class="caret"></span>-->
+                    <!--</a>-->
+                    <!--<ul class="dropdown-menu">-->
+                        <!--<li><a href="#">Merchandise</a></li>-->
+                        <!--<li><a href="#">Extras</a></li>-->
+                        <!--<li><a href="#">Media</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
+                <!--<li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>-->
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid" style="padding-top: 70px; text-align: center">
+</div>
+<div class="container">
+    <div class="col-md-2"></div>
+    <div class="col-md-10">
+    <h2>Prihlásenie do obedového systému</h2>
+    <p>Tu sa môžete prihlásiť do obedového systému. Použite čítačku, kód alebo meno heslo</p>
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="ssoId">Načítaj čiarový kód:</label>
+            <input type="text" class="form-control" id="ssoId" placeholder="Kód alebo meno" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Heslo:</label>
+            <input type="password" class="form-control" id="password" placeholder="Heslo">
+        </div>
+        <button type="submit" class="btn btn-default">Prihlás ma</button>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+    </div>
+</div>
+<div class="container-fluid" style="padding-top: 50px; text-align: center">
+</div>
+<div class="container-fluid" style="background: #ffc400">
+<div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 1000px; margin: 0 auto">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="images/pizza.jpg" alt="Chutnkučká pizza">
+        </div>
+
+        <div class="item">
+            <img src="images/mexico.jpg" alt="Pokantné mexico">
+        </div>
+
+        <div class="item">
+            <img src="images/sushi.jpg" alt="Štavnaté sushi">
+        </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Predchádzajúci</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Nasledujúci</span>
+    </a>
+</div>
+</div>
+</body>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/bootstrap.min.js"></script>
+</html>
