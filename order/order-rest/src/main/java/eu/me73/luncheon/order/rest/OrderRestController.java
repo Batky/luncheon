@@ -4,18 +4,21 @@ import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileN
 
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.commons.DateUtils;
-import eu.me73.luncheon.order.api.*;
-
+import eu.me73.luncheon.order.api.DailyReport;
+import eu.me73.luncheon.order.api.DailyReportSummary;
+import eu.me73.luncheon.order.api.EnabledOrderDate;
+import eu.me73.luncheon.order.api.MonthlyReport;
+import eu.me73.luncheon.order.api.Order;
+import eu.me73.luncheon.order.api.OrderEnabledService;
+import eu.me73.luncheon.order.api.OrderService;
+import eu.me73.luncheon.order.api.UserOrder;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLConnection;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -42,6 +45,9 @@ public class OrderRestController {
 
     @Autowired
     DateUtils dateUtils;
+
+    @Autowired
+    OrderEnabledService orderEnabledService;
 
     @RequestMapping(value = "orders/all", method = RequestMethod.GET, produces = "application/json")
     public Collection<Order> getAllOrders() {
@@ -177,4 +183,31 @@ public class OrderRestController {
         }
     }
 
+    @RequestMapping(value = "orders/lock", method = RequestMethod.GET, produces = "application/json")
+    public EnabledOrderDate getLockDate(HttpServletResponse response) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for lock date.");
+        }
+        EnabledOrderDate date = orderEnabledService.getDate();
+        if (Objects.isNull(date)) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setStatus(HttpServletResponse.SC_EXPECTATION_FAILED);
+        }
+        return date;
+    }
+
+    @RequestMapping(value = "orders/lock/{date}", method = RequestMethod.POST, consumes = "application/json")
+    public void setLockDate(HttpServletResponse response, @PathVariable String date) {
+        LocalDate dt = dateUtils.getLocalDate(date);
+        EnabledOrderDate enabledOrderDate = orderEnabledService.getDate();
+        if (Objects.nonNull((enabledOrderDate)) && Objects.nonNull(dt)) {
+            if (enabledOrderDate.getDate().isBefore(dt)) {
+                orderEnabledService.save(new EnabledOrderDate(dt.getMonth().getValue(), dt.getYear()));
+                response.setStatus(HttpServletResponse.SC_ACCEPTED);
+                return;
+            }
+        }
+        response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+    }
 }
