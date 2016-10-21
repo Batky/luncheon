@@ -1,10 +1,13 @@
 package eu.me73.luncheon.order.api;
 
+import java.time.LocalDateTime;
+
 public class DailyReport {
 
     private String name;
     private String soup;
     private String meal;
+    private LocalDateTime changed;
 
     public DailyReport() {
     }
@@ -33,12 +36,21 @@ public class DailyReport {
         this.meal = meal;
     }
 
+    public LocalDateTime getChanged() {
+        return changed;
+    }
+
+    public void setChanged(LocalDateTime changed) {
+        this.changed = changed;
+    }
+
     @Override
     public String toString() {
         return "DailyReport{" +
                 "name='" + name + '\'' +
                 ", soup='" + soup + '\'' +
-                ", meal=" + meal +
+                ", meal='" + meal + '\'' +
+                ", changed=" + changed +
                 '}';
     }
 

@@ -72,6 +72,11 @@ public class LuncheonRestController {
         return "pages/powerorders.html";
     }
 
+    @RequestMapping(value = "/securitydaily", method = RequestMethod.GET)
+    String getOrdersAdminDaily() {
+        return "pages/dailya.html";
+    }
+
     @RequestMapping(value = "/daily", method = RequestMethod.GET)
     String getOrdersDaily() {
         return "pages/daily.html";

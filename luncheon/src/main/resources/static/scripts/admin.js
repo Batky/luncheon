@@ -25,6 +25,11 @@ $(document).ready(function(){
         selectedUserId = str[0];
     });
 
+    $("#daily").click(function(){
+        location.href = "/securitydaily";
+    });
+
+
 });
 
 function readData() {

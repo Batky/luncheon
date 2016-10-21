@@ -46,3 +46,15 @@ function toSvkRelation(relation) {
 function isRelationVisitor(relation) {
      return (relation === relations[1]);
 }
+
+function gainReadableDateTime(dateTime) {
+    var day = dateTime[2] + ".";
+    day = (day.length < 3 ? "0" + day : day);
+    var month = dateTime[1] + ".";
+    month = (month.length < 3 ? "0" + month : month);
+    var hour = dateTime[3] + ":";
+    hour = (hour.length < 3 ? "0" + hour : hour);
+    var minutes = dateTime[4] + "";
+    minutes = (minutes.length < 2 ? "0" + minutes : minutes);
+    return day + month + dateTime[0] + " " + hour + minutes;
+}

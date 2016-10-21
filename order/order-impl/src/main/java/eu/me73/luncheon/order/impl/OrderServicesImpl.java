@@ -505,6 +505,7 @@ public class OrderServicesImpl implements OrderService {
         }
         dailyReport.setSoup(numberingMap.get(entity.getSoup()));
         dailyReport.setMeal(numberingMap.get(entity.getMeal()));
+        dailyReport.setChanged(entity.getChanged());
         return dailyReport;
     }
 
