@@ -15,6 +15,8 @@ public class LuncheonConfig {
     private String powerPassword;
     private String adminName;
     private String adminPassword;
+    private Integer sameDayStart;
+    private Integer sameDayEnd;
 
     public Integer getOrdering() {
         return ordering;
@@ -94,5 +96,21 @@ public class LuncheonConfig {
 
     public void setAdminPassword(String adminPassword) {
         this.adminPassword = adminPassword;
+    }
+
+    public Integer getSameDayStart() {
+        return sameDayStart;
+    }
+
+    public void setSameDayStart(Integer sameDayStart) {
+        this.sameDayStart = sameDayStart;
+    }
+
+    public Integer getSameDayEnd() {
+        return sameDayEnd;
+    }
+
+    public void setSameDayEnd(Integer sameDayEnd) {
+        this.sameDayEnd = sameDayEnd;
     }
 }

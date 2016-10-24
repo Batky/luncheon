@@ -12,6 +12,7 @@ import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderEnabledService;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.api.UserOrder;
+import eu.me73.luncheon.user.api.UserService;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,6 +50,9 @@ public class OrderRestController {
     @Autowired
     OrderEnabledService orderEnabledService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping(value = "orders/all", method = RequestMethod.GET, produces = "application/json")
     public Collection<Order> getAllOrders() {
         if (LOG.isDebugEnabled()) {
@@ -61,6 +65,7 @@ public class OrderRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public void saveLunches(@RequestBody List<Order> orders) {
         for (Order order : orders) {
+            order.updateChangedBy(userService.getActualUser());
             orderService.save(order);
         }
     }
@@ -68,6 +73,7 @@ public class OrderRestController {
     @RequestMapping(value = "orders/order", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public void saveLunch(@RequestBody Order order) {
+        order.updateChangedBy(userService.getActualUser());
         orderService.save(order);
     }
 
@@ -150,6 +156,15 @@ public class OrderRestController {
         }
         LocalDate dt = dateUtils.getLocalDate(date);
         return Objects.nonNull(dt) ? orderService.createDailySummary(dt) : null;
+    }
+
+    @RequestMapping(value = "orders/daily/summary/morning/{date}", method = RequestMethod.GET, produces = "application/json")
+    public Collection<DailyReportSummary> getDailyReportSummaryMorning(@PathVariable String date) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for daily orders report summary mornings adds, date: {}", date);
+        }
+        LocalDate dt = dateUtils.getLocalDate(date);
+        return Objects.nonNull(dt) ? orderService.createDailySummaryMorning(dt) : null;
     }
 
     @RequestMapping(value = "orders/monthly/summary/{date}", method = RequestMethod.GET, produces = "application/json")

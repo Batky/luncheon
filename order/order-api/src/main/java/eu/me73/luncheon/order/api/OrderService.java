@@ -34,6 +34,8 @@ public interface OrderService {
 
     Collection<DailyReportSummary> createDailySummary(final LocalDate date);
 
+    Collection<DailyReportSummary> createDailySummaryMorning(final LocalDate date);
+
     Collection<MonthlyReport> createMonthlyReport(final LocalDate date);
 
     String createOlympFile(final LocalDate date);

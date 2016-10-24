@@ -1,9 +1,12 @@
 var urlDaily = "/orders/daily/";
 var urlDailySum = "/orders/daily/summary/";
+var urlDailySumMorning = "/orders/daily/summary/morning/";
 var dailyJson;
 var summaryJson;
+var summaryJsonMorning;
 var tableDaily = "#daily";
 var tableSummary = "#summary";
+var tableSummaryMorning = "#summaryMorning";
 var datetimepicker = $("#datetimepicker");
 var printheader = $("#printheader");
 
@@ -28,7 +31,7 @@ $(document).ready(function(){
 
     datetimepicker
         .change(function () {
-            var valueDate = $("#datetimepicker").val();
+            var valueDate = datetimepicker.val();
             readData(fromPickerDate(valueDate));
             printheader.text("Denný prehľad " + valueDate);
         });
@@ -55,6 +58,7 @@ function readData(date) {
 
     $(tableDaily + " tr").remove();
     $(tableSummary + " tr").remove();
+    $(tableSummaryMorning + " tr").remove();
 
     $.when(
 
@@ -64,12 +68,17 @@ function readData(date) {
 
         $.get(urlDailySum + date, function (json2) {
             summaryJson = json2;
+        }),
+
+        $.get(urlDailySumMorning + date, function (json3) {
+            summaryJsonMorning = json3;
         })
 
     ).then( function () {
 
         createTable(dailyJson);
         createTableSummary(summaryJson);
+        createTableSummaryMorning(summaryJsonMorning);
 
     });
 
@@ -80,6 +89,7 @@ function createTable(json) {
         .append(
             "<tr>" +
             "<th class='danger'>Meno</th>" +
+            "<th class='danger hidden-print'>Dohlasované</th>" +
             "<th class='danger'>Polievka</th>" +
             "<th class='danger'>Hlavné jedlo</th>" +
             "</tr>");
@@ -87,9 +97,10 @@ function createTable(json) {
         $(tableDaily + " > tbody:last-child")
             .append(
                 "<tr>" +
-                "<td width='70%'>" + json[index].name + "</td>" +
-                "<td width='15%'>" + json[index].soup + "</td>" +
-                "<td width='15%'>" + json[index].meal + "</td>" +
+                "<td width='50%'>" + json[index].name + "</td>" +
+                "<td width='10%' class='hidden-print'>" + gainMorningOrdering(json[index].changed, datetimepicker.val()) + "</td>" +
+                "<td width='20%'>" + json[index].soup + "</td>" +
+                "<td width='20%'>" + json[index].meal + "</td>" +
                 "</tr>");
     }
 }
@@ -111,6 +122,23 @@ function createTableSummary(json) {
     }
 }
 
+function createTableSummaryMorning(json) {
+    $(tableSummaryMorning + " > tbody:last-child").append("<tr><th class='info' colspan='3'>Dohlásené obedy</th></tr>");
+    for (var index = 0; index < json.length; index++) {
+        $(tableSummaryMorning + " > tbody:last-child")
+            .append(
+                "<tr>" +
+                "<td width='15%'>" + json[index].mark + "</td>" +
+                "<td width='70%'>" + json[index].meal + "</td>" +
+                "<td width='15%'>" + json[index].count + "</td>" +
+                "</tr>");
+        if (index == 1) {
+            $(tableSummaryMorning + " > tbody:last-child")
+                .append("<tr><td colspan='3'></td> </tr>");
+        }
+    }
+}
+
 function toPickerDate(date) {
     return date.substr(6,2) + "." + date.substr(4,2) + "." + date.substr(0,4);
 }
@@ -124,3 +152,4 @@ function dateToRestString(date) {
         ('0' + (date.getMonth() + 1)).slice(-2) +
         ('0' + (date.getDate())).slice(-2);
 }
+

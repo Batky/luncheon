@@ -8,6 +8,7 @@ public class DailyReport {
     private String soup;
     private String meal;
     private LocalDateTime changed;
+    private String changedBy;
 
     public DailyReport() {
     }
@@ -44,6 +45,14 @@ public class DailyReport {
         this.changed = changed;
     }
 
+    public String getChangedBy() {
+        return changedBy;
+    }
+
+    public void setChangedBy(String changedBy) {
+        this.changedBy = changedBy;
+    }
+
     @Override
     public String toString() {
         return "DailyReport{" +
@@ -51,6 +60,7 @@ public class DailyReport {
                 ", soup='" + soup + '\'' +
                 ", meal='" + meal + '\'' +
                 ", changed=" + changed +
+                ", changedBy='" + changedBy + '\'' +
                 '}';
     }
 

@@ -17,6 +17,7 @@ public class Order {
     private Lunch meal;
     private LocalDateTime changed;
     private String description;
+    private User changedBy;
 
     public Order() {
     }
@@ -77,6 +78,14 @@ public class Order {
         this.description = description;
     }
 
+    public User getChangedBy() {
+        return changedBy;
+    }
+
+    public void updateChangedBy(User changedBy) {
+        this.changedBy = this.updateObject(this.changedBy, changedBy);
+    }
+
     public OrderEntity toEntity() {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setId(this.id);
@@ -86,6 +95,9 @@ public class Order {
         orderEntity.setUser(this.user.getId());
         orderEntity.setChanged(this.changed);
         orderEntity.setDescription(this.description);
+        if (Objects.nonNull(this.changedBy)) {
+            orderEntity.setChangedBy(this.getChangedBy().getId());
+        }
         return orderEntity;
     }
 

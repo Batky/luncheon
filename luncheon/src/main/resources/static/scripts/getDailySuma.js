@@ -83,15 +83,17 @@ function createTable(json) {
             "<th class='danger'>Polievka</th>" +
             "<th class='danger'>Hlavné jedlo</th>" +
             "<th class='danger'>Zmenené</th>" +
+            "<th class='danger'>Zmenil</th>" +
             "</tr>");
     for (var index = 0; index < json.length; index++) {
         $(tableDaily + " > tbody:last-child")
             .append(
                 "<tr>" +
-                "<td width='60%'>" + json[index].name + "</td>" +
+                "<td width='30%'>" + json[index].name + "</td>" +
                 "<td width='10%'>" + json[index].soup + "</td>" +
                 "<td width='10%'>" + json[index].meal + "</td>" +
                 "<td width='20%'>" + gainReadableDateTime(json[index].changed) + "</td>" +
+                "<td width='30%'>" + json[index].changedBy + "</td>" +
                 "</tr>");
     }
 }

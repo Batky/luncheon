@@ -31,6 +31,9 @@ public class OrderEntity implements Serializable {
     @Column(name = "changed")
     LocalDateTime changed;
 
+    @Column(name = "changed_by")
+    Long changedBy;
+
     @Column(name = "description")
     String description;
 
@@ -93,6 +96,14 @@ public class OrderEntity implements Serializable {
         this.description = description;
     }
 
+    public Long getChangedBy() {
+        return changedBy;
+    }
+
+    public void setChangedBy(Long changedBy) {
+        this.changedBy = changedBy;
+    }
+
     @Override
     public String toString() {
         return "OrderEntity{" +
@@ -102,6 +113,7 @@ public class OrderEntity implements Serializable {
                 ", meal=" + meal +
                 ", user=" + user +
                 ", changed=" + changed +
+                ", changedBy=" + changedBy +
                 ", description='" + description + '\'' +
                 '}';
     }

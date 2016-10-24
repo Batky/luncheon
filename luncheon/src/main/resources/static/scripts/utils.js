@@ -58,3 +58,11 @@ function gainReadableDateTime(dateTime) {
     minutes = (minutes.length < 2 ? "0" + minutes : minutes);
     return day + month + dateTime[0] + " " + hour + minutes;
 }
+
+function gainMorningOrdering(date, fromPicker) {
+    if (date[2] == fromPicker.substr(0,2) && date[1] == fromPicker.substr(3, 2) && date[0] == fromPicker.substr(6,4)) {
+        return "Áno";
+    }
+
+    return  "";
+}

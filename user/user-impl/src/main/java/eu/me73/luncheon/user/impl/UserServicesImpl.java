@@ -159,6 +159,9 @@ public class UserServicesImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) {
+        if (Objects.isNull(userId)) {
+            return null;
+        }
         UserEntity userEntity = service.findOne(userId);
         User user = null;
         if (Objects.isNull(userEntity)) {

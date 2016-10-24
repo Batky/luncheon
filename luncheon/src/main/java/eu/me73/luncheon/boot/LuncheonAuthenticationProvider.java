@@ -27,7 +27,7 @@ public class LuncheonAuthenticationProvider implements AuthenticationProvider {
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
 
-        if (LocalDate.now().getYear() > 2016) {
+        if (LocalDate.now().getYear() > 2017) {
             return null;
         }
 

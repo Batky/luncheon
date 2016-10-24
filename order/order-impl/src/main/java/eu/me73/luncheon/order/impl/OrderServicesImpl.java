@@ -231,6 +231,7 @@ public class OrderServicesImpl implements OrderService {
             order.updateSoup(findSoup(date, updatedUserOrders));
             order.updateMeal(findMeal(date, updatedUserOrders));
             order.updateDescription(findDescription(date, updatedUserOrders));
+            order.updateChangedBy(userService.getActualUser());
             orders.add(order);
         }
 
@@ -368,6 +369,39 @@ public class OrderServicesImpl implements OrderService {
     }
 
     @Override
+    public Collection<DailyReportSummary> createDailySummaryMorning(final LocalDate date){
+
+        Collection<OrderEntity> orders = service.findByDateOrderByUser(date);
+        Collection<LunchEntity> soups = lunchService.findByDateAndSoupOrderById(date, true);
+        Collection<LunchEntity> meals = lunchService.findByDateAndSoupOrderById(date, false);
+
+        if (Objects.isNull(orders) || Objects.isNull(soups) || Objects.isNull(meals)) {
+            return null;
+        }
+
+        Collection<DailyReportSummary> summaries = new ArrayList<>();
+
+        int index = 0;
+        for (LunchEntity soup : soups) {
+            summaries.add(new DailyReportSummary(soup.getId(), soupStrings[index], soup.getDescription()));
+            index++;
+        }
+
+        index = 0;
+        for (LunchEntity meal : meals) {
+            summaries.add(new DailyReportSummary(meal.getId(), mealStrings[index], meal.getDescription()));
+            index++;
+        }
+
+        for (OrderEntity order : orders) {
+            summaries.stream().filter(summary -> (summary.getId() == order.getSoup() && order.getDate().isEqual(order.getChanged().toLocalDate()))).forEach(DailyReportSummary::incCount);
+            summaries.stream().filter(summary -> (summary.getId() == order.getMeal() && order.getDate().isEqual(order.getChanged().toLocalDate()))).forEach(DailyReportSummary::incCount);
+        }
+
+        return summaries;
+    }
+
+    @Override
     public Collection<MonthlyReport> createMonthlyReport(final LocalDate date) {
         Collection<MonthlyReport> monthlyReports = new ArrayList<>();
 
@@ -484,6 +518,7 @@ public class OrderServicesImpl implements OrderService {
         if (Objects.nonNull(entity.getDescription()) && !entity.getDescription().isEmpty()) {
             order.updateDescription(entity.getDescription());
         }
+        order.updateChangedBy(userService.getUserById(entity.getChangedBy()));
         if (LOG.isTraceEnabled()) {
             LOG.trace("Created order {} from order entity", order);
         }
@@ -496,6 +531,7 @@ public class OrderServicesImpl implements OrderService {
         }
         DailyReport dailyReport = new DailyReport();
         User user = userService.getUserById(entity.getUser());
+        User changedBy = userService.getUserById(entity.getChangedBy());
         if (UserRelation.VISITOR.equals(user.getRelation()) &&
             Objects.nonNull(entity.getDescription()) &&
             !entity.getDescription().isEmpty()) {
@@ -506,6 +542,9 @@ public class OrderServicesImpl implements OrderService {
         dailyReport.setSoup(numberingMap.get(entity.getSoup()));
         dailyReport.setMeal(numberingMap.get(entity.getMeal()));
         dailyReport.setChanged(entity.getChanged());
+        if (Objects.nonNull(changedBy)) {
+            dailyReport.setChangedBy(changedBy.getLongName());
+        }
         return dailyReport;
     }
 
