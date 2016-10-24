@@ -31,6 +31,16 @@
     width: 502px; /* total computed width = 302 x 4 + 306 */
 }
 
+.selected-lunch {
+    background: #ffc400;
+    font-weight: bold;
+}
+
+.first-meal {
+    border-top: 100px solid black;
+    /*padding: 10px 0;*/
+}
+
 #pricing-table .plan {
     font: 12px 'Lucida Sans', 'trebuchet MS', Arial, Helvetica;
     text-shadow: 0 1px rgba(255,255,255,.8);
@@ -86,4 +96,12 @@
     width: 460px; /* plan width = 460 + 20 + 20 + 1 + 1 = 502px */
     float: left;
     position: relative;
+}
+
+.navbar-luncheon {
+    background-color: #ddd;
+    font: 12px 'Lucida Sans', 'trebuchet MS', Arial, Helvetica;
+    text-shadow: 0 1px rgba(255,255,255,.8);
+    border: 1px solid #ddd;
+    color: #333;
 }
