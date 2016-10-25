@@ -8,7 +8,6 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -79,8 +78,8 @@ public class DateUtils {
         final LocalDate tomorrowDate = actualDate.plusDays(1);
         final LocalTime actualTime = LocalTime.now();
         final LocalTime configOrderingHour = LocalTime.of(config.getOrdering(), 0);
-        final LocalTime configSameDayOrderingHourStart = LocalTime.of(config.getSameDayStart(), 0);
-        final LocalTime configSameDayOrderingHourEnd = LocalTime.of(config.getSameDayEnd(), 0);
+        final LocalTime configSameDayOrderingHourStart = LocalTime.of(config.getSameDayStartHour(), config.getSameDayStartMinutes());
+        final LocalTime configSameDayOrderingHourEnd = LocalTime.of(config.getSameDayEndHour(), config.getSameDayEndMinutes());
 
         if (date.isEqual(actualDate)) {
             if (actualTime.isAfter(configSameDayOrderingHourStart) && actualTime.isBefore(configSameDayOrderingHourEnd)) {

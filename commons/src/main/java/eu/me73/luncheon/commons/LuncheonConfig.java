@@ -15,8 +15,11 @@ public class LuncheonConfig {
     private String powerPassword;
     private String adminName;
     private String adminPassword;
-    private Integer sameDayStart;
-    private Integer sameDayEnd;
+    private Integer sameDayStartHour;
+    private Integer sameDayStartMinutes;
+    private Integer sameDayEndHour;
+    private Integer sameDayEndMinutes;
+
 
     public Integer getOrdering() {
         return ordering;
@@ -98,19 +101,35 @@ public class LuncheonConfig {
         this.adminPassword = adminPassword;
     }
 
-    public Integer getSameDayStart() {
-        return sameDayStart;
+    public Integer getSameDayStartHour() {
+        return sameDayStartHour;
     }
 
-    public void setSameDayStart(Integer sameDayStart) {
-        this.sameDayStart = sameDayStart;
+    public void setSameDayStartHour(Integer sameDayStartHour) {
+        this.sameDayStartHour = sameDayStartHour;
     }
 
-    public Integer getSameDayEnd() {
-        return sameDayEnd;
+    public Integer getSameDayEndHour() {
+        return sameDayEndHour;
     }
 
-    public void setSameDayEnd(Integer sameDayEnd) {
-        this.sameDayEnd = sameDayEnd;
+    public void setSameDayEndHour(Integer sameDayEndHour) {
+        this.sameDayEndHour = sameDayEndHour;
+    }
+
+    public Integer getSameDayStartMinutes() {
+        return sameDayStartMinutes;
+    }
+
+    public void setSameDayStartMinutes(Integer sameDayStartMinutes) {
+        this.sameDayStartMinutes = sameDayStartMinutes;
+    }
+
+    public Integer getSameDayEndMinutes() {
+        return sameDayEndMinutes;
+    }
+
+    public void setSameDayEndMinutes(Integer sameDayEndMinutes) {
+        this.sameDayEndMinutes = sameDayEndMinutes;
     }
 }
