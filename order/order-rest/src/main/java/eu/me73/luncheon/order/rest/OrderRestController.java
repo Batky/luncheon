@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -105,7 +106,7 @@ public class OrderRestController {
 
     @RequestMapping(value = "orders/store/user", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public String saveUsersLunches(@RequestBody List<UserOrder> userOrders) {
+    public String saveUsersLunches(@RequestBody List<UserOrder> userOrders, HttpSession httpSession) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request to store {} user orders", userOrders.size());
         }

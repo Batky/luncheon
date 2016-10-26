@@ -157,6 +157,10 @@ public class OrderServicesImpl implements OrderService {
             return "0";
         }
 
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Saving users orders by logged user {}", userService.getActualUser().getLongName());
+        }
+
         ArrayList<UserOrder> userOrderArrayList = userOrders
                 .stream()
 //                .filter(UserOrder::isChangeable)
