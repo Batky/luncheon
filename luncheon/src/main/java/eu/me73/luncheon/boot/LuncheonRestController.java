@@ -97,8 +97,4 @@ public class LuncheonRestController {
         return "pages/admin.html";
     }
 
-    @RequestMapping(value = "/test",method = RequestMethod.GET)
-    String redesing() {
-        return "redesign/login.html";
-    }
 }

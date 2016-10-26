@@ -11,19 +11,18 @@
 <div class="login-form" id="login-form">
     <h2>Prihlásenie do obedového systému</h2>
     <p>Tu sa môžete prihlásiť do obedového systému. Použite čítačku, kód alebo meno heslo</p>
-    <form class="form-inline">
+    <form class="form-inline" method="post">
         <div class="form-group">
             <label for="ssoId">Načítaj čiarový kód:</label>
-            <input type="text" class="form-control" id="ssoId" placeholder="Kód alebo meno" required>
+            <input type="text" class="form-control" id="ssoId" name="ssoId" placeholder="Kód alebo meno" required>
         </div>
         <div class="form-group">
             <label for="password">Heslo:</label>
-            <input type="password" class="form-control" id="password" placeholder="Heslo">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Heslo">
         </div>
         <button type="submit" class="btn btn-default">Prihlás ma</button>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
-    <!--</div>-->
 </div>
 <script src="../scripts/jquery.min.js"></script>
 <script src="../scripts/luncheon.utils.js"></script>
