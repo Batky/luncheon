@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.user.api.UserService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +19,11 @@ public class LuncheonRestController {
     UserService service;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    String getIndex() {
+    String getIndex(Authentication authentication) {
         boolean isUser = false;
         boolean isAdmin = false;
         boolean isSpecial = false;
-        for (GrantedAuthority grantedAuthority : service.getActualUser().getAuthorities()) {
+        for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
             if (grantedAuthority.getAuthority().equals("ROLE_SPECIAL")) {
                 isSpecial = true;
                 break;

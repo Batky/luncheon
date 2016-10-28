@@ -1,10 +1,10 @@
 package eu.me73.luncheon.order.api;
 
+import eu.me73.luncheon.user.api.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Collection;
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +18,7 @@ public interface OrderService {
 
     Collection<UserOrder> getOrdersForUser(Long id, LocalDate fromDate, LocalDate toDate);
 
-    String storeOrdersForUser(Collection<UserOrder> userOrders);
+    String storeOrdersForUser(final Collection<UserOrder> userOrders, final User user);
 
     void delete(final Collection<Order> orders);
 

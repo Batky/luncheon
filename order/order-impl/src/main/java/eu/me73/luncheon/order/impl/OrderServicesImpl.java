@@ -5,23 +5,38 @@ import eu.me73.luncheon.commons.DateUtils;
 import eu.me73.luncheon.commons.LuncheonConfig;
 import eu.me73.luncheon.lunch.api.Lunch;
 import eu.me73.luncheon.lunch.api.LunchService;
-import eu.me73.luncheon.order.api.*;
+import eu.me73.luncheon.order.api.DailyReport;
+import eu.me73.luncheon.order.api.DailyReportSummary;
+import eu.me73.luncheon.order.api.MonthlyReport;
+import eu.me73.luncheon.order.api.Order;
+import eu.me73.luncheon.order.api.OrderService;
+import eu.me73.luncheon.order.api.UserOrder;
 import eu.me73.luncheon.repository.lunch.LunchEntity;
 import eu.me73.luncheon.repository.order.OrderDaoService;
 import eu.me73.luncheon.repository.order.OrderEntity;
 import eu.me73.luncheon.repository.users.UserRelation;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.Collator;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class OrderServicesImpl implements OrderService {
@@ -150,7 +165,7 @@ public class OrderServicesImpl implements OrderService {
     }
 
     @Override
-    public String storeOrdersForUser(final Collection<UserOrder> userOrders) {
+    public String storeOrdersForUser(final Collection<UserOrder> userOrders, final User user) {
         Objects.requireNonNull(userOrders, "If storing users orders collection cannot be null");
         if (userOrders.isEmpty()) {
             LOG.warn("User orders collection is empty nothing to store");
@@ -158,8 +173,10 @@ public class OrderServicesImpl implements OrderService {
         }
 
         if (LOG.isTraceEnabled()) {
-            LOG.trace("Saving users orders by logged user {}", userService.getActualUser().getLongName());
+            LOG.trace("Saving users orders by logged user {}", user.getLongName());
         }
+
+
 
         ArrayList<UserOrder> userOrderArrayList = userOrders
                 .stream()
@@ -200,7 +217,7 @@ public class OrderServicesImpl implements OrderService {
             return "0";
         }
 
-        Collection<Order> updatedOrders = createOrdersFromUserOrders(updatedUserOrders);
+        Collection<Order> updatedOrders = createOrdersFromUserOrders(updatedUserOrders,user);
 
         if (LOG.isDebugEnabled()) {
             LOG.debug("Found {} updated orders for user {} and days from {} to {}",
@@ -214,11 +231,11 @@ public class OrderServicesImpl implements OrderService {
         return String.valueOf(updatedOrders.size());
     }
 
-    private Collection<Order> createOrdersFromUserOrders(Collection<UserOrder> updatedUserOrders) {
+    private Collection<Order> createOrdersFromUserOrders(final Collection<UserOrder> updatedUserOrders, final User user) {
 
         ArrayList<UserOrder> userOrderArrayList = (ArrayList<UserOrder>) updatedUserOrders;
 
-        Long user = userOrderArrayList.get(0).getUser();
+        Long userFromData = userOrderArrayList.get(0).getUser();
 
         Collection<LocalDate> dates = updatedUserOrders
                 .stream()
@@ -231,11 +248,11 @@ public class OrderServicesImpl implements OrderService {
         for (LocalDate date : dates) {
             Order order = new Order();
             order.updateDate(date);
-            order.updateUser(userService.getUserById(user));
+            order.updateUser(userService.getUserById(userFromData));
             order.updateSoup(findSoup(date, updatedUserOrders));
             order.updateMeal(findMeal(date, updatedUserOrders));
             order.updateDescription(findDescription(date, updatedUserOrders));
-            order.updateChangedBy(userService.getActualUser());
+            order.updateChangedBy(user);
             orders.add(order);
         }
 

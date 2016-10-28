@@ -49,9 +49,4 @@ public interface UserService {
 
     User getUserByPid(final String pid);
 
-    void logInUser(final User user);
-
-    void logOutUser();
-
-    User getActualUser();
 }

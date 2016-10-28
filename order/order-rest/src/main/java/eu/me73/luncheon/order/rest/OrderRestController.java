@@ -12,6 +12,7 @@ import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderEnabledService;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.api.UserOrder;
+import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -24,11 +25,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.security.core.Authentication;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,50 +56,74 @@ public class OrderRestController {
     UserService userService;
 
     @RequestMapping(value = "orders/all", method = RequestMethod.GET, produces = "application/json")
-    public Collection<Order> getAllOrders() {
+    public Collection<Order> getAllOrders(Authentication authentication) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for all orders.");
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         return orderService.getAllOrders();
     }
 
     @RequestMapping(value = "orders/orders", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveLunches(@RequestBody List<Order> orders) {
+    public void saveLunches(@RequestBody List<Order> orders, Authentication authentication) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for save {} orders.", orders.size());
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
+        }
         for (Order order : orders) {
-            order.updateChangedBy(userService.getActualUser());
+            order.updateChangedBy((User) authentication.getPrincipal());
             orderService.save(order);
         }
     }
 
     @RequestMapping(value = "orders/order", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveLunch(@RequestBody Order order) {
-        order.updateChangedBy(userService.getActualUser());
+    public void saveLunch(@RequestBody Order order, Authentication authentication) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for save order {}", order);
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
+        }
+        order.updateChangedBy((User) authentication.getPrincipal());
         orderService.save(order);
     }
 
     @RequestMapping(value = "orders/date/{date}/user/{id}", method = RequestMethod.GET)
-    public Collection<UserOrder> getOrdersForUserFromDate(@PathVariable String date, @PathVariable Long id) {
+    public Collection<UserOrder> getOrdersForUserFromDate(@PathVariable String date, @PathVariable Long id, Authentication authentication) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Request for orders for user {} and date: {}", id, date);
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         LocalDate dt = dateUtils.getLocalDate(date);
         return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, dateUtils.getFirstDate(dt), dateUtils.getLastDate(dt)) : null;
     }
 
     @RequestMapping(value = "orders/id/{id}", method = RequestMethod.GET)
-    public Order getOrdersById(@PathVariable Long id) {
+    public Order getOrdersById(@PathVariable Long id, Authentication authentication) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Request for orders with id {} ", id);
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         return orderService.getOrderForId(id);
     }
 
     @RequestMapping(value = "orders/exact/date/{date}/user/{id}", method = RequestMethod.GET)
-    public Collection<UserOrder> getOrdersForUserForExactDate(@PathVariable String date, @PathVariable Long id) {
+    public Collection<UserOrder> getOrdersForUserForExactDate(@PathVariable String date, @PathVariable Long id, Authentication authentication) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Request for orders for user {} and exact date: {}", id, date);
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         LocalDate dt = dateUtils.getLocalDate(date);
         return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, dt, dt) : null;
@@ -106,19 +131,25 @@ public class OrderRestController {
 
     @RequestMapping(value = "orders/store/user", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public String saveUsersLunches(@RequestBody List<UserOrder> userOrders, HttpSession httpSession) {
+    public String saveUsersLunches(@RequestBody List<UserOrder> userOrders, Authentication authentication) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request to store {} user orders", userOrders.size());
         }
-        return orderService.storeOrdersForUser(userOrders);
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
+        }
+        return orderService.storeOrdersForUser(userOrders, (User) authentication.getPrincipal());
     }
 
     @Async
     @RequestMapping(value = "orders/file/import", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
-    public String importLocalUsersFromFile() {
+    public String importLocalUsersFromFile(Authentication authentication) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for reimporting local orders from file.");
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         final Collection<Order> orders;
         int count = 0;
@@ -142,45 +173,60 @@ public class OrderRestController {
     }
 
     @RequestMapping(value = "orders/daily/{date}", method = RequestMethod.GET, produces = "application/json")
-    public Collection<DailyReport> getDailyReport(@PathVariable String date) {
+    public Collection<DailyReport> getDailyReport(@PathVariable String date, Authentication authentication) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for daily orders report, date: {}", date);
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         LocalDate dt = dateUtils.getLocalDate(date);
         return Objects.nonNull(dt) ? orderService.createReport(dt) : null;
     }
 
     @RequestMapping(value = "orders/daily/summary/{date}", method = RequestMethod.GET, produces = "application/json")
-    public Collection<DailyReportSummary> getDailyReportSummary(@PathVariable String date) {
+    public Collection<DailyReportSummary> getDailyReportSummary(@PathVariable String date, Authentication authentication) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for daily orders report summary, date: {}", date);
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         LocalDate dt = dateUtils.getLocalDate(date);
         return Objects.nonNull(dt) ? orderService.createDailySummary(dt) : null;
     }
 
     @RequestMapping(value = "orders/daily/summary/morning/{date}", method = RequestMethod.GET, produces = "application/json")
-    public Collection<DailyReportSummary> getDailyReportSummaryMorning(@PathVariable String date) {
+    public Collection<DailyReportSummary> getDailyReportSummaryMorning(@PathVariable String date, Authentication authentication) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for daily orders report summary mornings adds, date: {}", date);
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         LocalDate dt = dateUtils.getLocalDate(date);
         return Objects.nonNull(dt) ? orderService.createDailySummaryMorning(dt) : null;
     }
 
     @RequestMapping(value = "orders/monthly/summary/{date}", method = RequestMethod.GET, produces = "application/json")
-    public Collection<MonthlyReport> getMonthlyReport(@PathVariable String date) {
+    public Collection<MonthlyReport> getMonthlyReport(@PathVariable String date, Authentication authentication) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for monthly orders report summary for date {}", date);
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         LocalDate dt = dateUtils.getLocalDate(date);
         return Objects.nonNull(dt) ?  orderService.createMonthlyReport(dt) : null;
     }
 
     @RequestMapping(value = "orders/monthly/olymp/{date}", method = RequestMethod.GET)
-    public void downloadOlympFile(HttpServletResponse response, @PathVariable String date) throws IOException {
+    public void downloadOlympFile(HttpServletResponse response, @PathVariable String date, Authentication authentication) throws IOException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for olymp file for date {}", date);
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         LocalDate dt = dateUtils.getLocalDate(date);
         String fileName = Objects.nonNull(dt) ? orderService.createOlympFile(dt) : null;
@@ -200,9 +246,12 @@ public class OrderRestController {
     }
 
     @RequestMapping(value = "orders/lock", method = RequestMethod.GET, produces = "application/json")
-    public EnabledOrderDate getLockDate(HttpServletResponse response) {
+    public EnabledOrderDate getLockDate(HttpServletResponse response, Authentication authentication) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request for lock date.");
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         EnabledOrderDate date = orderEnabledService.getDate();
         if (Objects.isNull(date)) {
@@ -214,7 +263,13 @@ public class OrderRestController {
     }
 
     @RequestMapping(value = "orders/lock/{date}", method = RequestMethod.POST, consumes = "application/json")
-    public void setLockDate(HttpServletResponse response, @PathVariable String date) {
+    public void setLockDate(HttpServletResponse response, @PathVariable String date, Authentication authentication) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for set lock date to date {}", date);
+        }
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Rest request from user {}", authentication.getPrincipal());
+        }
         LocalDate dt = dateUtils.getLocalDate(date);
         EnabledOrderDate enabledOrderDate = orderEnabledService.getDate();
         if (Objects.nonNull((enabledOrderDate)) && Objects.nonNull(dt)) {
