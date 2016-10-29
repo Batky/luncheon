@@ -16,7 +16,7 @@ public interface OrderService {
     Collection<Order> getAllOrders();
     Collection<Order> importOrdersFromFile(final BufferedReader importFile) throws IOException;
 
-    Collection<UserOrder> getOrdersForUser(Long id, LocalDate fromDate, LocalDate toDate);
+    Collection<UserOrder> getOrdersForUser(final Long id, final LocalDate fromDate, final LocalDate toDate);
 
     String storeOrdersForUser(final Collection<UserOrder> userOrders, final User user);
 

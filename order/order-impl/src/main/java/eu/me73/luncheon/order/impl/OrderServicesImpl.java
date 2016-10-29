@@ -1,5 +1,9 @@
 package eu.me73.luncheon.order.impl;
 
+import static eu.me73.luncheon.commons.LuncheonConstants.USER_ORDERS_EMPTY;
+import static eu.me73.luncheon.commons.LuncheonConstants.USER_ORDERS_NOTHING_TO_STORE;
+import static eu.me73.luncheon.commons.LuncheonConstants.USER_ORDERS_WRONG_USER;
+
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.commons.DateUtils;
 import eu.me73.luncheon.commons.LuncheonConfig;
@@ -168,31 +172,36 @@ public class OrderServicesImpl implements OrderService {
     public String storeOrdersForUser(final Collection<UserOrder> userOrders, final User user) {
         Objects.requireNonNull(userOrders, "If storing users orders collection cannot be null");
         if (userOrders.isEmpty()) {
-            LOG.warn("User orders collection is empty nothing to store");
-            return "0";
+            LOG.warn(USER_ORDERS_EMPTY);
+            return USER_ORDERS_EMPTY;
         }
 
         if (LOG.isTraceEnabled()) {
             LOG.trace("Saving users orders by logged user {}", user.getLongName());
         }
 
-
-
         ArrayList<UserOrder> userOrderArrayList = userOrders
                 .stream()
 //                .filter(UserOrder::isChangeable)
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        if (userOrderArrayList.isEmpty()) {
-            return "0";
+//        if (userOrderArrayList.isEmpty()) {
+//            return "0";
+//        }
+
+        Long lunchUserId = userOrderArrayList.get(0).getUser();
+        if (!user.getRelation().equals(UserRelation.POWER_USER)) {
+            if (!Objects.equals(lunchUserId, user.getId())) {
+                LOG.warn(USER_ORDERS_WRONG_USER);
+                return USER_ORDERS_WRONG_USER;
+            }
         }
 
-        Long id = userOrderArrayList.get(0).getUser();
         LocalDate firstDate = userOrderArrayList.get(0).getLunch().getDate();
         LocalDate lastDate = userOrderArrayList.get(userOrderArrayList.size()-1).getLunch().getDate();
 
         Collection<Order> orders = service
-                .findByUserAndDateGreaterThanEqualAndDateLessThanEqualOrderByDate(id, firstDate, lastDate)
+                .findByUserAndDateGreaterThanEqualAndDateLessThanEqualOrderByDate(lunchUserId, firstDate, lastDate)
                 .stream()
                 .map(this::fromEntity)
                 .collect(Collectors.toList());
@@ -213,8 +222,8 @@ public class OrderServicesImpl implements OrderService {
                 .collect(Collectors.toList());
 
         if (updatedUserOrders.isEmpty()) {
-            LOG.info("Nothing to store to orders for user {}", id);
-            return "0";
+            LOG.warn("Nothing to store for user {}", lunchUserId);
+            return USER_ORDERS_NOTHING_TO_STORE;
         }
 
         Collection<Order> updatedOrders = createOrdersFromUserOrders(updatedUserOrders,user);
