@@ -105,3 +105,17 @@
     border: 1px solid #ddd;
     color: #333;
 }
+
+.lubar{
+    color: black;
+}
+
+.lubar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lubar li {
+    display: inline;
+}

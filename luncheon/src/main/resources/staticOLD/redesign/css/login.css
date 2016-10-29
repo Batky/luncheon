@@ -1,0 +1,35 @@
+.luncheon-login-1, body {
+    background-image: url("../images/zdrave_jedlo_6.jpg");
+    background-repeat: no-repeat;
+    color: white;
+}
+
+.luncheon-login-1 .login-form {
+    padding-top: 170px;
+    padding-left: 180px;
+}
+
+.luncheon-login-2, body {
+    background-image: url("../images/zdrave_jedlo_2.jpg");
+    background-repeat: no-repeat;
+    color: black;
+}
+
+.luncheon-login-2 .login-form {
+    padding-top: 70px;
+    padding-left: 80px;
+}
+
+.luncheon-login-3, body {
+    background-image: url("../images/zdrave_jedlo_8.jpg");
+    background-repeat: no-repeat;
+    color: black;
+}
+
+.luncheon-login-3 .login-form {
+    float: right;
+    padding-top: 10px;
+    padding-right: 80px;
+    background-image: none;
+}
+

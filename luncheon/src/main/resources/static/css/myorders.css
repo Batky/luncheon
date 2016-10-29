@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Chewy');
+
+h3 {
+    text-align: center;
+    font-size: 275%;
+    font-family: 'Chewy', cursive;
+}
+
+.header {
+    padding-top: 70px;
+}
+
+.background {
+    color: black;
+}
+
+.background:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+    display: block;
+    width: 1920px;
+    height: 1271px;
+
+    background-image: url("../images/maliny.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+
+/*#box {*/
+    /*margin: auto;*/
+    /*width: 50em;*/
+/*}*/
+
+/*#center {*/
+    /*vertical-align: middle;*/
+    /*display: inline-block;*/
+    /*white-space: normal;*/
+/*}*/
+/*#box:after {*/
+    /*content: "";*/
+    /*width: 1px;*/
+    /*height: 100%;*/
+    /*vertical-align: middle;*/
+    /*display: inline-block;*/
+    /*margin-right: -10px;*/
+/*}*/
+
+/*table {*/
+    /*background-color: white;*/
+    /*padding: 1em;*/
+    /*border-color: #27ae60 !important;*/
+/*}*/
+
+/*th {*/
+    /*text-transform: uppercase;*/
+    /*font-weight: 300;*/
+    /*text-align: center;*/
+    /*color: white;*/
+    /*background-color: #27ae60;*/
+    /*position: relative;*/
+/*}*/
+
+/*th:after {*/
+     /*content: "";*/
+     /*display: block;*/
+     /*height: 5px;*/
+     /*right: 0;*/
+     /*left: 0;*/
+     /*bottom: 0;*/
+     /*background-color: #16a085;*/
+     /*position: absolute;*/
+/*}*/

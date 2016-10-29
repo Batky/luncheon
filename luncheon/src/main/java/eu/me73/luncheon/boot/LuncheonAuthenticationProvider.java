@@ -1,5 +1,6 @@
 package eu.me73.luncheon.boot;
 
+import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.user.api.Role;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
@@ -18,11 +19,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class LuncheonAuthenticationProvider implements AuthenticationProvider {
 
+    private final Logger LOG = (Logger) LoggerFactory.getLogger(LuncheonAuthenticationProvider.class);
+
     @Autowired
     private UserService userService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Attempt to login: {}", authentication);
+        }
         String username = authentication.getName();
         String password = (String) authentication.getCredentials();
 
