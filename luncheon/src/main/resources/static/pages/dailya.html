@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denný sumár</title>
+    <link rel="stylesheet" type="text/css" href="../css/luncheon.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../css/luncheon-print.css" media="print">
+    <link rel="stylesheet" type="text/css" href="../css/luncheon-ordering-affix.css">
+    <link rel="stylesheet" type="text/css" href="../themes/smoothness/jquery-ui.min.css">
+</head>
+<body>
+
+<div class="container visible-print-block">
+    <div class="page-header">
+        <h3 id="printheader"></h3>
+    </div>
+</div>
+<div class="container-fluid hidden-print" style="height:200px;">
+    <h1 class="text-center">Denný prehľad</h1>
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4">
+            <div class="input-group">
+                <input type="text" class="form-control" id='datetimepicker' />
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button" id="select">Vyber</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="navbar navbar-inverse hidden-print" data-spy="affix" data-offset-top="197">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li><a href="#" id="backbtn"><span class="glyphicon glyphicon-arrow-left"></span> Späť</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" id="logout"><span class="glyphicon glyphicon-log-out"></span> Odhlásenie</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <table class="table table-condensed table-striped" id="daily">
+        <tbody></tbody>
+    </table>
+</div>
+<div class="container">
+    <table class="table table-condensed" id="summary">
+        <tbody></tbody>
+    </table>
+</div>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery-ui.min.js"></script>
+<script src="../scripts/utils.js"></script>
+<script src="../scripts/getDailySuma.js"></script>
+</body>
+</html>

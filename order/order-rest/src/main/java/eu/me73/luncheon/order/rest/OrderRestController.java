@@ -1,9 +1,13 @@
 package eu.me73.luncheon.order.rest;
 
 import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileName;
+import static eu.me73.luncheon.commons.LuncheonConstants.USER_ORDERS_EMPTY;
+import static eu.me73.luncheon.commons.LuncheonConstants.USER_ORDERS_NOTHING_TO_STORE;
+import static eu.me73.luncheon.commons.LuncheonConstants.USER_ORDERS_WRONG_USER;
 
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.commons.DateUtils;
+import eu.me73.luncheon.commons.LuncheonConstants;
 import eu.me73.luncheon.order.api.DailyReport;
 import eu.me73.luncheon.order.api.DailyReportSummary;
 import eu.me73.luncheon.order.api.EnabledOrderDate;
@@ -103,7 +107,7 @@ public class OrderRestController {
             LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         LocalDate dt = dateUtils.getLocalDate(date);
-        return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, dateUtils.getFirstDate(dt), dateUtils.getLastDate(dt)) : null;
+        return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, dt, dateUtils.getLastDate(dt)) : null;
     }
 
     @RequestMapping(value = "orders/id/{id}", method = RequestMethod.GET)
@@ -130,15 +134,27 @@ public class OrderRestController {
     }
 
     @RequestMapping(value = "orders/store/user", method = RequestMethod.POST, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String saveUsersLunches(@RequestBody List<UserOrder> userOrders, Authentication authentication) {
+    public void saveUsersLunches(HttpServletResponse response, @RequestBody List<UserOrder> userOrders, Authentication authentication) {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Rest request to store {} user orders", userOrders.size());
         }
         if (LOG.isTraceEnabled()) {
             LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
-        return orderService.storeOrdersForUser(userOrders, (User) authentication.getPrincipal());
+        String result = orderService.storeOrdersForUser(userOrders, (User) authentication.getPrincipal());
+        if (result.equals(USER_ORDERS_EMPTY)) {
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        } else {
+            if (result.equals(USER_ORDERS_WRONG_USER)) {
+                response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+            } else {
+                if (result.equals(USER_ORDERS_NOTHING_TO_STORE)) {
+                    response.setStatus(HttpServletResponse.SC_ACCEPTED);
+                } else {
+                    response.setStatus(HttpServletResponse.SC_CREATED);
+                }
+            }
+        }
     }
 
     @Async

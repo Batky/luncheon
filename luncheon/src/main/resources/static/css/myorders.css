@@ -1,20 +1,17 @@
-@import url('https://fonts.googleapis.com/css?family=Chewy');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Ubuntu+Condensed');
 
 h3 {
     text-align: center;
-    font-size: 275%;
-    font-family: 'Chewy', cursive;
+    font-size: 50px;
+    color: #ffc400;
+    font-family: 'Ubuntu Condensed', sans-serif;
 }
 
 .header {
-    padding-top: 70px;
+    padding-top: 20px;
 }
 
-.background {
-    color: black;
-}
-
-.background:before {
+.background1:before {
     content: "";
     position: fixed;
     left: 0;
@@ -25,57 +22,145 @@ h3 {
     width: 1920px;
     height: 1271px;
 
-    background-image: url("../images/maliny.jpg");
+    background-image: url("../images/food1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: blur(5px);
+    /*-webkit-filter: blur(5px);*/
+    /*-moz-filter: blur(5px);*/
+    /*-o-filter: blur(5px);*/
+    /*-ms-filter: blur(5px);*/
+    /*filter: blur(5px);*/
 }
 
-/*#box {*/
-    /*margin: auto;*/
-    /*width: 50em;*/
-/*}*/
+.background2:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
 
-/*#center {*/
-    /*vertical-align: middle;*/
-    /*display: inline-block;*/
-    /*white-space: normal;*/
-/*}*/
-/*#box:after {*/
-    /*content: "";*/
-    /*width: 1px;*/
-    /*height: 100%;*/
-    /*vertical-align: middle;*/
-    /*display: inline-block;*/
-    /*margin-right: -10px;*/
-/*}*/
+    display: block;
+    width: 1920px;
+    height: 1271px;
 
-/*table {*/
-    /*background-color: white;*/
-    /*padding: 1em;*/
-    /*border-color: #27ae60 !important;*/
-/*}*/
+    background-image: url("../images/food2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
-/*th {*/
-    /*text-transform: uppercase;*/
-    /*font-weight: 300;*/
-    /*text-align: center;*/
-    /*color: white;*/
-    /*background-color: #27ae60;*/
-    /*position: relative;*/
-/*}*/
+.background3:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
 
-/*th:after {*/
-     /*content: "";*/
-     /*display: block;*/
-     /*height: 5px;*/
-     /*right: 0;*/
-     /*left: 0;*/
-     /*bottom: 0;*/
-     /*background-color: #16a085;*/
-     /*position: absolute;*/
-/*}*/
+    display: block;
+    width: 1920px;
+    height: 1271px;
+
+    background-image: url("../images/food3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.background4:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+    display: block;
+    width: 1920px;
+    height: 1271px;
+
+    background-image: url("../images/food4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.background5:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+    display: block;
+    width: 1920px;
+    height: 1271px;
+
+    background-image: url("../images/food5.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.background6:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+    display: block;
+    width: 1920px;
+    height: 1271px;
+
+    background-image: url("../images/food6.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.background7:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+    display: block;
+    width: 1920px;
+    height: 1271px;
+
+    background-image: url("../images/food7.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.background8:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: -1;
+
+    display: block;
+    width: 1920px;
+    height: 1271px;
+
+    background-image: url("../images/food8.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbar-default {
+    background-color: #333;
+    border-bottom: 3px solid #abff91;
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
+
+.navbar-default li a {
+    font-size: 20px;
+    color: #777;
+}
+
+.navbar-default li a:hover {
+    background-color: #333;
+    color: #ffc400;
+    font-size: 20px;
+}
+
+.luncheon-label-div {
+    background-color: beige;
+}

@@ -1,6 +1,44 @@
+var urlUserActual = "/users/actual";
+var urlOrdersForDate = "/orders/date/";
+var ulrUserAdding = "/user/";
+var urlStoreUsersOrders = "/orders/store/user";
+var weekElements = ["mon", "tue", "wed", "thu", "fri"];
+var numberWeekElements = ["1", "2"];
+var dateElement = "d";
+var soupElements = ["s1", "s2"];
+var mealElements = ["m1", "m2", "m3", "m4", "m5"];
+var spaceElement = "space";
+var buttonElement = "b";
+var jsonElement =  "j";
 
 function getRandomBackgroundForLoginPage() {
     return Math.floor((Math.random() * 3) + 1);
+}
+
+function getRandomBackgroundForMyOrderPage() {
+    return Math.floor((Math.random() * 8) + 1);
+}
+
+function logOut() {
+    location.href = "/logout";
+}
+
+function getDayFromJsonDate(json) {
+    return day = new Date(json[0], json[1]-1, json[2]).getDay() - 1;
+}
+
+function equalsArrayDate(dateArray1, dateArray2) {
+    return (dateArray1[0] === dateArray2[0] && dateArray1[1] === dateArray2[1] && dateArray1[2] === dateArray2[2])
+}
+
+function hideAllWeeks() {
+    for (var j=0;j<2;j++) {
+        for (var i = 0; i < 5; i++) {
+            $("#" + weekElements[i] + numberWeekElements[j]).hide();
+            $("#" + weekElements[i] + numberWeekElements[j] + spaceElement).hide();
+            $("#" + weekElements[i] + numberWeekElements[j] + buttonElement).prop("disabled", true);
+        }
+    }
 }
 
 // var cookies = getCookies();

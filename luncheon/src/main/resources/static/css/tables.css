@@ -1,75 +1,232 @@
-.pure-table {
-    /* Remove spacing between table cells (from Normalize.css) */
-    border-collapse: collapse;
-    border-spacing: 0;
-    empty-cells: show;
-    border: 1px solid #cbcbcb;
-}
+/*body{*/
+    /*background: #303030;*/
+/*}*/
 
-.pure-table caption {
-    color: #000;
-    font: italic 85%/1 arial, sans-serif;
-    padding: 1em 0;
+#luncheon-table {
+    margin: 100px auto;
     text-align: center;
+    width: 100%; /*496px; /* total computed width = 292 x 4 + 296 */
 }
 
-.pure-table td,
-.pure-table th {
-    border-left: 1px solid #cbcbcb;/*  inner column border */
-    border-width: 0 0 0 1px;
-    font-size: inherit;
-    margin: 0;
-    overflow: visible; /*to make ths where the title is really long work*/
-    padding: 0.5em 1em; /* cell padding */
+#luncheon-table .plan {
+    font: 12px 'Lucida Sans', 'trebuchet MS', Arial, Helvetica;
+    text-shadow: 0 1px rgba(255,255,255,.8);
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #333;
+    padding: 20px;
+    width: 100%; /*450px; /* plan width = 450 + 20 + 20 + 1 + 1 = 292px */
+    float: left;
+    position: relative;
 }
 
-/* Consider removing this next declaration block, as it causes problems when
-there's a rowspan on the first cell. Case added to the tests. issue#432 */
-.pure-table td:first-child,
-.pure-table th:first-child {
-    border-left-width: 0;
+#luncheon-table .space {
+    /*font: 12px 'Lucida Sans', 'trebuchet MS', Arial, Helvetica;*/
+    /*text-shadow: 0 1px rgba(255,255,255,.8);*/
+    background: none;
+    border: 1px solid #ddd;
+    color: #333;
+    padding: 80px;
+    width: 100%; /*450px; /* plan width = 450 + 20 + 20 + 1 + 1 = 292px */
+    float: left;
+    position: relative;
 }
 
-.pure-table thead {
-    background-color: #e0e0e0;
-    color: #000;
+#luncheon-table .most-popular {
+    z-index: 2;
+    top: -13px;
+    border-width: 3px;
+    padding: 30px 20px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 20px 0 10px -10px rgba(0, 0, 0, .15), -20px 0 10px -10px rgba(0, 0, 0, .15);
+    -webkit-box-shadow: 20px 0 10px -10px rgba(0, 0, 0, .15), -20px 0 10px -10px rgba(0, 0, 0, .15);
+    box-shadow: 20px 0 10px -10px rgba(0, 0, 0, .15), -20px 0 10px -10px rgba(0, 0, 0, .15);
+}
+
+#luncheon-table .plan:nth-child(1) {
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
+    border-radius: 5px 0 0 5px;
+}
+
+#luncheon-table .plan:nth-child(4) {
+    -moz-border-radius: 0 5px 5px 0;
+    -webkit-border-radius: 0 5px 5px 0;
+    border-radius: 0 5px 5px 0;
+}
+
+/* --------------- */
+
+#luncheon-table h3 {
+    font-size: 30px;
+    font-weight: normal;
+    padding: 20px;
+    margin: -20px -20px 50px -20px;
+    background-color: #eee;
+    background-image: -moz-linear-gradient(#fff,#eee);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+    background-image: -webkit-linear-gradient(#fff, #eee);
+    background-image: -o-linear-gradient(#fff, #eee);
+    background-image: -ms-linear-gradient(#fff, #eee);
+    background-image: linear-gradient(#fff, #eee);
+}
+
+#luncheon-table #most-popular h3 {
+    background-color: #ddd;
+    background-image: -moz-linear-gradient(#eee,#ddd);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ddd));
+    background-image: -webkit-linear-gradient(#eee, #ddd);
+    background-image: -o-linear-gradient(#eee, #ddd);
+    background-image: -ms-linear-gradient(#eee, #ddd);
+    background-image: linear-gradient(#eee, #ddd);
+    margin-top: -30px;
+    padding-top: 30px;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+}
+
+#luncheon-table .plan:nth-child(1) h3 {
+    -moz-border-radius: 5px 0 0 0;
+    -webkit-border-radius: 5px 0 0 0;
+    border-radius: 5px 0 0 0;
+}
+
+#luncheon-table .plan:nth-child(4) h3 {
+    -moz-border-radius: 0 5px 0 0;
+    -webkit-border-radius: 0 5px 0 0;
+    border-radius: 0 5px 0 0;
+}
+
+#luncheon-table h3 span {
+    display: block;
+    font: bold 25px/100px Georgia, Serif;
+    color: #777;
+    background: #fff;
+    border: 5px solid #fff;
+    height: 100px;
+    width: 100px;
+    margin: 10px auto -65px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    border-radius: 100px;
+    -moz-box-shadow: 0 5px 20px #ddd inset, 0 3px 0 #999 inset;
+    -webkit-box-shadow: 0 5px 20px #ddd inset, 0 3px 0 #999 inset;
+    box-shadow: 0 5px 20px #ddd inset, 0 3px 0 #999 inset;
+}
+
+/* --------------- */
+
+#luncheon-table ul {
+    margin: 20px 0 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+#luncheon-table li {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 20px;
     text-align: left;
-    vertical-align: bottom;
+    border-top: 1px solid #ddd;
+    padding: 10px 0;
 }
 
-/*
-striping:
-   even - #fff (white)
-   odd  - #f2f2f2 (light gray)
-*/
-.pure-table td {
-    background-color: transparent;
-}
-.pure-table-odd td {
-    background-color: #f2f2f2;
+#luncheon-table table {
+    width: 100%;
 }
 
-/* nth-child selector for modern browsers */
-.pure-table-striped tr:nth-child(2n-1) td {
-    background-color: #f2f2f2;
+#luncheon-table td {
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 20px;
+    text-align: left;
+    padding: 10px 0;
 }
 
-/* BORDERED TABLES */
-.pure-table-bordered td {
-    border-bottom: 1px solid #cbcbcb;
-}
-.pure-table-bordered tbody > tr:last-child > td {
-    border-bottom-width: 0;
+#luncheon-table .line-up-bold {
+    border-top: 3px solid black;
 }
 
-
-/* HORIZONTAL BORDERED TABLES */
-
-.pure-table-horizontal td,
-.pure-table-horizontal th {
-    border-width: 0 0 1px 0;
-    border-bottom: 1px solid #cbcbcb;
+#luncheon-table .line-up {
+    border-top: 1px solid #ddd;
 }
-.pure-table-horizontal tbody > tr:last-child > td {
-    border-bottom-width: 0;
+
+#luncheon-table .cell-bold {
+    border-top: 1px solid #ddd;
+    font-weight: bolder;
+}
+
+#luncheon-table .cell-bold-centered {
+    border-top: 1px solid #ddd;
+    text-align: center;
+    font-weight: bolder;
+}
+
+#luncheon-table .not-ordered {
+    /*text-decoration: line-through;*/
+}
+
+#luncheon-table .ordered {
+    background-color: #abff91;
+    font-weight: bolder;
+}
+/* --------------- */
+
+#luncheon-table .signup {
+    position: relative;
+    padding: 8px 20px;
+    margin: 20px 0 0 0;
+    color: #fff;
+    font: bold 14px Arial, Helvetica;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #72ce3f;
+    background-image: -moz-linear-gradient(#72ce3f, #62bc30);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#72ce3f), to(#62bc30));
+    background-image: -webkit-linear-gradient(#72ce3f, #62bc30);
+    background-image: -o-linear-gradient(#72ce3f, #62bc30);
+    background-image: -ms-linear-gradient(#72ce3f, #62bc30);
+    background-image: linear-gradient(#72ce3f, #62bc30);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    text-shadow: 0 1px 0 rgba(0,0,0,.3);
+    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5), 0 2px 0 rgba(0, 0, 0, .7);
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5), 0 2px 0 rgba(0, 0, 0, .7);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .5), 0 2px 0 rgba(0, 0, 0, .7);
+}
+
+#luncheon-table .signup:hover {
+    background-color: #62bc30;
+    background-image: -moz-linear-gradient(#62bc30, #72ce3f);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#62bc30), to(#72ce3f));
+    background-image: -webkit-linear-gradient(#62bc30, #72ce3f);
+    background-image: -o-linear-gradient(#62bc30, #72ce3f);
+    background-image: -ms-linear-gradient(#62bc30, #72ce3f);
+    background-image: linear-gradient(#62bc30, #72ce3f);
+}
+
+#luncheon-table .signup:active, #luncheon-table .signup:focus {
+    background: #62bc30;
+    top: 2px;
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, .7) inset;
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .7) inset;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .7) inset;
+}
+
+/* --------------- */
+
+.clear:before, .clear:after {
+    content:"";
+    display:table
+}
+
+.clear:after {
+    clear:both
+}
+
+.clear {
+    zoom:1
 }

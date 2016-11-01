@@ -3,166 +3,545 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--<link href="../../staticOLD/redesign/css/bootstrap.min.css" rel="stylesheet">-->
-    <!--<link href="../../staticOLD/redesign/css/tables.css" rel="stylesheet">-->
-    <!--<link href="../../staticOLD/redesign/css/tables2.css" rel="stylesheet">-->
-    <!--<link href="../../staticOLD/redesign/css/luncheon.css" rel="stylesheet">-->
     <link href="../css/bootstrap.min.css" rel="stylesheet"/>
-    <!--<link href="../css/tables.css" rel="stylesheet"/>-->
+    <link href="../css/tables.css" rel="stylesheet"/>
     <link href="../css/myorders.css" rel="stylesheet"/>
+    <link href="../css/luncheon-radios.css" rel="stylesheet"/>
     <title>Obedy užívateľa</title>
 </head>
 <body>
-<div class="background">
+<div id="orders-background">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <ul class="nav navbar-right">
+                <li><a href="#" onclick="logOut()">Odhlásiť</a></li>
+            </ul>
+        </div>
+    </nav>
     <div class="header">
-        <h3>Môj denný zoznam jedál</h3>
     </div>
-    <div class="container-fluid" style="background: white">
-        <div class="container">
-        <div class="col-md-12">
-            <table class="table">
-                <!--<table class="table-striped">-->
-                <thead>
-                <tr>
-                    <th>Dátum</th>
-                    <th>Deň</th>
-                    <th>Čo mám objednané</th>
-                    <th>tlacitka</th>
-                    <th>grafika</th>
-                </tr>
-                </thead>
+    <div id="luncheon-table" class="clear">
+        <div class="plan" id="mon1" hidden>
+            <h3>Pondelok<span id="mon1d">31.10</span></h3>
+            <button type="button" class="btn btn-success btn-sm" id="mon1b">Zmeň</button>
+            <p></p>
+            <div class="container">
+            <table>
                 <tbody>
-                <tr>
-                    <td>25.10.2016</td>
-                    <td>Utorok</td>
-                    <td>Hrachová polivka<br>Pečené kura s ryžou, zeleninový šalát</td>
-                    <td>btn1<br>btn2</td>
-                    <td></td>
+                <tr class="line-up ordered">
+                    <td id="mon1s1j" hidden></td>
+                    <td width="30%" style="text-align: center">1</td>
+                    <td width="70%" id="mon1s1">no-text</td>
+                </tr>
+                <tr class="line-up">
+                    <td id="mon1s2j" hidden></td>
+                    <td style="text-align: center">2</td>
+                    <td id="mon1s2">no-text</td>
+                </tr>
+                <tr class="line-up-bold ordered">
+                    <td id="mon1m1j" hidden></td>
+                    <td style="text-align: center">1</td>
+                    <td id="mon1m1">no-text</td>
+                </tr>
+                <tr class="line-up">
+                    <td id="mon1m2j" hidden></td>
+                    <td style="text-align: center">2</td>
+                    <td id="mon1m2">no-text</td>
+                </tr>
+                <tr class="line-up">
+                    <td id="mon1m3j" hidden></td>
+                    <td style="text-align: center">3</td>
+                    <td id="mon1m3">no-text</td>
+                </tr>
+                <tr class="line-up">
+                    <td id="mon1m4j" hidden></td>
+                    <td style="text-align: center">4</td>
+                    <td id="mon1m4">no-text</td>
+                </tr>
+                <tr class="line-up">
+                    <td id="mon1m5j" hidden></td>
+                    <td style="text-align: center">5</td>
+                    <td id="mon1m5">no-text</td>
                 </tr>
                 </tbody>
             </table>
+            </div>
         </div>
+        <div class="space" id="tue1space" hidden></div>
+        <div class="plan" id="tue1" hidden>
+            <h3>Utorok<span id="tue1d">31.10</span></h3>
+            <button type="button" class="btn btn-success btn-sm" id="tue1b">Zmeň</button>
+            <p></p>
+            <div class="container">
+                <table>
+                    <tbody>
+                    <tr class="line-up ordered">
+                        <td id="tue1s1j" hidden></td>
+                        <td width="30%" style="text-align: center">1</td>
+                        <td width="70%" id="tue1s1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="tue1s2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="tue1s2">no-text</td>
+                    </tr>
+                    <tr class="line-up-bold ordered">
+                        <td id="tue1m1j" hidden></td>
+                        <td style="text-align: center">1</td>
+                        <td id="tue1m1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="tue1m2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="tue1m2">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="tue1m3j" hidden></td>
+                        <td style="text-align: center">3</td>
+                        <td id="tue1m3">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="tue1m4j" hidden></td>
+                        <td style="text-align: center">4</td>
+                        <td id="tue1m4">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="tue1m5j" hidden></td>
+                        <td style="text-align: center">5</td>
+                        <td id="tue1m5">no-text</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="space" id="wed1space" hidden></div>
+        <div class="plan" id="wed1" hidden>
+            <h3>Streda<span id="wed1d">31.10</span></h3>
+            <button type="button" class="btn btn-success btn-sm" id="wed1b">Zmeň</button>
+            <p></p>
+            <div class="container">
+                <table>
+                    <tbody>
+                    <tr class="line-up ordered">
+                        <td id="wed1s1j" hidden></td>
+                        <td width="30%" style="text-align: center">1</td>
+                        <td width="70%" id="wed1s1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="wed1s2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="wed1s2">no-text</td>
+                    </tr>
+                    <tr class="line-up-bold ordered">
+                        <td id="wed1m1j" hidden></td>
+                        <td style="text-align: center">1</td>
+                        <td id="wed1m1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="wed1m2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="wed1m2">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="wed1m3j" hidden></td>
+                        <td style="text-align: center">3</td>
+                        <td id="wed1m3">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="wed1m4j" hidden></td>
+                        <td style="text-align: center">4</td>
+                        <td id="wed1m4">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="wed1m5j" hidden></td>
+                        <td style="text-align: center">5</td>
+                        <td id="wed1m5">no-text</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="space" id="thu1space" hidden></div>
+        <div class="plan" id="thu1" hidden>
+            <h3>Štvrtok<span id="thu1d">31.10</span></h3>
+            <button type="button" class="btn btn-success btn-sm" id="thu1b">Zmeň</button>
+            <p></p>
+            <div class="container">
+                <table>
+                    <tbody>
+                    <tr class="line-up ordered">
+                        <td id="thu1s1j" hidden></td>
+                        <td width="30%" style="text-align: center">1</td>
+                        <td width="70%" id="thu1s1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="thu1s2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="thu1s2">no-text</td>
+                    </tr>
+                    <tr class="line-up-bold ordered">
+                        <td id="thu1m1j" hidden></td>
+                        <td style="text-align: center">1</td>
+                        <td id="thu1m1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="thu1m2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="thu1m2">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="thu1m3j" hidden></td>
+                        <td style="text-align: center">3</td>
+                        <td id="thu1m3">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="thu1m4j" hidden></td>
+                        <td style="text-align: center">4</td>
+                        <td id="thu1m4">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="thu1m5j" hidden></td>
+                        <td style="text-align: center">5</td>
+                        <td id="thu1m5">no-text</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="space" id="fri1space" hidden></div>
+        <div class="plan" id="fri1" hidden>
+            <h3>Piatok<span id="fri1d">31.10</span></h3>
+            <button type="button" class="btn btn-success btn-sm" id="fri1b">Zmeň</button>
+            <p></p>
+            <div class="container">
+                <table>
+                    <tbody>
+                    <tr class="line-up ordered">
+                        <td id="fri1s1j" hidden></td>
+                        <td width="30%" style="text-align: center">1</td>
+                        <td width="70%" id="fri1s1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="fri1s2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="fri1s2">no-text</td>
+                    </tr>
+                    <tr class="line-up-bold ordered">
+                        <td id="fri1m1j" hidden></td>
+                        <td style="text-align: center">1</td>
+                        <td id="fri1m1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="fri1m2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="fri1m2">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="fri1m3j" hidden></td>
+                        <td style="text-align: center">3</td>
+                        <td id="fri1m3">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="fri1m4j" hidden></td>
+                        <td style="text-align: center">4</td>
+                        <td id="fri1m4">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="fri1m5j" hidden></td>
+                        <td style="text-align: center">5</td>
+                        <td  id="fri1m5">no-text</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="space" id="mon2space" hidden></div>
+        <div class="plan" id="mon2" hidden>
+            <h3>Pondelok<span id="mon2d">31.10</span></h3>
+            <button type="button" class="btn btn-success btn-sm" id="mon2b">Zmeň</button>
+            <p></p>
+            <div class="container">
+                <table>
+                    <tbody>
+                    <tr class="line-up ordered">
+                        <td id="mon2s1j" hidden></td>
+                        <td width="30%" style="text-align: center">1</td>
+                        <td width="70%" id="mon2s1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="mon2s2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="mon2s2">no-text</td>
+                    </tr>
+                    <tr class="line-up-bold ordered">
+                        <td id="mon2m1j" hidden></td>
+                        <td style="text-align: center">1</td>
+                        <td id="mon2m1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="mon2m2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="mon2m2">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="mon2m3j" hidden></td>
+                        <td style="text-align: center">3</td>
+                        <td id="mon2m3">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="mon2m4j" hidden></td>
+                        <td style="text-align: center">4</td>
+                        <td id="mon2m4">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="mon2m5j" hidden></td>
+                        <td style="text-align: center">5</td>
+                        <td id="mon2m5">no-text</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="space" id="tue2space" hidden></div>
+        <div class="plan" id="tue2" hidden>
+            <h3>Utorok<span id="tue2d">31.10</span></h3>
+            <button type="button" class="btn btn-success btn-sm" id="tue2b">Zmeň</button>
+            <p></p>
+            <div class="container">
+                <table>
+                    <tbody>
+                    <tr class="line-up ordered">
+                        <td id="tue2s1j" hidden></td>
+                        <td width="30%" style="text-align: center">1</td>
+                        <td width="70%" id="tue2s1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="tue2s2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="tue2s2">no-text</td>
+                    </tr>
+                    <tr class="line-up-bold ordered">
+                        <td id="tue2m1j" hidden></td>
+                        <td style="text-align: center">1</td>
+                        <td id="tue2m1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="tue2m2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="tue2m2">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="tue2m3j" hidden></td>
+                        <td style="text-align: center">3</td>
+                        <td id="tue2m3">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="tue2m4j" hidden></td>
+                        <td style="text-align: center">4</td>
+                        <td id="tue2m4">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="tue2m5j" hidden></td>
+                        <td style="text-align: center">5</td>
+                        <td id="tue2m5">no-text</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="space" id="wed2space" hidden></div>
+        <div class="plan" id="wed2" hidden>
+            <h3>Streda<span id="wed2d">31.10</span></h3>
+            <button type="button" class="btn btn-success btn-sm" id="wed2b">Zmeň</button>
+            <p></p>
+            <div class="container">
+                <table>
+                    <tbody>
+                    <tr class="line-up ordered">
+                        <td id="wed2s1j" hidden></td>
+                        <td width="30%" style="text-align: center">1</td>
+                        <td width="70%" id="wed2s1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="wed2s2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="wed2s2">no-text</td>
+                    </tr>
+                    <tr class="line-up-bold ordered">
+                        <td id="wed2m1j" hidden></td>
+                        <td style="text-align: center">1</td>
+                        <td id="wed2m1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="wed2m2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="wed2m2">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="wed2m3j" hidden></td>
+                        <td style="text-align: center">3</td>
+                        <td id="wed2m3">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="wed2m4j" hidden></td>
+                        <td style="text-align: center">4</td>
+                        <td id="wed2m4">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="wed2m5j" hidden></td>
+                        <td style="text-align: center">5</td>
+                        <td id="wed2m5">no-text</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="space" id="thu2space" hidden></div>
+        <div class="plan" id="thu2" hidden>
+            <h3>Štvrtok<span id="thu2d">31.10</span></h3>
+            <button type="button" class="btn btn-success btn-sm" id="thu2b">Zmeň</button>
+            <p></p>
+            <div class="container">
+                <table>
+                    <tbody>
+                    <tr class="line-up ordered">
+                        <td id="thu2s1j" hidden></td>
+                        <td width="30%" style="text-align: center">1</td>
+                        <td width="70%" id="thu2s1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="thu2s2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="thu2s2">no-text</td>
+                    </tr>
+                    <tr class="line-up-bold ordered">
+                        <td id="thu2m1j" hidden></td>
+                        <td style="text-align: center">1</td>
+                        <td id="thu2m1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="thu2m2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="thu2m2">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="thu2m3j" hidden></td>
+                        <td style="text-align: center">3</td>
+                        <td id="thu2m3">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="thu2m4j" hidden></td>
+                        <td style="text-align: center">4</td>
+                        <td id="thu2m4">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="thu2m5j" hidden></td>
+                        <td style="text-align: center">5</td>
+                        <td id="thu2m5">no-text</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="space" id="fri2space" hidden></div>
+        <div class="plan" id="fri2" hidden>
+            <h3>Piatok<span id="fri2d">31.10</span></h3>
+            <button type="button" class="btn btn-success btn-sm" id="fri2b">Zmeň</button>
+            <p></p>
+            <div class="container">
+                <table>
+                    <tbody>
+                    <tr class="line-up ordered">
+                        <td id="fri2s1j" hidden></td>
+                        <td width="30%" style="text-align: center">1</td>
+                        <td width="70%" id="fri2s1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="fri2s2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="fri2s2">no-text</td>
+                    </tr>
+                    <tr class="line-up-bold ordered">
+                        <td id="fri2m1j" hidden></td>
+                        <td style="text-align: center">1</td>
+                        <td id="fri2m1">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="fri2m2j" hidden></td>
+                        <td style="text-align: center">2</td>
+                        <td id="fri2m2">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="fri2m3j" hidden></td>
+                        <td style="text-align: center">3</td>
+                        <td id="fri2m3">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="fri2m4j" hidden></td>
+                        <td style="text-align: center">4</td>
+                        <td id="fri2m4">no-text</td>
+                    </tr>
+                    <tr class="line-up">
+                        <td id="fri2m5j" hidden></td>
+                        <td style="text-align: center">5</td>
+                        <td  id="fri2m5">no-text</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="modalChangeOrder" tabindex="-1" role="dialog" aria-labelledby="modalChangeOrderLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalChangeOrderLabel">Zmena obeda</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group luncheon-label-div">
+                    <input id="soup1radio" type="radio" name="soup" class="pull-right">
+                    <label id="soup1" for="soup1radio" >Polievka č.1</label>
+                </div>
+                <div class="form-group">
+                    <label id="soup2" for="soup2radio" class="luncheon-label">Polievka č.2</label>
+                    <input id="soup2radio" type="radio" name="soup" class="pull-right">
+                </div>
+                <hr>
+                <div class="form-group luncheon-label-div">
+                    <label id="meal1" for="meal1radio" class="luncheon-label">Hlavne jedlo č.1</label>
+                    <input id="meal1radio" type="radio" name="meal" class="pull-right">
+                </div>
+                <div class="form-group ">
+                    <label id="meal2" for="meal2radio" class="luncheon-label">Hlavne jedlo č.2</label>
+                    <input id="meal2radio" type="radio" name="meal" class="pull-right">
+                </div>
+                <div class="form-group luncheon-label-div">
+                    <label id="meal3" for="meal3radio" class="luncheon-label">Hlavne jedlo č.3</label>
+                    <input id="meal3radio" type="radio" name="meal" class="pull-right">
+                </div>
+                <div class="form-group">
+                    <label id="meal4" for="meal4radio" class="luncheon-label">Hlavne jedlo č.4</label>
+                    <input id="meal4radio" type="radio" name="meal" class="pull-right">
+                </div>
+                <div class="form-group luncheon-label-div">
+                    <label id="meal5" for="meal5radio" class="luncheon-label">Hlavne jedlo č.5</label>
+                    <input id="meal5radio" type="radio" name="meal" class="pull-right">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zatvor bez zmeny</button>
+                <button type="button" class="btn btn-danger" onclick="deleteOrders()" data-dismiss="modal">Zruš obed úplne</button>
+                <button type="button" class="btn btn-primary" onclick="changeOrdersAndSave()" data-dismiss="modal">Ulož zmeny</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../scripts/jquery.min.js"></script>
+<script src="../scripts/bootstrap.min.js"></script>
+<script src="../scripts/luncheon.utils.js"></script>
+<script src="../scripts/myorders.js"></script>
 </body>
-<!--<body>-->
-<!--<nav class="navbar navbar-default navbar-fixed-top navbar-luncheon">-->
-    <!--<div class="container-fluid">-->
-        <!--<div class="navbar-header">-->
-            <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">-->
-                <!--<span class="icon-bar"></span>-->
-                <!--<span class="icon-bar"></span>-->
-                <!--<span class="icon-bar"></span>-->
-            <!--</button>-->
-            <!--<p class="navbar-brand">K-system spol. s r.o.</p>-->
-        <!--</div>-->
-        <!--<div class="collapse navbar-collapse" id="myNavbar">-->
-            <!--<ul class="nav navbar-nav navbar-right">-->
-                <!--<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Odhlásenie</a></li>-->
-                <!--&lt;!&ndash;<li><a href="#band">BAND</a></li>&ndash;&gt;-->
-                <!--&lt;!&ndash;<li><a href="#tour">TOUR</a></li>&ndash;&gt;-->
-                <!--&lt;!&ndash;<li><a href="#contact">CONTACT</a></li>&ndash;&gt;-->
-                <!--&lt;!&ndash;<li class="dropdown">&ndash;&gt;-->
-                <!--&lt;!&ndash;<a class="dropdown-toggle" data-toggle="dropdown" href="#">MORE&ndash;&gt;-->
-                <!--&lt;!&ndash;<span class="caret"></span>&ndash;&gt;-->
-                <!--&lt;!&ndash;</a>&ndash;&gt;-->
-                <!--&lt;!&ndash;<ul class="dropdown-menu">&ndash;&gt;-->
-                <!--&lt;!&ndash;<li><a href="#">Merchandise</a></li>&ndash;&gt;-->
-                <!--&lt;!&ndash;<li><a href="#">Extras</a></li>&ndash;&gt;-->
-                <!--&lt;!&ndash;<li><a href="#">Media</a></li>&ndash;&gt;-->
-                <!--&lt;!&ndash;</ul>&ndash;&gt;-->
-                <!--&lt;!&ndash;</li>&ndash;&gt;-->
-                <!--&lt;!&ndash;<li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>&ndash;&gt;-->
-            <!--</ul>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</nav>-->
-<!--&lt;!&ndash;<div class="container-fluid" style="padding-top: 70px; text-align: center">&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="col-md-2"></div>&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="col-md-10">&ndash;&gt;-->
-        <!--&lt;!&ndash;<h2>Zoznam obedov pre užívateľa: </h2>&ndash;&gt;-->
-        <!--&lt;!&ndash;<p>Na dnes nemáte objednaný žiadny obed</p>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="container-fluid" style="padding-top: 50px; text-align: center">&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="container-fluid" style="background: #ffc400">&ndash;&gt;-->
-    <!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
-        <!--&lt;!&ndash;<div class="col-md-12">&ndash;&gt;-->
-    <!--&lt;!&ndash;<h1>Pondelok: 01.01.2016</h1>&ndash;&gt;-->
-    <!--&lt;!&ndash;<table class="table-bordered">&ndash;&gt;-->
-        <!--&lt;!&ndash;<thead>&ndash;&gt;-->
-        <!--&lt;!&ndash;<tr>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>Číslo</th>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>Popis</th>&ndash;&gt;-->
-            <!--&lt;!&ndash;<th>Objednané</th>&ndash;&gt;-->
-        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
-        <!--&lt;!&ndash;</thead>&ndash;&gt;-->
-        <!--&lt;!&ndash;<tbody>&ndash;&gt;-->
-        <!--&lt;!&ndash;<tr>&ndash;&gt;-->
-
-        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
-        <!--&lt;!&ndash;</tbody>&ndash;&gt;-->
-    <!--&lt;!&ndash;</table>&ndash;&gt;-->
-        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="container-fluid"></div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="container-fluid" style="background: #ffc400"></div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="container-fluid"></div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="container-fluid" style="background: #ffc400"></div>&ndash;&gt;-->
-<!--<div id="pricing-table" class="clear">-->
-    <!--<div class="plan" id="most-popular">-->
-        <!--<h3>Obed na dnes<span>26.01</span></h3>-->
-        <!--&lt;!&ndash;<a class="signup" href="">Zrušiť obed</a>&ndash;&gt;-->
-        <!--<ul>-->
-            <!--<li class="selected-lunch">Hrachová polievka</li>-->
-            <!--<li>Mrkvová polievka</li>-->
-            <!--<li class="first-meal">Marínované bravčové rebierka, zemiaky, čalamáda</li>-->
-            <!--<li>Uhorksý guľáš</li>-->
-            <!--<li>Vyprážaný rezeň, zemiakový šalát, kyslá uhorka</li>-->
-            <!--<li class="selected-lunch">Slivkové gule so strúhankou</li>-->
-            <!--<li>Zeleninový šalát</li>-->
-        <!--</ul>-->
-    <!--</div>-->
-<!--</div>-->
-<!--<div id="pricing-table-two" class="clear">-->
-    <!--<div class="plan">-->
-        <!--<h3>Utorok<span>27.1</span></h3>-->
-        <!--<a class="signup" href="">Objednať</a>-->
-        <!--<ul>-->
-            <!--<li></li>-->
-            <!--<li></li>-->
-        <!--</ul>-->
-    <!--</div>-->
-    <!--<div class="plan">-->
-        <!--<h3>Streda<span>28.1</span></h3>-->
-        <!--<a class="signup" href="">Objednať</a>-->
-        <!--<ul>-->
-            <!--<li></li>-->
-            <!--<li></li>-->
-        <!--</ul>-->
-    <!--</div>-->
-    <!--<div class="plan">-->
-        <!--<h3>Štvrtok<span>29.1</span></h3>-->
-        <!--<a class="signup" href="">Objednať</a>-->
-        <!--<ul>-->
-            <!--<li></li>-->
-            <!--<li></li>-->
-        <!--</ul>-->
-    <!--</div>-->
-    <!--<div class="plan">-->
-        <!--<h3>Piatok<span>30.01</span></h3>-->
-        <!--<a class="signup" href="">Zrušiť obed</a>-->
-        <!--<ul>-->
-            <!--<li>Hrachová polievka s krúpkami</li>-->
-            <!--<li>Marínované bravčové medailónky, ryža, zemiaky, paradajkový šalát</li>-->
-        <!--</ul>-->
-    <!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</body>-->
 </html>
