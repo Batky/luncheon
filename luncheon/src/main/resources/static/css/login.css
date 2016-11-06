@@ -1,13 +1,13 @@
 .luncheon-login-1, body {
-    background-image: url("../images/zdrave_jedlo_6.jpg");
+    background-image: url("../images/zdrave_jedlo_1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     color: white;
 }
 
 .luncheon-login-1 .login-form {
-    padding-top: 170px;
-    padding-left: 180px;
+    padding-top: 70px;
+    padding-left: 80px;
 }
 
 .luncheon-login-2, body {
@@ -23,16 +23,26 @@
 }
 
 .luncheon-login-3, body {
-    background-image: url("../images/zdrave_jedlo_8.jpg");
+    background-image: url("../images/zdrave_jedlo_3.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     color: black;
 }
 
 .luncheon-login-3 .login-form {
-    float: right;
-    padding-top: 10px;
-    padding-right: 80px;
-    background-image: none;
+    padding-top: 70px;
+    padding-left: 80px;
+}
+
+.luncheon-login-4, body {
+    background-image: url("../images/zdrave_jedlo_4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: black;
+}
+
+.luncheon-login-4 .login-form {
+    padding-top: 70px;
+    padding-left: 80px;
 }
 

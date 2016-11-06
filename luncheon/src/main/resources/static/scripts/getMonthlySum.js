@@ -25,15 +25,12 @@ $(document).ready(function(){
             jumpYears: 'Skoč roky',
             backTo: 'Späť na',
             months: monthNamesShort
-                // ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'Máj', 'Jún', 'Júl', 'Aug.', 'Sep.', 'Okt.', 'Nov.', 'Dec.']
         },
         OnAfterChooseMonth: function(selectedDate) {
             changeTime();
         }
     });
 
-    // $("#datetimepicker").datepicker().show();
-    //
     datetimepicker
         .val(toPickerDate(dateToRestString(new Date())));
 
@@ -89,6 +86,10 @@ function createTableSummary(json) {
             "<th class='danger'>Spolu</th>" +
             "</tr>");
     var lastPrice = json[0].price;
+    var cnt = [];
+    cnt[0] = 0;
+    cnt[1] = 0;
+    cnt[2] = 0;
     var sum  = [];
     sum[0] = 0;
     sum[1] = 0;
@@ -99,7 +100,8 @@ function createTableSummary(json) {
             $(tableSummary + " > tbody:last-child")
                 .append(
                     "<tr>" +
-                    "<td colspan='3' class = 'text-danger'>Spolu:</td>" +
+                    "<td colspan='2' class = 'text-danger'>Spolu:</td>" +
+                    "<td class='text-danger'>" + Math.round(cnt[i] * 100) / 100 + "</td>" +
                     "<td></td>" +
                     "<td class='text-danger'>" + Math.round(sum[i] * 100) / 100 + "</td>" +
                     "</tr>" +
@@ -108,6 +110,7 @@ function createTableSummary(json) {
             lastPrice = json[index].price;
         }
         sum[i] += json[index].sum;
+        cnt[i] += json[index].count;
         var pc = index+1;
         $(tableSummary + " > tbody:last-child")
             .append(
@@ -122,7 +125,8 @@ function createTableSummary(json) {
     $(tableSummary + " > tbody:last-child")
         .append(
             "<tr>" +
-            "<td colspan='3' class='text-danger'>Spolu:</td>" +
+            "<td colspan='2' class='text-danger'>Spolu:</td>" +
+            "<td class='text-danger'>" + Math.round(cnt[i] * 100) / 100 + "</td>" +
             "<td></td>" +
             "<td class='text-danger'>" + Math.round(sum[i] * 100) / 100 + "</td>" +
             "</tr>");

@@ -42,7 +42,7 @@ $(document).ready(function () {
         startModal("tue2");
     });
 
-    $("#wed3b").click(function () {
+    $("#wed2b").click(function () {
         startModal("wed2");
     });
 
