@@ -107,6 +107,7 @@ public class OrderRestController {
             LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         LocalDate dt = dateUtils.getLocalDate(date);
+        dt = LocalDate.now();
         return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, dt, dateUtils.getLastDate(dt)) : null;
     }
 
