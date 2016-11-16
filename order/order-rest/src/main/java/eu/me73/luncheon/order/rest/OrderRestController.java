@@ -4,14 +4,7 @@ import static eu.me73.luncheon.commons.DummyConfig.createBufferedReaderFromFileN
 
 import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.commons.DateUtils;
-import eu.me73.luncheon.order.api.DailyReport;
-import eu.me73.luncheon.order.api.DailyReportSummary;
-import eu.me73.luncheon.order.api.EnabledOrderDate;
-import eu.me73.luncheon.order.api.MonthlyReport;
-import eu.me73.luncheon.order.api.Order;
-import eu.me73.luncheon.order.api.OrderEnabledService;
-import eu.me73.luncheon.order.api.OrderService;
-import eu.me73.luncheon.order.api.UserOrder;
+import eu.me73.luncheon.order.api.*;
 import eu.me73.luncheon.user.api.UserService;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -224,5 +217,10 @@ public class OrderRestController {
             }
         }
         response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+    }
+
+    @RequestMapping(value = "orders/stats/{id}", method = RequestMethod.GET, produces = "application/json")
+    public UserStatistics getStatistics(@PathVariable Long id) {
+        return orderService.gainStatistics(id, LocalDate.now());
     }
 }

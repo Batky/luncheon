@@ -16,7 +16,7 @@ public interface OrderService {
     Collection<Order> getAllOrders();
     Collection<Order> importOrdersFromFile(final BufferedReader importFile) throws IOException;
 
-    Collection<UserOrder> getOrdersForUser(Long id, LocalDate fromDate, LocalDate toDate);
+    Collection<UserOrder> getOrdersForUser(final Long id, final LocalDate fromDate, final LocalDate toDate);
 
     String storeOrdersForUser(Collection<UserOrder> userOrders);
 
@@ -39,4 +39,6 @@ public interface OrderService {
     Collection<MonthlyReport> createMonthlyReport(final LocalDate date);
 
     String createOlympFile(final LocalDate date);
+
+    UserStatistics gainStatistics(final Long id, final LocalDate date);
 }

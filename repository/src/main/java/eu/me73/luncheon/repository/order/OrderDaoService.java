@@ -17,4 +17,6 @@ public interface OrderDaoService extends JpaRepository<OrderEntity, Long> {
             "where o.date BETWEEN :from_date and :to_date " +
             "group by o.user ")
     Collection<Object[]> findByDateGreaterThanEqualAndDateLessThanEqualOrderByDate(@Param(value = "from_date") LocalDate fdate, @Param(value = "to_date") LocalDate tdate);
+    @Query("select count(o) from OrderEntity as o where (o.user = :user) and (month(o.date) = :month) group by o.user")
+    Long countByUserAndMonth(@Param(value = "user") Long id, @Param(value = "month") Integer month);
 }

@@ -484,6 +484,13 @@ public class OrderServicesImpl implements OrderService {
         return config.getExport();
     }
 
+    @Override
+    public UserStatistics gainStatistics(final Long id, final LocalDate date) {
+        String name = userService.getUserById(id).getLongName();
+        int lunches = Math.toIntExact(service.countByUserAndMonth(id, date.getMonthValue()));
+        return new UserStatistics(name, lunches, true, true, true, true, true );
+    }
+
     private boolean lunchInOrders(final Collection<Order> orders, final Lunch lunch) {
         for (Order order : orders) {
             if (lunch.equals(order.getSoup()) || lunch.equals(order.getMeal())) {
