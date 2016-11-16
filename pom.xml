@@ -94,57 +94,57 @@
             <dependency>
                 <groupId>eu.me73.luncheon</groupId>
                 <artifactId>user-api</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>eu.me73.luncheon</groupId>
                 <artifactId>user-impl</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>eu.me73.luncheon</groupId>
                 <artifactId>user-rest</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>eu.me73.luncheon</groupId>
                 <artifactId>lunch-api</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>eu.me73.luncheon</groupId>
                 <artifactId>lunch-impl</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>eu.me73.luncheon</groupId>
                 <artifactId>lunch-rest</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>eu.me73.luncheon</groupId>
                 <artifactId>order-api</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>eu.me73.luncheon</groupId>
                 <artifactId>order-impl</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>eu.me73.luncheon</groupId>
                 <artifactId>order-rest</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>eu.me73.luncheon</groupId>
                 <artifactId>repository</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>eu.me73.luncheon</groupId>
                 <artifactId>commons</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
+                <version>1.2.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
