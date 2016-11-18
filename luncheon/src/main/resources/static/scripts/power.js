@@ -224,14 +224,13 @@ function saveOrders(refresh, show) {
             data: jsonLunchesOrders,
             dataType: "json",
             complete: function (data) {
-                if (data.status == 201) {
-                    if (show) {
+                if (show) {
+                    if (data.status == 201) {
                         alert("Zmeny na obedoch sa úspešne uložili");
                     }
-                } else {
-                    if (show) {
-                        alert("Obed sa nepodarilo ulozit, skontroluj vyber !");
-                    }
+                    else
+                        if (data.status == 202) { alert("Zmeny boli akceptované"); }
+                        else { alert("Obed sa nepodarilo ulozit, skontroluj vyber !");}
                 }
             }
         })).then(function () {

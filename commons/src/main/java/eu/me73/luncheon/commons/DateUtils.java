@@ -1,6 +1,9 @@
 package eu.me73.luncheon.commons;
 
+import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
+
 import ch.qos.logback.classic.Logger;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -96,7 +99,50 @@ public class DateUtils {
         }
 
         return true;
+    }
 
+    /**
+     * First day of month
+     * @param date somewhere between first and last day of month
+     * @return first day
+     */
+    public LocalDate firstDayInMnt(final LocalDate date) {
+        return date.withDayOfMonth(1);
+    }
+
+    /**
+     * Last day of month
+     * @param date somewhere between first and last day of month
+     * @return last day
+     */
+    public LocalDate lastDayOfMnt(final LocalDate date) {
+        return date.with(lastDayOfMonth());
+    }
+
+    /**
+     * First day of work week
+     * @param date somewhere between first and last day of week
+     * @return first day
+     */
+    public LocalDate firstDayInWk(final LocalDate date) {
+        return date.with(DayOfWeek.MONDAY);
+    }
+
+    /**
+     * Last day of work week
+     * @param date somewhere between first and last day of week
+     * @return last day
+     */
+    public LocalDate lastDayOfWk(final LocalDate date) {
+        return firstDayInWk(date).plusDays(5L);
+    }
+
+    public LocalDate firstMondayNextWk(final LocalDate date) {
+        return firstDayInWk(date).plusDays(7L);
+    }
+
+    public LocalDate nextWorkDay(final LocalDate date) {
+        return date.getDayOfWeek().equals(DayOfWeek.FRIDAY) ? date.plusDays(3L) : date.plusDays(1L);
     }
 
 }

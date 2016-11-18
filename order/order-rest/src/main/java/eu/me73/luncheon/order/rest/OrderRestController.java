@@ -16,6 +16,7 @@ import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderEnabledService;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.api.UserOrder;
+import eu.me73.luncheon.order.api.UserStatistics;
 import eu.me73.luncheon.user.api.User;
 import eu.me73.luncheon.user.api.UserService;
 import java.io.BufferedInputStream;
@@ -297,5 +298,13 @@ public class OrderRestController {
             }
         }
         response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+    }
+
+    @RequestMapping(value = "orders/stats/{id}", method = RequestMethod.GET, produces = "application/json")
+    public UserStatistics getStatistics(@PathVariable Long id) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Rest request for statistics for user {}", id);
+        }
+        return orderService.gainStatistics(id, LocalDate.now());
     }
 }

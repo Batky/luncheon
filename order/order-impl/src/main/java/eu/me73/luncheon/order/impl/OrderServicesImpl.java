@@ -15,6 +15,7 @@ import eu.me73.luncheon.order.api.MonthlyReport;
 import eu.me73.luncheon.order.api.Order;
 import eu.me73.luncheon.order.api.OrderService;
 import eu.me73.luncheon.order.api.UserOrder;
+import eu.me73.luncheon.order.api.UserStatistics;
 import eu.me73.luncheon.repository.lunch.LunchEntity;
 import eu.me73.luncheon.repository.order.OrderDaoService;
 import eu.me73.luncheon.repository.order.OrderEntity;
@@ -27,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.Collator;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -238,6 +240,30 @@ public class OrderServicesImpl implements OrderService {
 
         save(updatedOrders);
         return String.valueOf(updatedOrders.size());
+    }
+
+    @Override
+    public UserStatistics gainStatistics(final Long id, final LocalDate date) {
+        String name = userService.getUserById(id).getLongName();
+        Long count = service.countByUserAndMonth(id, date, dateUtils.nextWorkDay(date));
+        int lunches = Objects.nonNull(count) ? Math.toIntExact(count) : 0;
+        LocalDate dayInWk = date;
+        Collection<Order> orders = service
+                .findByUserStatistics(id, dayInWk, dateUtils.firstMondayNextWk(date))
+                .stream()
+                .map(this::fromEntity)
+                .collect(Collectors.toList());
+        boolean results[] = new boolean[2];
+        for (int i=0;i<2;i++) {
+            for (Order order : orders) {
+                results[i] = (order.getDate().equals(dayInWk));
+                if (results[i]) {
+                    break;
+                }
+            }
+            dayInWk = (dayInWk.getDayOfWeek().equals(DayOfWeek.FRIDAY)) ? dayInWk.plusDays(3L) : dayInWk.plusDays(1L);
+        }
+        return new UserStatistics(name, lunches, results[0], results[1]);
     }
 
     private Collection<Order> createOrdersFromUserOrders(final Collection<UserOrder> updatedUserOrders, final User user) {

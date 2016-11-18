@@ -1,5 +1,6 @@
 var urlUserActual = "/users/actual";
 var urlOrdersForDate = "/orders/date/";
+var urlStatisticsForUser = "/orders/stats/";
 var ulrUserAdding = "/user/";
 var urlStoreUsersOrders = "/orders/store/user";
 var weekElements = ["mon", "tue", "wed", "thu", "fri"];

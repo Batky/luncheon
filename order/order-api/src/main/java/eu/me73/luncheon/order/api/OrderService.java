@@ -39,4 +39,6 @@ public interface OrderService {
     Collection<MonthlyReport> createMonthlyReport(final LocalDate date);
 
     String createOlympFile(final LocalDate date);
+
+    UserStatistics gainStatistics(final Long id, final LocalDate date);
 }

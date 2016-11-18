@@ -1,6 +1,7 @@
 var user;
 var usersOrders;
 var tempOrders;
+var stats;
 var actualDate = new Date();
 var actualDateChanged = (actualDate.getFullYear()) +
     ('0' + (actualDate.getMonth() + 1)).slice(-2) +
@@ -55,12 +56,14 @@ $(document).ready(function () {
     });
 
     var urlOrders;
+    var urlStatistics;
 
     $.when (
 
         $.getJSON(urlUserActual, function (json) {
             user = json;
             urlOrders = urlOrdersForDate + actualDateChanged + ulrUserAdding + user.id;
+            urlStatistics = urlStatisticsForUser + user.id;
         })
 
     ).then (
@@ -68,11 +71,34 @@ $(document).ready(function () {
             $.get(urlOrders , function(jsonUserOrder) {
                 usersOrders = jsonUserOrder;
                 fillTables(usersOrders);
+            });
+
+            $.get(urlStatistics, function (jsonUserStats) {
+                stats = jsonUserStats;
+                updateStatistics(stats);
             })
         }
     );
 
 });
+
+function updateStatistics(statistics) {
+    var todayText = "NEMÁM";
+    var tomorrowText = todayText;
+
+    if (statistics.today) {
+        todayText = "MÁM";
+    }
+
+    if (statistics.tomorrow) {
+        tomorrowText = "MÁM";
+    }
+
+    $("#stat-name").html(statistics.name);
+    $("#stat-count").html("Počet obedov tento mesiac: " + statistics.lunchesThisMonth);
+    $("#stat-today").html("Na dnes obed " + todayText);
+    $("#stat-tomorrow").html("Najbližší pracovný deň " + tomorrowText);
+}
 
 function fillTables(jsonOrders) {
     hideAllWeeks();
