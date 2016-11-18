@@ -1,9 +1,14 @@
 package eu.me73.luncheon.order.api;
 
+import ch.qos.logback.classic.Logger;
 import eu.me73.luncheon.repository.order.EnabledEntity;
 import java.time.LocalDate;
+import java.util.Objects;
+import org.slf4j.LoggerFactory;
 
 public class EnabledOrderDate {
+
+    private final Logger LOG = (Logger) LoggerFactory.getLogger(EnabledOrderDate.class);
 
     private Integer month;
     private Integer year;
@@ -19,8 +24,15 @@ public class EnabledOrderDate {
     }
 
     public EnabledOrderDate(final EnabledEntity enabledEntity) {
-        this.year = enabledEntity.getYear();
-        this.month = enabledEntity.getMonth();
+        if (Objects.isNull(enabledEntity)) {
+            LOG.warn("Creating new enabled order date is not possible, probably never set in DB.");
+            this.year = 1999;
+            this.month = 1;
+        } else {
+            this.year = enabledEntity.getYear();
+            this.month = enabledEntity.getMonth();
+            this.date = LocalDate.of(this.year, this.month, 1);
+        }
     }
 
     public Integer getMonth() {
