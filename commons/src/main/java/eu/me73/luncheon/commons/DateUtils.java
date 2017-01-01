@@ -78,7 +78,12 @@ public class DateUtils {
     public boolean itsChangeable(final LocalDate date) {
 
         final LocalDate actualDate = LocalDate.now();
-        final LocalDate tomorrowDate = actualDate.plusDays(1);
+        LocalDate tomorrowDate = actualDate.plusDays(1);
+        if (tomorrowDate.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
+            tomorrowDate.plusDays(2);
+        } else if (tomorrowDate.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+            tomorrowDate.plusDays(1);
+        }
         final LocalTime actualTime = LocalTime.now();
         final LocalTime configOrderingHour = LocalTime.of(config.getOrdering(), 0);
         final LocalTime configSameDayOrderingHourStart = LocalTime.of(config.getSameDayStartHour(), config.getSameDayStartMinutes());
