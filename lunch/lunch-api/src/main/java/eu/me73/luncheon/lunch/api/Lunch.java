@@ -2,6 +2,7 @@ package eu.me73.luncheon.lunch.api;
 
 import eu.me73.luncheon.repository.lunch.LunchEntity;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Lunch {
 
@@ -9,6 +10,7 @@ public class Lunch {
     private Boolean soup;
     private LocalDate date;
     private String description;
+    private Boolean stable;
 
 
     public Lunch(final LunchEntity entity) {
@@ -16,17 +18,20 @@ public class Lunch {
         this.soup = entity.getSoup();
         this.date = entity.getDate();
         this.description = entity.getDescription();
+        this.stable = Objects.nonNull(entity.getStable()) ? entity.getStable() : false;
     }
 
     public Lunch(
             final Long id,
             final Boolean soup,
             final LocalDate date,
-            final String description) {
+            final String description,
+            final Boolean stable) {
         this.id = id;
         this.soup = soup;
         this.date = date;
         this.description = description;
+        this.stable = stable;
     }
 
     public Lunch() {
@@ -64,15 +69,6 @@ public class Lunch {
         this.description = description;
     }
 
-    public LunchEntity toEntity() {
-        LunchEntity lunchEntity = new LunchEntity();
-        lunchEntity.setId(this.getId());
-        lunchEntity.setSoup(this.soup);
-        lunchEntity.setDate(this.date);
-        lunchEntity.setDescription(this.description);
-        return lunchEntity;
-    }
-
     @Override
     public String toString() {
         return "Lunch{" +
@@ -80,8 +76,28 @@ public class Lunch {
                 ", soup=" + soup +
                 ", date=" + date +
                 ", description='" + description + '\'' +
+                ", stable=" + stable +
                 '}';
     }
+
+    public Boolean getStable() {
+        return stable;
+    }
+
+    public void setStable(Boolean stable) {
+        this.stable = stable;
+    }
+
+    public LunchEntity toEntity() {
+        LunchEntity lunchEntity = new LunchEntity();
+        lunchEntity.setId(this.getId());
+        lunchEntity.setSoup(this.soup);
+        lunchEntity.setDate(this.date);
+        lunchEntity.setDescription(this.description);
+        lunchEntity.setStable(this.stable);
+        return lunchEntity;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -90,20 +106,12 @@ public class Lunch {
 
         Lunch lunch = (Lunch) o;
 
-        if (!id.equals(lunch.id)) return false;
-        if (soup != null ? !soup.equals(lunch.soup) : lunch.soup != null) return false;
-        if (date != null ? !date.equals(lunch.date) : lunch.date != null) return false;
-        return description != null ? description.equals(lunch.description) : lunch.description == null;
-
+        return id != null ? id.equals(lunch.id) : lunch.id == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + (soup != null ? soup.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 }
 

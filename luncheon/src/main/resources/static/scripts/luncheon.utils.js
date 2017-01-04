@@ -3,17 +3,20 @@ var urlOrdersForDate = "/orders/date/";
 var urlStatisticsForUser = "/orders/stats/";
 var ulrUserAdding = "/user/";
 var urlStoreUsersOrders = "/orders/store/user";
+var urlStableLunches = "/lunches/stable";
 var weekElements = ["mon", "tue", "wed", "thu", "fri"];
 var numberWeekElements = ["1", "2"];
 var dateElement = "d";
 var soupElements = ["s1", "s2"];
-var mealElements = ["m1", "m2", "m3", "m4", "m5"];
+var mealElements = ["m1", "m2", "m3", "m4", "m5", "m6"];
+var lastLine = "six";
 var spaceElement = "space";
 var buttonElement = "b";
+var buttonElementStable = "bs";
 var jsonElement =  "j";
 
 function getRandomBackgroundForLoginPage() {
-    return Math.floor((Math.random() * 4) + 1);
+    return Math.floor((Math.random() * 8) + 1);
 }
 
 function getRandomBackgroundForMyOrderPage() {
@@ -38,6 +41,7 @@ function hideAllWeeks() {
             $("#" + weekElements[i] + numberWeekElements[j]).hide();
             $("#" + weekElements[i] + numberWeekElements[j] + spaceElement).hide();
             $("#" + weekElements[i] + numberWeekElements[j] + buttonElement).prop("disabled", true);
+            $("#" + weekElements[i] + numberWeekElements[j] + buttonElementStable).prop("disabled", true);
         }
     }
 }

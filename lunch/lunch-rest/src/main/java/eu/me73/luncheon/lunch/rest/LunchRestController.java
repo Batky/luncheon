@@ -96,6 +96,14 @@ public class LunchRestController {
         return Objects.nonNull(dt) ? lunchService.getAllBetweenDates(dateUtils.getFirstDate(dt), dateUtils.getFirstDate(dt).plusDays(5)) : null;
     }
 
+    @RequestMapping(value = "lunches/stable", method = RequestMethod.GET)
+    public Collection<Lunch> getStableLunches() {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Request for stable lunches.");
+        }
+        return lunchService.getAllStableLunches();
+    }
+
     @Async
     @RequestMapping(value = "lunches/file/import", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)

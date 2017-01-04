@@ -1,6 +1,7 @@
 var urlLunches = "/lunches/date/";
 var urlOneLunch = "/lunches/exact/date/";
 var urlPostLunches = "/lunches/lunches";
+var urlOneLunchStable = "/lunches/stable";
 
 var actualDate = new Date();
 var actualDateChanged = (actualDate.getFullYear()) +
@@ -36,6 +37,10 @@ $(document).ready(function(){
 
     $("#myModal").on('show.bs.modal', function () {
         fillModalForm(actualDateChanged, false);
+    });
+
+    $("#myModalStable").on('show.bs.modal', function () {
+        fillModalFormStable(false);
     });
 
     datePicker.change(function () {
@@ -154,6 +159,13 @@ function cleanup() {
     }
 }
 
+function cleanupStable() {
+    var meal = "#meals";
+    for (index = 0; index < 10; index++) {
+        $(meal+(index+1)).val("");
+    }
+}
+
 function fillModalForm(date, fromForm){
     var oneTimeURL = urlOneLunch + date;
     if (fromForm) {
@@ -184,15 +196,33 @@ function fillModalForm(date, fromForm){
     })
 }
 
+function fillModalFormStable(fromForm){
+    if (fromForm) {
+        cleanupStable();
+    }
+    $.get(urlOneLunchStable, function (json) {
+        if (json.length > 0) {
+            var meal = "#meals";
+            var idmeal = "#idmeals";
+            var mealIndex = 1;
+            for (index = 0; index < json.length; index++) {
+                $(meal+mealIndex).val(json[index].description);
+                $(idmeal+mealIndex).val(json[index].id);
+                mealIndex++;
+            }
+        }
+    })
+}
+
 function postLunches() {
     var date = fromPickerDateToJson(datePicker.val());
     var lunches = [];
     for (index = 1; index < 3; index++) {
-        var lunchSoup = new Lunch($("#idsoup"+index).val(), true, date, $("#soup"+index).val());
+        var lunchSoup = new Lunch($("#idsoup"+index).val(), true, date, $("#soup"+index).val(), false);
         lunches.push(lunchSoup);
     }
     for (index = 1; index < 6; index++) {
-        var lunchMeal = new Lunch($("#idmeal"+index).val(), false, date, $("#meal"+index).val());
+        var lunchMeal = new Lunch($("#idmeal"+index).val(), false, date, $("#meal"+index).val(), false);
         lunches.push(lunchMeal);
     }
     var jsonLunches = JSON.stringify(lunches);
@@ -214,9 +244,37 @@ function postLunches() {
     );
 }
 
-function Lunch(id, soup, date, description) {
+function postLunchesStable() {
+    var date = "1973-01-01";
+    var lunches = [];
+    for (index = 1; index < 11; index++) {
+        var lunchMeal = new Lunch($("#idmeals"+index).val(), false, date, $("#meals"+index).val(), true);
+        lunches.push(lunchMeal);
+    }
+    var jsonLunches = JSON.stringify(lunches);
+    $.when(
+        $.ajax({
+            url:urlPostLunches,
+            type:"POST",
+            headers: {
+                "Accept" : "application/json; charset=utf-8",
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            data:jsonLunches,
+            dataType:"json"
+        })
+    ).then(
+        function () {
+            location.reload();
+        }
+    );
+}
+
+
+function Lunch(id, soup, date, description, stable) {
     this.id = id;
     this.soup = soup;
     this.date = date;
     this.description = description;
+    this.stable = stable;
 }

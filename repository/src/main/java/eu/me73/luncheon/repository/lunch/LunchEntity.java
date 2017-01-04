@@ -28,6 +28,9 @@ public class LunchEntity implements Serializable {
     @Column(name = "description")
     String description;
 
+    @Column(name = "stable")
+    Boolean stable;
+
     public LunchEntity() {
     }
 
@@ -63,10 +66,16 @@ public class LunchEntity implements Serializable {
         this.description = description;
     }
 
+    public Boolean getStable() {
+        return stable;
+    }
+
+    public void setStable(Boolean stable) {
+        this.stable = stable;
+    }
+
     public LunchEntity(Boolean soup) {
         this.soup = soup;
-
-
     }
 
     @Override
@@ -76,6 +85,7 @@ public class LunchEntity implements Serializable {
                 ", soup=" + soup +
                 ", date=" + date +
                 ", description='" + description + '\'' +
+                ", stable=" + stable +
                 '}';
     }
 }

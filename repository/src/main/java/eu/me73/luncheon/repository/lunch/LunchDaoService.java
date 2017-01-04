@@ -16,7 +16,20 @@ public interface LunchDaoService extends JpaRepository<LunchEntity, Long> {
     );
     Collection<LunchEntity> findByDateGreaterThanEqualAndDateLessThanEqualOrderByDate(LocalDate fromDate, LocalDate toDate);
 
+    @Query(value = "SELECT lunch FROM LunchEntity AS lunch WHERE (lunch.date BETWEEN :from_date AND :to_date) OR (lunch.stable = true)")
+    Collection<LunchEntity> findTwoDatesAndStable(
+            @Param("from_date") LocalDate fromDate,
+            @Param("to_date") LocalDate toDate
+    );
+
     Collection<LunchEntity> findByDateAndSoupOrderById(LocalDate date, boolean soup);
 
+    @Query(value = "SELECT lunch FROM LunchEntity AS lunch WHERE ((lunch.date = :exact_date) AND (lunch.soup = false)) OR (lunch.stable = true)")
+    Collection<LunchEntity> findStableMealsForDate(
+            @Param("exact_date") LocalDate date
+    );
+
     Collection<LunchEntity> findByDate(LocalDate date);
+
+    Collection<LunchEntity> findByStable(boolean stable);
 }

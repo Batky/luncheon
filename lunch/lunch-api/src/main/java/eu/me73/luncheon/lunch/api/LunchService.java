@@ -14,6 +14,7 @@ public interface LunchService {
     void save(final Collection<Lunch> lunches);
     Collection<Lunch> getAllLunches();
     Collection<Lunch> getAllBetweenDates(final LocalDate fromDate, final LocalDate toDate);
+    Collection<Lunch> getAllBetweenDatesAndStables(final LocalDate fromDate, final LocalDate toDate);
     Collection<Lunch> importLunchesFromFile(final BufferedReader importFile) throws IOException;
 
     Lunch getLunchById(final Long id);
@@ -30,4 +31,8 @@ public interface LunchService {
     Collection<Lunch> getLunchByDate(final LocalDate date);
 
     Collection<LunchEntity> findByDateAndSoupOrderById(final LocalDate date, final boolean soup);
+
+    Collection<LunchEntity> findStableMealsForDate(LocalDate date);
+
+    Collection<Lunch> getAllStableLunches();
 }

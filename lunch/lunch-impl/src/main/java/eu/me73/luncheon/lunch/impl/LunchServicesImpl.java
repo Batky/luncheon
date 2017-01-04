@@ -59,6 +59,15 @@ public class LunchServicesImpl implements LunchService {
     }
 
     @Override
+    public Collection<Lunch> getAllBetweenDatesAndStables(LocalDate fromDate, LocalDate toDate) {
+        return service
+                .findTwoDatesAndStable(fromDate, toDate)
+                .stream()
+                .map(Lunch::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Collection<Lunch> importLunchesFromFile(final BufferedReader importFile) throws IOException {
         if (LOG.isDebugEnabled()) {
             LOG.debug("Importing lunches from file {} ", importFile);
@@ -85,7 +94,7 @@ public class LunchServicesImpl implements LunchService {
                             LOG.warn("Lunch description is longer as 255 characters");
                             LOG.info("Description: {}", sLunch.trim());
                         } else {
-                            Lunch lunch = new Lunch(xid++, (counter <= 3), date, sLunch.trim());
+                            Lunch lunch = new Lunch(xid++, (counter <= 3), date, sLunch.trim(), false);
                             if (LOG.isTraceEnabled()) {
                                 LOG.trace("Adding lunch {}", lunch);
                             }
@@ -167,5 +176,20 @@ public class LunchServicesImpl implements LunchService {
     public Collection<LunchEntity> findByDateAndSoupOrderById(LocalDate date, boolean soup) {
         return service
                 .findByDateAndSoupOrderById(date, soup);
+    }
+
+    @Override
+    public Collection<LunchEntity> findStableMealsForDate(LocalDate date) {
+        return service
+                .findStableMealsForDate(date);
+    }
+
+    @Override
+    public Collection<Lunch> getAllStableLunches() {
+        return service
+                .findByStable(true)
+                .stream()
+                .map(Lunch::new)
+                .collect(Collectors.toList());
     }
 }
