@@ -45,7 +45,7 @@ public class Lunch {
         this.id = id;
     }
 
-    public Boolean getSoup() {
+    public Boolean isSoup() {
         return soup;
     }
 
@@ -80,7 +80,7 @@ public class Lunch {
                 '}';
     }
 
-    public Boolean getStable() {
+    public Boolean isStable() {
         return stable;
     }
 

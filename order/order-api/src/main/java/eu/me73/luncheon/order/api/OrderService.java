@@ -18,6 +18,8 @@ public interface OrderService {
 
     Collection<UserOrder> getOrdersForUser(final Long id, final LocalDate fromDate, final LocalDate toDate);
 
+    Collection<UserOrder> getOrdersForUserWithAllStable(Long id, LocalDate fromDate, LocalDate toDate);
+
     String storeOrdersForUser(final Collection<UserOrder> userOrders, final User user);
 
     void delete(final Collection<Order> orders);

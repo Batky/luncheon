@@ -379,7 +379,7 @@ function changeOrdersAndSave() {
     var index = 0;
     $('input:radio').each(function () {
         if (index < 7) {
-            tempOrders[index].ordered = !!$(this).prop('checked');
+            tempOrders[index].ordered = $(this).prop('checked');
         }
         index++;
     });

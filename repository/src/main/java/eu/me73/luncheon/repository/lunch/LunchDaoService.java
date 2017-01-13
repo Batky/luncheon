@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface LunchDaoService extends JpaRepository<LunchEntity, Long> {
 
-    //TODO: decide which one is better approach and why Query annotation or spring JPA 'terrible' mathod name combination
+    //TODO: decide which one is better approach and why Query annotation or spring JPA 'terrible' method name combination
     @Query(value = "SELECT lunch FROM LunchEntity AS lunch WHERE lunch.date BETWEEN :from_date AND :to_date")
     Collection<LunchEntity> findActualTwoWeeks(
             @Param("from_date") LocalDate fromDate,
@@ -16,7 +16,7 @@ public interface LunchDaoService extends JpaRepository<LunchEntity, Long> {
     );
     Collection<LunchEntity> findByDateGreaterThanEqualAndDateLessThanEqualOrderByDate(LocalDate fromDate, LocalDate toDate);
 
-    @Query(value = "SELECT lunch FROM LunchEntity AS lunch WHERE (lunch.date BETWEEN :from_date AND :to_date) OR (lunch.stable = true)")
+    @Query(value = "SELECT lunch FROM LunchEntity AS lunch WHERE (lunch.date BETWEEN :from_date AND :to_date) OR (lunch.stable = true) ORDER BY lunch.stable ASC, lunch.id")
     Collection<LunchEntity> findTwoDatesAndStable(
             @Param("from_date") LocalDate fromDate,
             @Param("to_date") LocalDate toDate
@@ -24,7 +24,7 @@ public interface LunchDaoService extends JpaRepository<LunchEntity, Long> {
 
     Collection<LunchEntity> findByDateAndSoupOrderById(LocalDate date, boolean soup);
 
-    @Query(value = "SELECT lunch FROM LunchEntity AS lunch WHERE ((lunch.date = :exact_date) AND (lunch.soup = false)) OR (lunch.stable = true)")
+    @Query(value = "SELECT lunch FROM LunchEntity AS lunch WHERE ((lunch.date = :exact_date) AND (lunch.soup = false)) OR (lunch.stable = true) ORDER BY lunch.stable ASC, lunch.id")
     Collection<LunchEntity> findStableMealsForDate(
             @Param("exact_date") LocalDate date
     );

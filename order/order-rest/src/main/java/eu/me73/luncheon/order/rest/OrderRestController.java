@@ -131,7 +131,7 @@ public class OrderRestController {
             LOG.trace("Rest request from user {}", authentication.getPrincipal());
         }
         LocalDate dt = dateUtils.getLocalDate(date);
-        return Objects.nonNull(dt) ? orderService.getOrdersForUser(id, dt, dt) : null;
+        return Objects.nonNull(dt) ? orderService.getOrdersForUserWithAllStable(id, dt, dt) : null;
     }
 
     @RequestMapping(value = "orders/store/user", method = RequestMethod.POST, consumes = "application/json")

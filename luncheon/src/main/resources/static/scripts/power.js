@@ -212,7 +212,6 @@ function idFromName(name) {
 
 function saveOrders(refresh, show) {
     var jsonLunchesOrders = JSON.stringify(lunchesJson);
-    console.log(jsonLunchesOrders);
     $.when(
         $.ajax({
             url: urlStoreUser,
@@ -258,7 +257,7 @@ function getDescription() {
 function gatherOrders(withDescription) {
     var index = 0;
     $('input:radio').each(function () {
-        lunchesJson[index].ordered = !!$(this).prop('checked');
+        lunchesJson[index].ordered = $(this).prop('checked');
         if (withDescription) {
             lunchesJson[index].description = $("#description").val();
         }

@@ -156,12 +156,12 @@ public class OrderServicesImpl implements OrderService {
 
         Collection<Order> ordersWithoutStable = orders
                 .stream()
-                .filter(order -> !order.getMeal().getStable())
+                .filter(order -> !order.getMeal().isStable())
                 .collect(Collectors.toCollection(ArrayList::new));
 
         Collection<Order> ordersOnlyStable = orders
                 .stream()
-                .filter(order -> order.getMeal().getStable())
+                .filter(order -> order.getMeal().isStable())
                 .collect(Collectors.toCollection(ArrayList::new));
 
         Collection<Order> ordersWithDescription = orders
@@ -184,10 +184,10 @@ public class OrderServicesImpl implements OrderService {
             changeSoupInUserOrders(userOrdersWithoutStable, order.getSoup());
             Lunch newLunchCopy = new Lunch(
                     order.getMeal().getId(),
-                    order.getMeal().getSoup(),
+                    order.getMeal().isSoup(),
                     order.getDate(),
                     order.getMeal().getDescription(),
-                    order.getMeal().getStable());
+                    order.getMeal().isStable());
             userOrdersWithStable.add(new UserOrder(
                     id,
                     true,
@@ -208,6 +208,46 @@ public class OrderServicesImpl implements OrderService {
         return userOrders;
     }
 
+    @Override
+    public Collection<UserOrder> getOrdersForUserWithAllStable(final Long id, final LocalDate fromDate, final LocalDate toDate) {
+
+        Collection<Lunch> lunches = lunchService.getAllBetweenDatesAndStables(fromDate, toDate);
+
+        Collection<Order> orders = service
+                .findByUserAndDateGreaterThanEqualAndDateLessThanEqualOrderByDate(id, fromDate, toDate)
+                .stream()
+                .map(this::fromEntity)
+                .collect(Collectors.toList());
+
+        Collection<Order> ordersWithoutStable = orders
+                .stream()
+                .filter(order -> !order.getMeal().isStable())
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        Collection<Order> ordersOnlyStable = orders
+                .stream()
+                .filter(order -> order.getMeal().isStable())
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        Collection<Order> ordersWithDescription = orders
+                .stream()
+                .filter(order -> (Objects.nonNull(order.getDescription()) && !order.getDescription().isEmpty()))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        Collection<UserOrder> userOrders = lunches
+                .stream()
+                .map(lunch -> new UserOrder(
+                        id,
+                        lunchInOrders(orders, lunch),
+                        lunch,
+                        dateUtils.itsChangeable(lunch.getDate()),
+                        getDescriptionInOrders(ordersWithDescription, lunch)))
+                .filter(userOrder -> !userOrder.getLunch().getDescription().isEmpty())
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        return userOrders;
+    }
+
     private void changeSoupInUserOrders(final ArrayList<UserOrder> userOrdersWithoutStable, final Lunch soup) {
         for (UserOrder userOrder : userOrdersWithoutStable) {
             if (userOrder.getLunch().equals(soup)) {
@@ -218,13 +258,13 @@ public class OrderServicesImpl implements OrderService {
     }
 
     private Lunch copyIfStable(final Collection<Order> orders, final Lunch lunch) {
-        if (lunch.getStable() && lunchInOrders(orders, lunch)) {
+        if (lunch.isStable() && lunchInOrders(orders, lunch)) {
             Lunch newLunchCopy = new Lunch(
                     lunch.getId(),
-                    lunch.getSoup(),
+                    lunch.isSoup(),
                     getOrderDate(orders,lunch),
                     lunch.getDescription(),
-                    lunch.getStable());
+                    lunch.isStable());
             return newLunchCopy;
         } else {
             return lunch;
@@ -233,24 +273,47 @@ public class OrderServicesImpl implements OrderService {
 
     @Override
     public String storeOrdersForUser(final Collection<UserOrder> userOrders, final User user) {
-        Objects.requireNonNull(userOrders, "If storing users orders collection cannot be null");
-        if (userOrders.isEmpty()) {
-            LOG.warn(USER_ORDERS_EMPTY);
-            return USER_ORDERS_EMPTY;
-        }
 
         if (LOG.isTraceEnabled()) {
             LOG.trace("Saving users orders by logged user {}", user.getLongName());
         }
 
-        ArrayList<UserOrder> userOrderArrayList = userOrders
-                .stream()
-//                .filter(UserOrder::isChangeable)
-                .collect(Collectors.toCollection(ArrayList::new));
+//        Objects.requireNonNull(userOrders, "If storing users orders collection cannot be null");
 
-//        if (userOrderArrayList.isEmpty()) {
-//            return "0";
-//        }
+        if (userOrders.isEmpty()) {
+            LOG.warn(USER_ORDERS_EMPTY);
+            return USER_ORDERS_EMPTY;
+        }
+
+        ArrayList<UserOrder> userOrderArrayList = new ArrayList<>();
+
+        if (userOrders.size() > 8) {
+            LOG.info("Normalizing user orders.");
+            UserOrder userOrder = userOrders
+                            .stream()
+                            .filter(uo -> uo.getLunch().isSoup())
+                            .findFirst().orElse(null);
+            if (Objects.isNull(userOrder)) {
+                LOG.warn("Orders without soup, cannot store.");
+                return USER_ORDERS_EMPTY;
+            }
+            LocalDate actualDate = userOrder.getLunch().getDate();
+
+            for (UserOrder order : userOrders) {
+                if (!order.getLunch().isStable()) {
+                    userOrderArrayList.add(order);
+                } else {
+                    if (order.isOrdered()) {
+                        order.getLunch().setDate(actualDate);
+                        userOrderArrayList.add(order);
+                    }
+                }
+            }
+        } else {
+            userOrderArrayList = userOrders
+                    .stream()
+                    .collect(Collectors.toCollection(ArrayList::new));
+        }
 
         Long lunchUserId = userOrderArrayList.get(0).getUser();
         if (!user.getRelation().equals(UserRelation.POWER_USER)) {
@@ -360,7 +423,7 @@ public class OrderServicesImpl implements OrderService {
     }
 
     private boolean isSoup(final UserOrder userOrder) {
-        return userOrder.getLunch().getSoup();
+        return userOrder.getLunch().isSoup();
     }
 
     private boolean hasDescription(final UserOrder userOrder) {
